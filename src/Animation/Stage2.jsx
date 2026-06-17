@@ -50,7 +50,7 @@ export const RunAct2 = ({ dragBoxRef, onComplete }) => {
             duration:1,
             autoAlpha:1,
             stagger:{
-                each:1,
+                each:0.5,
                 from:"end"
             },
             x:0,
@@ -59,7 +59,7 @@ export const RunAct2 = ({ dragBoxRef, onComplete }) => {
           to.to(".dragIndicator",{
                 autoAlpha:0,
                 duration:0.4,
-                delay:8,
+                delay:4,
             })
         self.ignore(()=>{
             const t1 = gsap.timeline();

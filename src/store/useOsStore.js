@@ -10,7 +10,7 @@ export const useOsStore = create(persist((set) =>({
     setLocation: (newcity) => set({location:newcity}),
     activeLocation: null,
     telemetryData:null,
-    settelemetryData = (location,data) => set({
+    settelemetryData : (location,data) => set({
         activeLocation:location,
         telemetryData,data
     })

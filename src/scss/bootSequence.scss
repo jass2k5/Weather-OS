@@ -1,7 +1,27 @@
 .bootContainer {
     position: relative;
     z-index: 0;
+    
+  .main-container{
 
+    transform: translateX(-50%);
+    z-index: 3;
+      .inputload{
+        height: auto;
+        min-width: 40px;
+        border: 2px solid white;
+        border-radius: 0.8rem;
+        background: transparent;
+        transition: all 2s ease-in;
+        padding-inline: 1rem;
+        outline: none;
+        &:focus{
+            background: rgba(0, 0, 0, 0.205);
+            
+        }
+
+    }
+  }
     .bottomLeftInfo {
         z-index: 2;
         min-height: 20vh;
