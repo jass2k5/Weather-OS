@@ -1,19 +1,16 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRef } from "react";
 import { useOsStore } from "../store/useOsStore";
-import gsap from "gsap";
-import axios from "axios";
 import { RunAct1 } from "../Animation/Stage1";
 import { RunAct2 } from "../Animation/Stage2";
 import { RunAct3 } from "../Animation/Stage3";
 export const BootSequence = () => {
-    const hasStarted = useRef(false);
     const firsth1Ref = useRef(null);
     const secondh1Ref = useRef(null);
     const bgClr = useOsStore((state) => state.systemBg);
     const dragBoxRef = useRef(null);
     const paraRef = useRef(null);
-    const [visible,setVisible] = useState(0);
+    const [visible] = useState(0);
     const [current,setCurrent] = useState("Stage1");
   
     return (
@@ -79,7 +76,7 @@ export const BootSequence = () => {
 
             {current === "Stage3" && (
 
-                <RunAct3 onComplete={console.log("RUN3 complete")}/>
+                <RunAct3 onComplete={() => console.log("RUN3 complete")}/>
             )}
            
         </div>

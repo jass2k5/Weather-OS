@@ -10,7 +10,7 @@ import { SplitText } from "gsap/SplitText";
 gsap.registerPlugin(SplitText);
 
 const Api_Key = import.meta.env.VITE_WEATHER_API_KEY;
-// const BASE_URL = 'https://api.weatherapi.com/v1';
+const BASE_URL = 'https://api.weatherapi.com/v1';
 
 const fetchLocationTelemetry = async (locationName) => {
     try {
@@ -44,10 +44,10 @@ export const RunAct3 = ({ onComplete }) => {
 
     const setSystemTelemetry = useOsStore((state) => state.setSystemTelemetry);
 
-    const { mutate, isPending, isSuccess, isError, error } = useMutation({
+    const { mutate, isPending, isSuccess, isError } = useMutation({
         mutationFn: fetchLocationTelemetry,
-        onSuccess: (data) => {
-            setSystemTelemetry(inputValue, data);
+        onSuccess: (data, submittedLocation) => {
+            setSystemTelemetry(submittedLocation, data);
             if (onComplete) {
                 onComplete();
             }
