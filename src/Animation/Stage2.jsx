@@ -56,7 +56,11 @@ export const RunAct2 = ({ dragBoxRef, onComplete }) => {
             x:0,
             ease:"power3.out"
         })
-
+          to.to(".dragIndicator",{
+                autoAlpha:0,
+                duration:0.4,
+                delay:8,
+            })
         self.ignore(()=>{
             const t1 = gsap.timeline();
 
@@ -79,21 +83,20 @@ export const RunAct2 = ({ dragBoxRef, onComplete }) => {
                 cursor:"grab",
                 activeCursor:"grabbing",
                 onDragStart: ()=>{
-                    gsap.to(".dragIndicator",{
+                  const d = document.querySelector(".dragIndicator")
+                  if(d){
+                       gsap.to(".dragIndicator",{
                         autoAlpha:0,
                         duration:0.2,
                     })
+                  }
                 },
                 onDragEnd: ()=>{
                     console.log("drag end");
                 }
 
             })
-            gsap.to(".dragIndicator",{
-                autoAlpha:0,
-                duration:0.4,
-                delay:30,
-            })
+          
 
         });
     },{scope:dragBoxRef,dependencies:[]})

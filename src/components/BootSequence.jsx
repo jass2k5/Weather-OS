@@ -5,6 +5,7 @@ import gsap from "gsap";
 import axios from "axios";
 import { RunAct1 } from "../Animation/Stage1";
 import { RunAct2 } from "../Animation/Stage2";
+import { RunAct3 } from "../Animation/Stage3";
 export const BootSequence = () => {
     const hasStarted = useRef(false);
     const firsth1Ref = useRef(null);
@@ -68,12 +69,17 @@ export const BootSequence = () => {
             </ul>
                  {current === "Stage2" && (
                 <RunAct2 dragBoxRef = {dragBoxRef} onComplete={()=>{
-                    console.log("runact2 done");
+                    setCurrent("Stage3")
                 }}/>
             )}
           </div>
            {current === "Stage1" && (
                 <RunAct1 firsth1Ref={firsth1Ref} secondh1Ref={secondh1Ref} paraRef={paraRef} onComplete={()=>setCurrent("Stage2")}/>
+            )}
+
+            {current === "Stage3" && (
+
+                <RunAct3 onComplete={console.log("RUN3 complete")}/>
             )}
            
         </div>

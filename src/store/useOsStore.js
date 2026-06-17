@@ -8,6 +8,12 @@ export const useOsStore = create(persist((set) =>({
     systemBg: "bg-[url(/stage1bg.png)]",
     finishBoot: () => {set({isBooted:true})},
     setLocation: (newcity) => set({location:newcity}),
+    activeLocation: null,
+    telemetryData:null,
+    settelemetryData = (location,data) => set({
+        activeLocation:location,
+        telemetryData,data
+    })
 
 })),
 {
