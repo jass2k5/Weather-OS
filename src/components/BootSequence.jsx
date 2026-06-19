@@ -4,6 +4,8 @@ import { useOsStore } from "../store/useOsStore";
 import { RunAct1 } from "../Animation/Stage1";
 import { RunAct2 } from "../Animation/Stage2";
 import { RunAct3 } from "../Animation/Stage3";
+import { RunAct4 } from "../Animation/Stage4";
+
 export const BootSequence = () => {
     const firsth1Ref = useRef(null);
     const secondh1Ref = useRef(null);
@@ -76,8 +78,13 @@ export const BootSequence = () => {
 
             {current === "Stage3" && (
 
-                <RunAct3 onComplete={() => console.log("RUN3 complete")}/>
+                <RunAct3 onComplete={() => setCurrent("Stage4")}/>
             )}
+            {current === "Stage4" && 
+            <RunAct4 onComplete = {()=>{
+                console.log("on complete ran")
+            }}/>
+            }
            
         </div>
     )

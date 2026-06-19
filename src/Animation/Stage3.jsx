@@ -1,4 +1,5 @@
 import { useState, useRef } from "react";
+import { useEffect } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { useMutation } from "@tanstack/react-query";
@@ -26,7 +27,7 @@ const fetchLocationTelemetry = async (locationName) => {
         return response.data;
 
     } catch (error) {
-        if(error.response){
+        if (error.response) {
 
             console.error("API CALL FAILED:", error.response);
         }
@@ -41,56 +42,50 @@ export const RunAct3 = ({ onComplete }) => {
     const inputRef = useRef(null);
     const containerRef = useRef(null);
     const beforeInput = useRef(null);
-
+    const info = useRef(null);
     const setSystemTelemetry = useOsStore((state) => state.setSystemTelemetry);
-
+    const timeoutIdRef = useRef(null);
+    const { contextSafe } = useGSAP();
     const { mutate, isPending, isSuccess, isError } = useMutation({
         mutationFn: fetchLocationTelemetry,
         onSuccess: (data, submittedLocation) => {
             setSystemTelemetry(submittedLocation, data);
-            if (onComplete) {
-                onComplete();
-            }
-        }
+            timeoutIdRef.current = setTimeout(() => {
+                contextSafe(() => {
+                    const tl = gsap.timeline({
+                        delay:0.3,
+                        onComplete:()=>{
+                            console.log("oncomplete run")
+                            onComplete();
+                        }
+                    });
 
+                   
+                    tl.to(inputRef.current, {
+                        autoAlpha: 0,
+                        y: -20,
+                        duration: 0.8,
+                        ease: "power3.inOut"
+                    })
+                      
+                        .to(info.current, {
+                            autoAlpha: 0,
+                            y: -20,
+                            delay:0.3,
+                            duration: 0.8,
+                            ease: "power3.inOut"
+                        });
+                })();
+            }, 3000);
+
+        }
     });
 
     useGSAP(() => {
-        const split = SplitText.create(beforeInput.current, {
-            type: "words"
-        });
-        const enterInfo = split.words;
-
-
 
         const t1 = gsap.timeline({
             delay: 0.3
         })
-
-        t1.fromTo(enterInfo, {
-            autoAlpha: 0,
-            y: -60,
-        }, {
-            duration: 0.8,
-            y: 0,
-            stagger: {
-                each: 0.5,
-                from: "start"
-            },
-            autoAlpha: 1,
-            ease: "power4.in"
-
-        })
-
-        t1.to(enterInfo, {
-            autoAlpha: 0,
-            duration: 0.8,
-            y: -60,
-            stagger: 0.5,
-            delay: 3,
-            ease: "power4.out"
-        })
-
 
         t1.fromTo(inputRef.current, {
             autoAlpha: 0,
@@ -107,19 +102,29 @@ export const RunAct3 = ({ onComplete }) => {
         })
 
     }, { dependencies: [] })
+    useEffect(() => {
 
+
+        return () => {
+            if (timeoutIdRef.current) {
+                clearTimeout(timeoutIdRef.current);
+            }
+        }
+    }, [])
     const handlesumbit = (e) => {
         e.preventDefault();
         const cleanValue = inputValue.trim();
         if (!cleanValue) return;
+
+
         mutate(cleanValue);
     }
     return (
         <div ref={containerRef} className=" main-container absolute h-full top-0 left-[50%] transform  w-[50%] flex flex-col gap-5 justify-center items-center">
 
             <div className="flex flex-col justify-center items-center h-auto w-full gap-4">
-
-                <div ref={beforeInput} className="italic font-sans text-2xl text-white animate-bounce">Enter Your Area Name!</div>
+                {/* 
+                <div ref={beforeInput} className="italic font-sans text-2xl text-white animate-bounce">Enter Your Area Name!</div> */}
 
                 <form onSubmit={handlesumbit} className="flex flex-col justify-center items-center">
                     <input
@@ -139,7 +144,7 @@ export const RunAct3 = ({ onComplete }) => {
 
             </div>
 
-            <div className="h-10 mt-4 w-full relative">
+            <div ref={info} className="h-10 mt-4 w-full relative">
 
 
                 {isPending && (
