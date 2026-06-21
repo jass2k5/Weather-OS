@@ -83,6 +83,9 @@ export const BootSequence = () => {
             {current === "Stage4" && 
             <RunAct4 
             dragBoxRef = {dragBoxRef}
+            firsth1Ref = {firsth1Ref}
+            secondh1Ref = {secondh1Ref}
+            paraRef = {paraRef}
             onComplete = {()=>{    
                 setCurrent("Stage5");
             }}/>
