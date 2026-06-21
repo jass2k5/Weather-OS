@@ -81,10 +81,13 @@ export const BootSequence = () => {
                 <RunAct3 onComplete={() => setCurrent("Stage4")}/>
             )}
             {current === "Stage4" && 
-            <RunAct4 onComplete = {()=>{
-                console.log("on complete ran")
+            <RunAct4 
+            dragBoxRef = {dragBoxRef}
+            onComplete = {()=>{    
+                setCurrent("Stage5");
             }}/>
             }
+           
            
         </div>
     )
