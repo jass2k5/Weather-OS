@@ -3,8 +3,8 @@ import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
-import { useOsStore } from "../store/useOsStore";
-import { BootSequence } from "../components/BootSequence";
+import { useOsStore } from "../Store/useOsStore";
+import { BootSequence } from "../Components/BootSequence";
 import { Draggable } from "gsap/Draggable";
 gsap.registerPlugin(Draggable, useGSAP);
 

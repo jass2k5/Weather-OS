@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useRef } from "react";
-import { useOsStore } from "../store/useOsStore";
+import { useOsStore } from "../Store/useOsStore";
 import { RunAct1 } from "../Animation/Stage1";
 import { RunAct2 } from "../Animation/Stage2";
 import { RunAct3 } from "../Animation/Stage3";
