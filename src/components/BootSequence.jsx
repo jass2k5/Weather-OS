@@ -12,6 +12,7 @@ export const BootSequence = () => {
     const bgClr = useOsStore((state) => state.systemBg);
     const dragBoxRef = useRef(null);
     const paraRef = useRef(null);
+    const jassRef = useRef(null);
     const [visible] = useState(0);
     const [current,setCurrent] = useState("Stage1");
   
@@ -29,7 +30,7 @@ export const BootSequence = () => {
                 <p ref={paraRef}>An event-driven workspace that turns live geolocation and atmospheric streams into a calm, zero-bloat surface — synchronized with your local sky.</p>
 
             </div>
-            <div className="Jass">
+            <div ref={jassRef} className="Jass">
                 <p>made by <span>jass</span></p>
                 <span>System_VR: 1.0.0</span>
             </div>
@@ -85,6 +86,7 @@ export const BootSequence = () => {
             dragBoxRef = {dragBoxRef}
             firsth1Ref = {firsth1Ref}
             secondh1Ref = {secondh1Ref}
+            jassRef = {jassRef}
             paraRef = {paraRef}
             onComplete = {()=>{    
                 setCurrent("Stage5");

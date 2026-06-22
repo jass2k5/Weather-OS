@@ -8,12 +8,12 @@ import { BootSequence } from "../components/BootSequence";
 import { Draggable } from "gsap/Draggable";
 gsap.registerPlugin(Draggable, useGSAP);
 
-export const RunAct4 = ({ dragBoxRef, firsth1Ref, secondh1Ref, paraRef, onComplete }) => {
+export const RunAct4 = ({ dragBoxRef, firsth1Ref, secondh1Ref, paraRef, jassRef,onComplete }) => {
     const containerRef = useRef(null);
     const columnRef = useRef(null);
     const [count, SetCount] = useState(null);
-    const [block, setBlock] = useState(200)
-    const timeoutRef = useRef(null);
+    const [block, setBlock] = useState(300)
+    // const timeoutRef = useRef(null);
     const finishBoot = useOsStore(state => state.finishBoot);
     useEffect(() => {
 
@@ -25,63 +25,62 @@ export const RunAct4 = ({ dragBoxRef, firsth1Ref, secondh1Ref, paraRef, onComple
             draggable.kill();
         }
 
-        const height = window.innerHeight;
-        const width = window.innerWidth;
-
-        SetCount(Math.floor(width / block));
-
-        return clearTimeout(timeoutRef.current);
-
     }, [])
 
     useGSAP(() => {
-        timeoutRef.current = setTimeout(() => {
-            const t1 = gsap.timeline({
-                onComplete: () => {
-                    onComplete();
-                    finishBoot();
-                }
-            });
-            t1.fromTo(".columnBox", {
-                autoAlpha: 0,
-                scaleY: 0,
-                transformOrigin: "center bottom"
-            }, {
-                autoAlpha: 1,
-                duration: 1,
-                scaleY: 1,
-                ease: "power4.in",
-                stagger: {
-                    each: 0.5,
-                    from: "end"
-                },
-                onComplete: () => {
-                    gsap.set([firsth1Ref.current, secondh1Ref.current, paraRef.current], {
-                        display: "none"
-                    })
-                }
+       const t1 = gsap.timeline({
+        delay: 1,
+        onComplete: () => {
+            onComplete();
+            finishBoot();
+        }
+    });
 
+    t1.fromTo(".above", {
+        scaleX: 0,
+        transformOrigin: "left center" 
+    }, {
+        duration: 1,
+        scaleX: 1,
+        ease: "power3.inOut",
+    });
+
+    t1.fromTo(".below", {
+        scaleX: 0,
+        transformOrigin: "right center" 
+    }, {
+        duration: 1,
+        scaleX: 1,
+        ease: "power3.inOut",
+         onComplete: () => {
+            const refs = [firsth1Ref,secondh1Ref,paraRef,jassRef];
+            refs.forEach( ref =>{
+                if(ref.current){
+                    ref.current.style.display = "none";
+                }
             })
-            t1.to(".columnBox", {
-                scaleY: 0,
-                transformOrigin: "center top",
-                duration: 1,
-                delay:0.2,
-                stagger: {
-                    each: 0.5,
-                    from: "start"
-                },
-                ease: "power4.out"
-            });
-        }, 1000);
+        }
+    },"<");
+    
+    t1.to(".above",{
+        scaleX:0,
+        transformOrigin:"right center",
+        duration:1,
+        ease:"power3.out"
+    })
+    t1.to(".below",{
+        scaleX:0,
+        duration:1,
+        transformOrigin:"left center",
+        ease:"power3.out"
 
+    },"<")
 
-    }, { dependencies: [count] })
+    }, { dependencies: []})
     return (
-        <div className="columncontainer bg-transparent h-full w-full absolute inset-0 flex flex-row items-center gap-0.5 justify-center z-50">
-            {Array.from({ length: count }).map((elem, index) =>
-                <div key={index} className='columnBox opacity-0'></div>
-            )}
+        <div className="columncontainer bg-transparent h-full w-full absolute inset-0 flex flex-col justify-center items-center z-50">
+            <div className="above"></div>
+            <div className="below"></div>
         </div>
     )
 
