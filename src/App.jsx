@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { BootSequence } from "./components/BootSequence"
-import { MouseFollower } from "./Components/mouseFollower/MouseFollower"
+import { MouseFollower } from "./components/mouseFollower/MouseFollower"
 export const App = ()=>{
 
   return(

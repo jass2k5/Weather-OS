@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { useRef } from "react";
-import { useOsStore } from "../Store/useOsStore";
-import { RunAct1 } from "../Animation/Stage1";
-import { RunAct2 } from "../Animation/Stage2";
-import { RunAct3 } from "../Animation/Stage3";
-import { RunAct4 } from "../Animation/Stage4";
+import { useOsStore } from "../store/useOsStore";
+import { RunAct1 } from "../animations/Stage1";
+import { RunAct2 } from "../animations/Stage2";
+import { RunAct3 } from "../animations/Stage3";
+import { RunAct4 } from "../animations/Stage4";
 
 export const BootSequence = () => {
     const firsth1Ref = useRef(null);
