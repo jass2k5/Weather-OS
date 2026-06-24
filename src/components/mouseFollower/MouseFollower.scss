@@ -1,0 +1,19 @@
+.cursorFollower{
+    position: fixed;
+    height: 40px;
+    width: 40px;
+ background-color: transparent;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 999;
+
+    .cursorImage{
+        height: 100%;
+        width: 100%;
+        border-radius: 50%;
+        object-fit: cover;
+        object-position: center;
+        background-color: transparent;
+    }
+}
