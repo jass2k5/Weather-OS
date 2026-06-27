@@ -8,7 +8,7 @@ import { BootSequence } from "../components/BootSequence";
 import { Draggable } from "gsap/Draggable";
 gsap.registerPlugin(Draggable, useGSAP);
 
-export const RunAct4 = ({ dragBoxRef, firsth1Ref, secondh1Ref, paraRef, jassRef,onComplete }) => {
+export const RunAct4 = ({ dragBoxRef, firsth1Ref, secondh1Ref, paraRef, jassRef,logoRef,onComplete }) => {
     const containerRef = useRef(null);
     const columnRef = useRef(null);
     const [count, SetCount] = useState(null);
@@ -53,7 +53,7 @@ export const RunAct4 = ({ dragBoxRef, firsth1Ref, secondh1Ref, paraRef, jassRef,
         scaleX: 1,
         ease: "power3.inOut",
          onComplete: () => {
-            const refs = [firsth1Ref,secondh1Ref,paraRef,jassRef];
+            const refs = [firsth1Ref,secondh1Ref,paraRef,jassRef,logoRef];
             refs.forEach( ref =>{
                 if(ref.current){
                     ref.current.style.display = "none";

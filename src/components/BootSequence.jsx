@@ -13,13 +13,14 @@ export const BootSequence = () => {
     const dragBoxRef = useRef(null);
     const paraRef = useRef(null);
     const jassRef = useRef(null);
+    const logoRef = useRef(null);
     const [visible] = useState(0);
     const [current,setCurrent] = useState("Stage1");
   
     return (
         <div className={` bootContainer h-full  w-full relative bg-no-repeat bg-center bg-cover ${bgClr}`}>
            
-            <div className="nameCapsule">
+            <div ref={logoRef} className="nameCapsule">
                 <i className="ri-circle-fill animate-pulse"></i>
                 <span> Weather Os</span>
             </div>
@@ -88,6 +89,7 @@ export const BootSequence = () => {
             secondh1Ref = {secondh1Ref}
             jassRef = {jassRef}
             paraRef = {paraRef}
+            logoRef = {logoRef}
             onComplete = {()=>{    
                 setCurrent("Stage5");
             }}/>
