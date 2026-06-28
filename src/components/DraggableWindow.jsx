@@ -1,35 +1,49 @@
 import { Rnd } from "react-rnd";
 
-export const DraggableWindow=({children, title , defaultpos = {x:50 , y:50}}) =>{
+const resizeHandleStyles = {
+    right: { width: "14px", right: 0, zIndex: 100 },
+    left: { width: "14px", left: 0, zIndex: 100 },
+    bottom: { height: "14px", bottom: 0, zIndex: 100 },
+    top: { height: "14px", top: 0, zIndex: 100 },
+    bottomRight: { width: "18px", height: "18px", right: 0, bottom: 0, zIndex: 101 },
+    bottomLeft: { width: "18px", height: "18px", left: 0, bottom: 0, zIndex: 101 },
+    topRight: { width: "18px", height: "18px", right: 0, top: 0, zIndex: 101 },
+    topLeft: { width: "18px", height: "18px", left: 0, top: 0, zIndex: 101 },
+};
 
-    return(
+export const DraggableWindow = ({ children, title, defaultpos = { x: 300, y: 100 } }) => {
+
+    return (
         <Rnd
-        default={{
-            x:100,
-            y: 80,
-            width:800,
-            height:500,
-        }}
-        minWidth={300}
+            default={{
+                x: defaultpos.x,
+                y: defaultpos.y,
+                width: 1000,
+                height: 500,
+            }}
+            minWidth={300}
             minHeight={250}
-            dragHandleClassName="window-header" 
+            dragHandleClassName="window-header"
             bounds=".desktop"
-            className="window-wrapper flex flex-col border border-cyan-500/20 bg-gray-900/90 backdrop-blur-md rounded-xl overflow-hidden shadow-2xl">
+            resizeHandleStyles={resizeHandleStyles}
+            style={{ display: "flex", flexDirection: "column" }}
+            className="window-wrapper border border-cyan-500/20 bg-black backdrop-blur-md rounded-[0.6rem] overflow-hidden shadow-2xl">
 
-                
-                <div className="window-header cursor-grab active:cursor-grabbing bg-gray-950/50 p-2 flex items-center justify-between border-b border-cyan-500/10">
-                <span className="text-xs text-cyan-100/50 font-mono tracking-widest">{title}</span>
-                <div className="flex gap-2">
-                    <div className="w-2.5 h-2.5 rounded-full bg-red-500/50"></div>
-                    <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/50"></div>
-                    <div className="w-2.5 h-2.5 rounded-full bg-green-500/50"></div>
-                </div>
+
+            <div className="window-header shrink-0 cursor-grab active:cursor-grabbing bg-zinc-800 p-8 flex items-center justify-center relative border-b border-cyan-500/10">
+
+                <div className="flex gap-0.5 absolute left-[1%] top-[30%] gap-1.5">
+                    <div className="w-3.5 h-3.5 rounded-full bg-red-500/50"></div>
+                    <div className="w-3.5 h-3.5 rounded-full bg-yellow-500/50"></div>
+                    <div className="w-3.5 h-3.5 rounded-full bg-green-500/50"></div></div>
+
+                <span className="text-l text-cyan-100/50 font-mono tracking-widest">{title}</span>
             </div>
 
-            <div className="window-content grow relative overflow-hidden">
+            <div className="window-content flex-1 min-h-0 relative overflow-hidden">
                 {children}
             </div>
 
-            </Rnd>
+        </Rnd>
     )
 }
