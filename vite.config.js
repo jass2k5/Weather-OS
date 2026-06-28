@@ -7,4 +7,7 @@ export default defineConfig({
     react(), 
     tailwindcss() // 2. Turn it on!
   ],
+  define: {
+    'process.env': {}
+  }
 })

@@ -43,7 +43,7 @@ export const WeatherMap = () => {
             )}
 
 
-            <div className="map-layer w-full h-full absolute inset-0 z-50 opacity-0">
+            <div className="map-layer w-full h-full absolute inset-0  z-50">
                 <Map
                     ref={mapRef}
                     initialViewState={{ longitude: 0, latitude: 20, zoom: 1.5 }}
