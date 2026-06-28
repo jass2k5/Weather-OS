@@ -11,7 +11,6 @@ export const RunAct2 = ({ dragBoxRef, onComplete }) => {
         if(!container) return;
 
         const to = gsap.timeline({
-            delay:0.4,
               onComplete:()=>{
                     onComplete();
                 }

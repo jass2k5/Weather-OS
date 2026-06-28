@@ -123,9 +123,7 @@ export const RunAct3 = ({ onComplete }) => {
         <div ref={containerRef} className=" main-container absolute h-full top-0 left-[50%] transform  w-[50%] flex flex-col gap-5 justify-center items-center">
 
             <div className="flex flex-col justify-center items-center h-auto w-full gap-4">
-                {/* 
-                <div ref={beforeInput} className="italic font-sans text-2xl text-white animate-bounce">Enter Your Area Name!</div> */}
-
+              
                 <form onSubmit={handlesumbit} className="flex flex-col justify-center items-center">
                     <input
                         ref={inputRef}
