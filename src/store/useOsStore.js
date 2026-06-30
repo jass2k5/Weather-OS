@@ -14,10 +14,6 @@ export const useOsStore = create(persist((set) =>({
         activeLocation:location,
         telemetryData:data
     }),
-    settelemetryData : (location,data) => set({
-        activeLocation:location,
-        telemetryData:data
-    }),
     
     apps:{
         map:{isOpen:false},

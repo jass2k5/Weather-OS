@@ -5,6 +5,14 @@ import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { useOsStore } from "../store/useOsStore";
 
+// Handles both WeatherAPI.com ({ location: { lat, lon } }) and
+// OpenWeatherMap ({ coord: { lat, lon } }) shapes.
+const getCoord = (data) => {
+    const loc = data?.location || data?.coord;
+    if (loc?.lat != null && loc?.lon != null) return { lat: loc.lat, lon: loc.lon };
+    return null;
+};
+
 export const TerminalMap = () => {
     const [isMapLoaded, setIsMapLoaded] = useState(false);
     const [mapError, setMapError] = useState("");
@@ -12,53 +20,26 @@ export const TerminalMap = () => {
     const mapRef = useRef(null);
     const MAPTILER_KEY = import.meta.env.VITE_MAPTILER_KEY;
     const mapStyleUrl = `https://api.maptiler.com/maps/topo-v4/style.json?key=${MAPTILER_KEY}`;
-    const telemetryData =  useOsStore((state) => state.telemetryData)
+    const telemetryData = useOsStore((state) => state.telemetryData);
 
+    // Keep the map's canvas matched to its container size (RND windows resize a lot)
     useEffect(() => {
-        const resizeMap = () => {
-            if (mapRef.current) {
-                mapRef.current.getMap().resize();
-            }
-        };
-
-        const timer = setTimeout(resizeMap, 0);
-        const resizeObserver = new ResizeObserver(resizeMap);
-
-        if (containerRef.current) {
-            resizeObserver.observe(containerRef.current);
-        }
-
-
-        return () => {
-            clearTimeout(timer);
-            resizeObserver.disconnect();
-        };
+        const resizeObserver = new ResizeObserver(() => mapRef.current?.getMap().resize());
+        if (containerRef.current) resizeObserver.observe(containerRef.current);
+        return () => resizeObserver.disconnect();
     }, []);
 
-    //useeffect for the map animation
-   useEffect(() => {
-        let timer; 
-
-        if (isMapLoaded && telemetryData?.coord && mapRef.current) {
-            const { lat, lon } = telemetryData.coord;
-            
-            const mapInstance =  mapRef.current.getMap();
-
-            timer = setTimeout(() => {
-                mapInstance.flyTo({
-                    center: [lon, lat],
-                    zoom: 12,
-                    duration: 2500,
-                    essential: true,
-                    curve: 1.4
-                });
-            }, 100); 
+    // Fly to the location once we have both a loaded map and real coordinates
+    useEffect(() => {
+        const coord = getCoord(telemetryData);
+        if (isMapLoaded && coord) {
+            mapRef.current.getMap().flyTo({
+                center: [coord.lon, coord.lat],
+                zoom: 12,
+                duration: 2500,
+                essential: true,
+            });
         }
-
-        // ✅ FIX 2: You were right! Always clean up your timeouts in React
-        return () => {
-            if (timer) clearTimeout(timer);
-        };
     }, [telemetryData, isMapLoaded]);
 
     return (
@@ -66,12 +47,9 @@ export const TerminalMap = () => {
             {!isMapLoaded && (
                 <div
                     className="absolute inset-0 z-50 flex flex-col items-center justify-center"
-                    style={{
-                        background: "linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%)",
-                        boxShadow: "0 4px 30px rgba(15, 32, 39, 0.4)",
-                    }}
+                    style={{ background: "linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%)" }}
                 >
-                    <SkeletonTheme baseColor="rgba(255, 255, 255, 0.05)" highlightColor="rgba(255, 255, 255, 0.15)">
+                    <SkeletonTheme baseColor="rgba(255,255,255,0.05)" highlightColor="rgba(255,255,255,0.15)">
                         <Skeleton count={1} className="w-full h-full absolute inset-0" />
                         <div className="relative z-10 flex flex-col items-center gap-3">
                             <div className="w-8 h-8 border-2 border-cyan-300/30 border-t-cyan-400 rounded-full animate-spin" />
@@ -92,14 +70,10 @@ export const TerminalMap = () => {
                         event.target.resize();
                         setIsMapLoaded(true);
                     }}
-                    onError={(event) => {
-                        console.error("Map Load Error:", event);
-                        setMapError("MAP STYLE LOAD FAILED");
-                    }}
+                    onError={() => setMapError("MAP STYLE LOAD FAILED")}
                     style={{ width: "100%", height: "100%" }}
                 />
             </div>
         </div>
     );
 };
-
