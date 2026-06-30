@@ -3,15 +3,63 @@ import Map from "react-map-gl/maplibre";
 import "maplibre-gl/dist/maplibre-gl.css";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import { useOsStore } from "../store/useOsStore";
 
-export const WeatherMap = () => {
+export const TerminalMap = () => {
     const [isMapLoaded, setIsMapLoaded] = useState(false);
     const [mapError, setMapError] = useState("");
     const containerRef = useRef(null);
     const mapRef = useRef(null);
     const MAPTILER_KEY = import.meta.env.VITE_MAPTILER_KEY;
     const mapStyleUrl = `https://api.maptiler.com/maps/topo-v4/style.json?key=${MAPTILER_KEY}`;
+    const telemetryData =  useOsStore((state) => state.telemetryData)
 
+    useEffect(() => {
+        const resizeMap = () => {
+            if (mapRef.current) {
+                mapRef.current.getMap().resize();
+            }
+        };
+
+        const timer = setTimeout(resizeMap, 0);
+        const resizeObserver = new ResizeObserver(resizeMap);
+
+        if (containerRef.current) {
+            resizeObserver.observe(containerRef.current);
+        }
+
+
+        return () => {
+            clearTimeout(timer);
+            resizeObserver.disconnect();
+        };
+    }, []);
+
+    //useeffect for the map animation
+   useEffect(() => {
+        let timer; 
+
+        if (isMapLoaded && telemetryData?.coord && mapRef.current) {
+            const { lat, lon } = telemetryData.coord;
+            
+            const mapInstance =  mapRef.current.getMap();
+
+            timer = setTimeout(() => {
+                mapInstance.flyTo({
+                    center: [lon, lat],
+                    zoom: 12,
+                    duration: 2500,
+                    essential: true,
+                    curve: 1.4
+                });
+            }, 100); 
+        }
+
+        // ✅ FIX 2: You were right! Always clean up your timeouts in React
+        return () => {
+            if (timer) clearTimeout(timer);
+        };
+    }, [telemetryData, isMapLoaded]);
 
     return (
         <div ref={containerRef} className="mapContainer relative h-full w-full overflow-hidden bg-slate-950">

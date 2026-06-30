@@ -17,7 +17,31 @@ export const useOsStore = create(persist((set) =>({
     settelemetryData : (location,data) => set({
         activeLocation:location,
         telemetryData:data
-    })
+    }),
+    
+    apps:{
+        map:{isOpen:false},
+        terminalMap:{isOpen:true}
+    },
+
+    closeApp:(Appid) =>set((state) =>({
+        apps:{
+            ...state.apps,
+            [Appid]:{
+                ...state.apps[Appid],
+                isOpen:false
+            }
+        }
+    })),
+    openApp:(Appid) =>set((state) =>({
+        apps:{
+            ...state.apps,
+            [Appid]:{
+                ...state.apps[Appid],
+                isOpen:true
+            }
+        }
+    }))
 
 })),
 {
