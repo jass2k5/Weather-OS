@@ -3,6 +3,15 @@ import Map from "react-map-gl/maplibre";
 import "maplibre-gl/dist/maplibre-gl.css";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import { useOsStore } from "../../store/useOsStore";
+import { Searchbar } from "./Searchbar";
+
+
+const getCoord = (data) => {
+    const loc = data?.location || data?.coord;
+    if (loc?.lat != null && loc?.lon != null) return { lat: loc.lat, lon: loc.lon };
+    return null;
+};
 
 export const WeatherMap = () => {
     const [isMapLoaded, setIsMapLoaded] = useState(false);
@@ -11,19 +20,28 @@ export const WeatherMap = () => {
     const mapRef = useRef(null);
     const MAPTILER_KEY = import.meta.env.VITE_MAPTILER_KEY;
     const mapStyleUrl = `https://api.maptiler.com/maps/topo-v4/style.json?key=${MAPTILER_KEY}`;
+    const telemetryData = useOsStore((state) => state.telemetryData);
 
+    useEffect(() => {
+        const coord = getCoord(telemetryData);
+        if (isMapLoaded && coord) {
+            mapRef.current.getMap().flyTo({
+                center: [coord.lon, coord.lat],
+                zoom: 12,
+                duration: 2500,
+                essential: true,
+            });
+        }
+    }, [telemetryData, isMapLoaded]);
 
     return (
         <div ref={containerRef} className="mapContainer relative h-full w-full overflow-hidden bg-slate-950">
             {!isMapLoaded && (
                 <div
                     className="absolute inset-0 z-50 flex flex-col items-center justify-center"
-                    style={{
-                        background: "linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%)",
-                        boxShadow: "0 4px 30px rgba(15, 32, 39, 0.4)",
-                    }}
+                    style={{ background: "linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%)" }}
                 >
-                    <SkeletonTheme baseColor="rgba(255, 255, 255, 0.05)" highlightColor="rgba(255, 255, 255, 0.15)">
+                    <SkeletonTheme baseColor="rgba(255,255,255,0.05)" highlightColor="rgba(255,255,255,0.15)">
                         <Skeleton count={1} className="w-full h-full absolute inset-0" />
                         <div className="relative z-10 flex flex-col items-center gap-3">
                             <div className="w-8 h-8 border-2 border-cyan-300/30 border-t-cyan-400 rounded-full animate-spin" />
@@ -36,6 +54,7 @@ export const WeatherMap = () => {
             )}
 
             <div className="map-layer w-full h-full absolute inset-0 z-0">
+                <Searchbar/>
                 <Map
                     ref={mapRef}
                     initialViewState={{ longitude: 0, latitude: 20, zoom: 1.5 }}
@@ -44,14 +63,10 @@ export const WeatherMap = () => {
                         event.target.resize();
                         setIsMapLoaded(true);
                     }}
-                    onError={(event) => {
-                        console.error("Map Load Error:", event);
-                        setMapError("MAP STYLE LOAD FAILED");
-                    }}
+                    onError={() => setMapError("MAP STYLE LOAD FAILED")}
                     style={{ width: "100%", height: "100%" }}
                 />
             </div>
         </div>
     );
 };
-

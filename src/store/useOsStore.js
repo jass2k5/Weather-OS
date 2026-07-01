@@ -16,8 +16,8 @@ export const useOsStore = create(persist((set) =>({
     }),
     
     apps:{
-        map:{isOpen:false},
-        terminalMap:{isOpen:true}
+        map:{isOpen:true},
+        terminalMap:{isOpen:false}
     },
 
     closeApp:(Appid) =>set((state) =>({

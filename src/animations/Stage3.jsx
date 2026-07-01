@@ -115,8 +115,6 @@ export const RunAct3 = ({ onComplete }) => {
         e.preventDefault();
         const cleanValue = inputValue.trim();
         if (!cleanValue) return;
-
-
         mutate(cleanValue);
     }
     return (

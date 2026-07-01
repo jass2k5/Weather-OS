@@ -6,6 +6,7 @@ import './scss/bootSequence.scss'
 import './scss/Desktop.scss'
 import './components/mouseFollower/MouseFollower.scss'
 import './scss/terminal.scss'
+import './scss/Searchbar.scss'
 import { App } from './App'
 import 'remixicon/fonts/remixicon.css'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';

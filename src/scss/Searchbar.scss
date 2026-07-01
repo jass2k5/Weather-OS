@@ -1,0 +1,64 @@
+.SearchContainer{
+    position: absolute;
+    z-index: 3;
+    background-color: whitesmoke;
+    border: 1px solid rgba(225,225,225,0.2);
+    border-radius: 1.5rem;
+    top: 5%;
+    left: 50%;
+    height: auto;
+    min-height: 5vh;
+    min-width: 14vw;
+    width: auto;
+    transform: translate(-50%,-50%);
+    color: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+   
+    .logoAndbar{
+        height: 100%;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.8rem;
+        overflow: hidden;
+        position: relative;
+
+        .form{
+           
+           input{
+            padding-inline: 1rem;
+            outline: none;
+            font-weight: 600;
+           } 
+        }
+       .holder {
+            position: relative;
+            width: 45px;  
+            height: 45px;
+            background-color: black;
+            border-radius: 50%;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(225,225,225,0.2);
+            flex-shrink: 0;
+
+            i {
+                position: absolute; 
+                color: white;
+                display: inline-block;
+                font-size: 1.2rem; 
+            }
+            .arrow{
+                opacity: 0;
+                transform: translateY(30px);
+                margin-right: 0.2rem;
+            }
+        }
+    }
+} 

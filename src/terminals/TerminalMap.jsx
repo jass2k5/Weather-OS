@@ -5,8 +5,7 @@ import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { useOsStore } from "../store/useOsStore";
 
-// Handles both WeatherAPI.com ({ location: { lat, lon } }) and
-// OpenWeatherMap ({ coord: { lat, lon } }) shapes.
+
 const getCoord = (data) => {
     const loc = data?.location || data?.coord;
     if (loc?.lat != null && loc?.lon != null) return { lat: loc.lat, lon: loc.lon };
@@ -22,7 +21,7 @@ export const TerminalMap = () => {
     const mapStyleUrl = `https://api.maptiler.com/maps/topo-v4/style.json?key=${MAPTILER_KEY}`;
     const telemetryData = useOsStore((state) => state.telemetryData);
 
-    // Keep the map's canvas matched to its container size (RND windows resize a lot)
+   
     useEffect(() => {
         const resizeObserver = new ResizeObserver(() => mapRef.current?.getMap().resize());
         if (containerRef.current) resizeObserver.observe(containerRef.current);

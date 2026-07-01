@@ -1,0 +1,131 @@
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+import axios from "axios";
+import { useMutation } from "@tanstack/react-query";
+import { useState, useEffect, useRef } from "react";
+import sunGif from "../../assets/sunGif.gif";
+import { useOsStore } from "../../store/useOsStore";
+export const Searchbar = () => {
+    const [inputvalue, setInputValue] = useState("");
+    const [isSubmitted, setIsSubmitted] = useState(false);
+    const setSystemTelemetry = useOsStore((state) => state.setSystemTelemetry)
+    const formRef = useRef(null);
+    const isFirstRender = useRef(true);
+    const Api_Key = import.meta.env.VITE_WEATHER_API_KEY;
+    const BASE_URL = 'https://api.weatherapi.com/v1';
+
+    const fetchLocationTelemetry = async (locationName) => {
+        try {
+            const response = await axios.get(`${BASE_URL}/current.json`, {
+                params: {
+                    key: Api_Key,
+                    q: locationName,
+                    aqi: "yes"
+                }
+            });
+
+            return response.data;
+
+        } catch (error) {
+            if (error.response) {
+
+                console.error("API CALL FAILED:", error.response);
+            }
+            throw error;
+        }
+    };
+
+    const { mutate, isPending, isSuccess, isError } = useMutation({
+        mutationFn: fetchLocationTelemetry,
+        onSuccess: (data, submittedLocation) => {
+            setSystemTelemetry(submittedLocation, data);
+        }
+    })
+
+
+    useGSAP(() => {
+         console.log("useGSAP fired", { formRef: formRef.current, isFirstRender: isFirstRender.current });
+    console.log(".form found?", formRef.current?.querySelector(".form"));
+    console.log(".search found?", formRef.current?.querySelector(".search"));
+        if (isFirstRender.current) {
+             const tl = gsap.timeline();
+
+        gsap.set(".arrow", { opacity: 0, y: 30 });
+        gsap.set(".form", { width: 0, opacity: 0, overflow: "hidden" });
+        gsap.set(".search", { opacity: 0, scale: 0.5 });
+
+        tl.to(".form", {
+            width: "100%",
+            opacity: 1,
+            duration: 0.8,
+            ease: "power3.out"
+        })
+        .to(".search", {
+            opacity: 1,
+            scale: 1,
+            duration: 0.5,
+            ease: "back.out(2)"
+        });
+            isFirstRender.current = false;
+        }
+
+        if(isPending){
+            gsap.to(".search",{
+                opacity:0,
+                y:-30,
+                duration:0.3,
+                ease:"power3.inOut"
+            })
+            gsap.fromTo(".arrow",{
+                opacity:0,
+                y:30,
+
+            },{
+                y:0,
+                opacity:1,
+                duration:0.3,
+                ease:"power3.inOut"
+            })
+        }
+        else {
+        
+            gsap.to(".arrow", { y: -30, opacity: 0, duration: 0.4, ease: "back.in(1.5)" });
+            gsap.fromTo(".search", 
+                { y: 30, opacity: 0 }, 
+                { y: 0, opacity: 1, duration: 0.4, ease: "back.out(1.5)", delay: 0.1 }
+            );
+        }
+    }, { scope: formRef, dependencies: [isPending,isFirstRender] })
+
+    const handlesumbit = (e) => {
+        e.preventDefault();
+        let cleanvalue = inputvalue.trim();
+        if (!cleanvalue) return;
+        mutate(cleanvalue);
+    }
+
+
+    return (
+        <div ref={formRef} className="SearchContainer">
+            <div className="logoAndbar">
+                {/* <img src={sunGif} alt="searcbarlogo" /> */
+                }
+                <form onSubmit={handlesumbit} className="form">
+                    <input type="text"
+                        className="input"
+                        value={inputvalue}
+                        placeholder="Enter Your Location"
+                        onChange={(e) => {
+                            setInputValue(e.target.value);
+                        }}
+
+                    />
+                </form>
+                <div className="holder">
+                    <i onClick={handlesumbit} className="ri-search-line search"></i>
+                    <i className="ri-send-plane-fill arrow"></i></div>
+            </div>
+        </div>
+    )
+
+}
