@@ -44,9 +44,7 @@ export const Searchbar = () => {
 
 
     useGSAP(() => {
-         console.log("useGSAP fired", { formRef: formRef.current, isFirstRender: isFirstRender.current });
-    console.log(".form found?", formRef.current?.querySelector(".form"));
-    console.log(".search found?", formRef.current?.querySelector(".search"));
+     
         if (isFirstRender.current) {
              const tl = gsap.timeline();
 
@@ -57,13 +55,13 @@ export const Searchbar = () => {
         tl.to(".form", {
             width: "100%",
             opacity: 1,
-            duration: 0.8,
+            duration: 1,
             ease: "power3.out"
         })
         .to(".search", {
             opacity: 1,
             scale: 1,
-            duration: 0.5,
+            duration: 1,
             ease: "back.out(2)"
         });
             isFirstRender.current = false;

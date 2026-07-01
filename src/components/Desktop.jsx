@@ -13,7 +13,7 @@ export const Desktop = ()=>{
             <div className="glassmorph "></div>
             
             <div className="absolute inset-0 z-10 bg "> 
-                {/* <OpenBtn/> */}
+               
                 {apps?.map?.isOpen && <WeatherMap/>}
                 {apps?.terminalMap?.isOpen && 
                 (<DraggableWindow title={"TerminalMap"} Appid = {"terminalMap"}><TerminalMap/></DraggableWindow>)}

@@ -5,7 +5,7 @@ import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { useOsStore } from "../../store/useOsStore";
 import { Searchbar } from "./Searchbar";
-
+import { OpenBtn } from "../../components/Openbtn";
 
 const getCoord = (data) => {
     const loc = data?.location || data?.coord;
@@ -54,7 +54,8 @@ export const WeatherMap = () => {
             )}
 
             <div className="map-layer w-full h-full absolute inset-0 z-0">
-                <Searchbar/>
+                 {isMapLoaded && <Searchbar />}
+                  <OpenBtn/>
                 <Map
                     ref={mapRef}
                     initialViewState={{ longitude: 0, latitude: 20, zoom: 1.5 }}
