@@ -1,0 +1,61 @@
+.conditionContainer {
+    height: auto;
+    width: max-content;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    position: absolute;
+    top: 18%;
+    left: 4%;
+    z-index: 5;
+
+    .searchedlocation {
+        align-self: flex-start;
+        font-size: clamp(0.8rem, 1.5vh, 3rem); //i will change the centeral conditional while making mobile responsive till then random vh
+        font-weight: 500;
+        letter-spacing: 0.2vw;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.574);
+    }
+
+    .countryCity {
+        font-size: clamp(1.5rem, 20vh, 5rem);
+        font-weight: 600;
+        letter-spacing: 0.1vw;
+        text-transform: capitalize;
+        margin-top: -10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+    }
+
+    .temperature {
+        margin-top: -12px;
+        align-self: flex-start;
+
+        >* {
+            font-size: clamp(2rem, 9vh, 6rem);
+            font-weight: 500;
+            font-family: "Lora", serif;
+            font-optical-sizing: auto;
+            opacity: 0;
+
+        }
+    }
+
+    .condition {
+        margin-top: -8px;
+        align-self: flex-start;
+
+        >* {
+            font-style: italic;
+            font-weight: 400;
+            font-family: "Lora", serif;
+            font-optical-sizing: auto;
+            font-size: clamp(2rem, 9vh, 4rem);
+        }
+
+    }
+}

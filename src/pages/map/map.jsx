@@ -1,11 +1,14 @@
 import { useEffect, useRef, useState } from "react";
 import Map from "react-map-gl/maplibre";
 import "maplibre-gl/dist/maplibre-gl.css";
+import { NavigationControl } from "react-map-gl/maplibre";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { useOsStore } from "../../store/useOsStore";
 import { Searchbar } from "./Searchbar";
 import { OpenBtn } from "../../components/Openbtn";
+import { Text } from "./Text";
+
 
 const getCoord = (data) => {
     const loc = data?.location || data?.coord;
@@ -19,7 +22,8 @@ export const WeatherMap = () => {
     const containerRef = useRef(null);
     const mapRef = useRef(null);
     const MAPTILER_KEY = import.meta.env.VITE_MAPTILER_KEY;
-    const mapStyleUrl = `https://api.maptiler.com/maps/topo-v4/style.json?key=${MAPTILER_KEY}`;
+    const mapStyleUrl = `https://api.maptiler.com/maps/dataviz-dark/style.json?key=${MAPTILER_KEY}`;
+    // (https://api.maptiler.com/maps/dataviz-dark/style.json?key=YOUR_KEY)
     const telemetryData = useOsStore((state) => state.telemetryData);
 
     useEffect(() => {
@@ -55,18 +59,26 @@ export const WeatherMap = () => {
 
             <div className="map-layer w-full h-full absolute inset-0 z-0">
                  {isMapLoaded && <Searchbar />}
+                 {isMapLoaded && <Text/> }
                   <OpenBtn/>
-                <Map
-                    ref={mapRef}
-                    initialViewState={{ longitude: 0, latitude: 20, zoom: 1.5 }}
-                    mapStyle={mapStyleUrl}
-                    onLoad={(event) => {
-                        event.target.resize();
-                        setIsMapLoaded(true);
-                    }}
-                    onError={() => setMapError("MAP STYLE LOAD FAILED")}
-                    style={{ width: "100%", height: "100%" }}
-                />
+              <Map
+                      ref={mapRef}
+                      initialViewState={{ longitude: 0, latitude: 20, zoom: 1.5 }}
+                      mapStyle={mapStyleUrl}
+                      onLoad={(event) => {
+                          event.target.resize();
+                          setIsMapLoaded(true);
+                      }}
+                      onError={() => setMapError("MAP STYLE LOAD FAILED")}
+                      style={{ width: "100%", height: "100%" }}
+                  >
+                      <NavigationControl 
+                          position="bottom-right" 
+                          showCompass={true} 
+                          showZoom={true} 
+                          visualizePitch={true} 
+                      />
+                  </Map>
             </div>
         </div>
     );
