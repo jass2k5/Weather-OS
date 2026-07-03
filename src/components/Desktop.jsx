@@ -4,6 +4,7 @@ import { DraggableWindow } from "./DraggableWindow"
 import {TerminalMap} from '../terminals/TerminalMap'
 import { OpenBtn } from "./Openbtn"
 import { WeatherMap } from "../pages/map/Map"
+import { TopRightDate } from "../layout/TopRightDate"
 export const Desktop = ()=>{
     const bgClr = useOsStore((state) => state.systemBg)
     const apps = useOsStore((state) => state.apps);
@@ -13,7 +14,7 @@ export const Desktop = ()=>{
             <div className="glassmorph "></div>
             
             <div className="absolute inset-0 z-10 bg "> 
-               
+                <TopRightDate/>
                 {apps?.map?.isOpen && <WeatherMap/>}
                 {apps?.terminalMap?.isOpen && 
                 (<DraggableWindow title={"TerminalMap"} Appid = {"terminalMap"}><TerminalMap/></DraggableWindow>)}

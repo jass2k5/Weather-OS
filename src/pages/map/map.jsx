@@ -59,7 +59,7 @@ export const WeatherMap = () => {
 
             <div className="map-layer w-full h-full absolute inset-0 z-0">
                  {isMapLoaded && <Searchbar />}
-                 {isMapLoaded && <Text/> }
+                 {isMapLoaded && <Text/>}
                   <OpenBtn/>
               <Map
                       ref={mapRef}
