@@ -4,6 +4,7 @@ import { persist } from "zustand/middleware";
 export const useOsStore = create(persist((set) =>({
     isDay:true,
     setNight:()=>{set({isDay:false})},
+    setDay:()=>{set({isDay:true})},
     isBooted: false,
     systemBg: "bg-[url(/stage1bg.png)]",
     finishBoot: () => {set({isBooted:true})},

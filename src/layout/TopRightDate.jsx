@@ -1,20 +1,29 @@
 import { useEffect, useState } from "react";
 import { useOsStore } from "../store/useOsStore";
 
-export const TopRightDate =()=>{
+export const TopRightDate = () => {
     const telemetryData = useOsStore((state) => state.telemetryData);
-    const setNight = useOsStore((state)=> state.setNight);
-    const [liveDate,setLiveDate] = useState(null);
+    const setNight = useOsStore((state) => state.setNight);
+    const setDay = useOsStore((state) => state.setDay);
+    const [liveDate, setLiveDate] = useState(null);
 
-    const isDaytime = telemetryData?.current?.is_day === 1;
- 
 
- useEffect(() => {
+    useEffect(() => {
+        if (!telemetryData?.current) return;
+        const isDaytime = telemetryData?.current?.is_day === 1;
+        if (!isDaytime) {
+            setNight()
+        } else {
+            setDay()
+        }
+    }, [telemetryData, setDay, setNight])
+
+    useEffect(() => {
         let timer;
         if (telemetryData?.location?.localtime) {
             const apiTimeString = telemetryData.location.localtime.replace(/-/g, "/");
             let currentDate = new Date(apiTimeString);
-            
+
             setLiveDate(currentDate);
 
             timer = setInterval(() => {
@@ -23,14 +32,14 @@ export const TopRightDate =()=>{
             }, 1000);
         }
         return () => clearInterval(timer);
-    },[telemetryData])
+    }, [telemetryData])
 
-    if(!liveDate) return null;
+    if (!liveDate) return null;
 
-    const timestring = liveDate.toLocaleTimeString("en-US",{
-        hour:"2-digit",
-        minute:"2-digit",
-        second:"2-digit"
+    const timestring = liveDate.toLocaleTimeString("en-US", {
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit"
     });
 
     const dayName = liveDate.toLocaleDateString("en-US", { weekday: "short" });
@@ -38,7 +47,7 @@ export const TopRightDate =()=>{
     const dateNum = liveDate.getDate();
     const year = liveDate.getFullYear();
 
-    return(
+    return (
         <div className="date-container absolute top-[2%] right-[6%] h-auto w-auto z-50 flex flex-col justify-center items-center">
             <span className="consttime ">{`${timestring}`}</span>
             <span className="constdate">{`${dayName}, ${monthName} ${dateNum}, ${year}`}</span>
