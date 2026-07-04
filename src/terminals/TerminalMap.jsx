@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import Map from "react-map-gl/maplibre";
+import { Marker } from "react-map-gl/maplibre";
 import "maplibre-gl/dist/maplibre-gl.css";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
@@ -20,7 +21,7 @@ export const TerminalMap = () => {
     const MAPTILER_KEY = import.meta.env.VITE_MAPTILER_KEY;
     const mapStyleUrl = `https://api.maptiler.com/maps/topo-v4/style.json?key=${MAPTILER_KEY}`;
     const telemetryData = useOsStore((state) => state.telemetryData);
-
+    const coord = getCoord(telemetryData);
    
     useEffect(() => {
         const resizeObserver = new ResizeObserver(() => mapRef.current?.getMap().resize());
@@ -28,7 +29,7 @@ export const TerminalMap = () => {
         return () => resizeObserver.disconnect();
     }, []);
 
-    // Fly to the location once we have both a loaded map and real coordinates
+  
     useEffect(() => {
         const coord = getCoord(telemetryData);
         if (isMapLoaded && coord) {
@@ -61,8 +62,8 @@ export const TerminalMap = () => {
             )}
 
             <div className="map-layer w-full h-full absolute inset-0 z-0">
-                <Map
-                    ref={mapRef}
+         <Map
+           ref={mapRef}
                     initialViewState={{ longitude: 0, latitude: 20, zoom: 1.5 }}
                     mapStyle={mapStyleUrl}
                     onLoad={(event) => {
@@ -70,8 +71,16 @@ export const TerminalMap = () => {
                         setIsMapLoaded(true);
                     }}
                     onError={() => setMapError("MAP STYLE LOAD FAILED")}
-                    style={{ width: "100%", height: "100%" }}
-                />
+                    style={{ width: "100%", height: "100%" }}>
+                        {coord && (
+                                                <Marker
+                                                    longitude={coord.lon}
+                                                    latitude={coord.lat}
+                                                    color="rgba(255, 0, 0, 0.867)"
+                                                    anchor="bottom"
+                                                />
+                                            )}
+                    </Map>
             </div>
         </div>
     );
