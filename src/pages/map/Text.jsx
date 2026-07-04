@@ -55,7 +55,10 @@ export const Text = () => {
                 from:"start",
                 each:0.2
             },
-            y:0
+            y:0,
+            onComplete:()=>{
+                weatherwords.revert();
+            }
         })
     }, { dependencies: [telemetryData] });
 

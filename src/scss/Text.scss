@@ -48,6 +48,14 @@
     .condition {
         margin-top: -8px;
         align-self: flex-start;
+        opacity: 1;
+        font-style: italic;
+        font-weight: 400;
+        font-family: "Lora", serif;
+        font-optical-sizing: auto;
+        font-size: clamp(2rem, 9vh, 4rem);
+        word-spacing: 0.3vw;
+        // user-select: none;
 
         >* {
             font-style: italic;
@@ -55,6 +63,7 @@
             font-family: "Lora", serif;
             font-optical-sizing: auto;
             font-size: clamp(2rem, 9vh, 4rem);
+
         }
 
     }
