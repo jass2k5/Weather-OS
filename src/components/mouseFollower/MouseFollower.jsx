@@ -2,8 +2,11 @@ import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { useRef } from "react";
 import sunGif from "../../assets/sunGif.gif";
+import batGif from "../../assets/batGif.svg";
+import { useOsStore } from "../../store/useOsStore";
 export const MouseFollower = () => {
-    const cursorRef = useRef(null);
+const cursorRef = useRef(null);
+const isDay = useOsStore((state)=> state.isDay);
 
    useGSAP(()=>{
 
@@ -28,7 +31,8 @@ export const MouseFollower = () => {
 
    return(
     <div ref={cursorRef} className="cursorFollower ">
-        <img src={sunGif} alt="mouseFollower " className="cursorImage" />
+      {isDay && <img src={sunGif} alt="mouseFollower " className="cursorImage" />}
+      {!isDay && <img src={batGif} alt="mouseFollower " className="cursorImage" />}
     </div>
    )
 }
