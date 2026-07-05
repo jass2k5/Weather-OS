@@ -5,26 +5,27 @@ import widgets from '../assets/widgets.png'
 import notification from '../assets/notification.png'
 import settings from '../assets/apple-settings.svg'
 import { useOsStore } from '../store/useOsStore'
+
 export const Dock = () => {
     const apps = useOsStore((state) => state.apps);
     const closeApp = useOsStore((state) => state.closeApp);
     const openApp = useOsStore((state) => state.openApp);
-
+    const startCloseApp = useOsStore((state)=>state.startCloseApp);
     return (
         <div className="Dock">
             <div onClick={()=>{
                 
                 if(apps?.map?.isOpen){
-                    closeApp("map");
+                    startCloseApp();
                 }else{
                     openApp("map");
                 }
-            }} className='weather icon'>
-                <img className='icons' src={weather} alt="weathericon" />
+            }} className='map icon'>
+                <img className='icons' src={map} alt="mapicon" />
 
             </div>
-            <div className='map icon'>
-                <img className='icons' src={map} alt="mapicon" />
+            <div className='weather icon'>
+                <img className='icons' src={weather} alt="weathericon" />
             </div>
             <div className='clock icon'>
                 <img className='icons' src={clock} alt="clockicon" />

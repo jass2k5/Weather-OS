@@ -2,6 +2,8 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
 export const useOsStore = create(persist((set) =>({
+    isClosing: false,
+    startCloseApp:()=>{set({isClosing:true})},
     isDay:true,
     setNight:()=>{set({isDay:false})},
     setDay:()=>{set({isDay:true})},
@@ -22,6 +24,7 @@ export const useOsStore = create(persist((set) =>({
     },
 
     closeApp:(Appid) =>set((state) =>({
+        isClosing:false,
         apps:{
             ...state.apps,
             [Appid]:{
@@ -31,6 +34,7 @@ export const useOsStore = create(persist((set) =>({
         }
     })),
     openApp:(Appid) =>set((state) =>({
+        isClosing:false,
         apps:{
             ...state.apps,
             [Appid]:{

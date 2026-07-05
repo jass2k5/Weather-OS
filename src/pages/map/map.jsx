@@ -9,6 +9,7 @@ import { useOsStore } from "../../store/useOsStore";
 import { Searchbar } from "./Searchbar";
 import { OpenBtn } from "../../components/Openbtn";
 import { Text } from "./Text";
+import gsap from "gsap";
 
 
 const getCoord = (data) => {
@@ -24,7 +25,10 @@ export const WeatherMap = () => {
     const mapRef = useRef(null);
     const MAPTILER_KEY = import.meta.env.VITE_MAPTILER_KEY;
     const mapStyleUrl = `https://api.maptiler.com/maps/dataviz-dark/style.json?key=${MAPTILER_KEY}`;
-    // (https://api.maptiler.com/maps/dataviz-dark/style.json?key=YOUR_KEY)
+    const apps = useOsStore((state) => state.apps);
+    const closeApp = useOsStore((state) => state.closeApp);
+    const isOpen = useOsStore((state)=>state.isOpen);
+    const isClosing = useOsStore((state)=>state.isClosing);
     const telemetryData = useOsStore((state) => state.telemetryData);
     const coord = getCoord(telemetryData);
 
@@ -39,6 +43,35 @@ export const WeatherMap = () => {
             });
         }
     }, [telemetryData, isMapLoaded]);
+
+     useEffect(() => {
+        if (!isClosing) return;
+        gsap.fromTo(containerRef.current,
+            { scale: 1, transformOrigin: "top center" },
+            {
+                duration: 1,
+                scale: 0,
+                ease: "power4.inOut",
+                opacity: 0,
+                onComplete: () => {
+                    closeApp("map");
+                },
+            }
+        );
+    }, [isClosing]);
+
+    useEffect(() => {
+        if (!isOpen) return;
+        gsap.fromTo(containerRef.current,
+            { scale: 0, transformOrigin: "top center", opacity: 0 },
+            {
+                scale: 1,
+                opacity: 1,
+                duration: 1,
+                ease: "power4.in",
+            }
+        );
+    }, [isOpen]);
 
     return (
         <div ref={containerRef} className="mapContainer relative h-full w-full overflow-hidden bg-slate-950">
@@ -92,3 +125,4 @@ export const WeatherMap = () => {
         </div>
     );
 };
+
