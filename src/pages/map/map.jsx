@@ -60,19 +60,6 @@ export const WeatherMap = () => {
         );
     }, [isClosing]);
 
-    useEffect(() => {
-        if (!isOpen) return;
-        gsap.fromTo(containerRef.current,
-            { scale: 0, transformOrigin: "top center", opacity: 0 },
-            {
-                scale: 1,
-                opacity: 1,
-                duration: 1,
-                ease: "power4.in",
-            }
-        );
-    }, [isOpen]);
-
     return (
         <div ref={containerRef} className="mapContainer relative h-full w-full overflow-hidden bg-slate-950">
             {!isMapLoaded && (
