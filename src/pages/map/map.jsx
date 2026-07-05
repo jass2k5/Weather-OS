@@ -62,7 +62,6 @@ export const WeatherMap = () => {
             <div className="map-layer w-full h-full absolute inset-0 z-0">
                 {isMapLoaded && <Searchbar />}
                 {isMapLoaded && <Text />}
-                <OpenBtn />
                 <Map
                     ref={mapRef}
                     initialViewState={{ longitude: 0, latitude: 20, zoom: 1.5 }}

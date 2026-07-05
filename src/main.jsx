@@ -11,6 +11,7 @@ import { App } from './App'
 import 'remixicon/fonts/remixicon.css'
 import './scss/Text.scss'
 import './scss/TopRightDate.scss'
+import './scss/Dock.scss'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 const queryClient = new QueryClient();
 

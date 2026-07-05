@@ -5,6 +5,7 @@ import {TerminalMap} from '../terminals/TerminalMap'
 import { OpenBtn } from "./Openbtn"
 import { WeatherMap } from "../pages/map/Map"
 import { TopRightDate } from "../layout/TopRightDate"
+import { Dock } from "../layout/Dock"
 export const Desktop = ()=>{
     const bgClr = useOsStore((state) => state.systemBg)
     const apps = useOsStore((state) => state.apps);
@@ -18,7 +19,7 @@ export const Desktop = ()=>{
                 {apps?.map?.isOpen && <WeatherMap/>}
                 {apps?.terminalMap?.isOpen && 
                 (<DraggableWindow title={"TerminalMap"} Appid = {"terminalMap"}><TerminalMap/></DraggableWindow>)}
-
+                <Dock/>
             </div>
             
         </div>
