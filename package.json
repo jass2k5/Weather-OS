@@ -23,6 +23,7 @@
     "react-rnd": "^10.5.3",
     "remixicon": "^4.9.1",
     "sass": "^1.101.0",
+    "styled-components": "^6.4.3",
     "tailwindcss": "^4.3.1",
     "zustand": "^5.0.14"
   },

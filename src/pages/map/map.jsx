@@ -7,7 +7,7 @@ import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { useOsStore } from "../../store/useOsStore";
 import { Searchbar } from "./Searchbar";
-import { OpenBtn } from "../../components/Openbtn";
+import {  Button } from "../../components/Button";
 import { Text } from "./Text";
 import gsap from "gsap";
 
