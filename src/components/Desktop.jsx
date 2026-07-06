@@ -2,7 +2,7 @@ import { useEffect } from "react"
 import { useOsStore } from "../store/useOsStore"
 import { DraggableWindow } from "./DraggableWindow"
 import {TerminalMap} from '../terminals/TerminalMap'
-import { WeatherMap } from "../pages/map/Map"
+import { WeatherMap } from "../pages/map/Map1"
 import { TopRightDate } from "../layout/TopRightDate"
 import { Dock } from "../layout/Dock"
 
