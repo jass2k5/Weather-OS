@@ -5,7 +5,7 @@ import {TerminalMap} from '../terminals/TerminalMap'
 import { WeatherMap } from "../pages/map/Map"
 import { TopRightDate } from "../layout/TopRightDate"
 import { Dock } from "../layout/Dock"
-import { ButtonTerminal } from "./Button"
+
 export const Desktop = ()=>{
     const bgClr = useOsStore((state) => state.systemBg)
     const apps = useOsStore((state) => state.apps);
