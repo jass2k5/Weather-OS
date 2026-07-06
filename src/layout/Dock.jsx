@@ -6,6 +6,7 @@ import notification from '../assets/notification.png'
 import settings from '../assets/apple-settings.svg'
 import { useOsStore } from '../store/useOsStore'
 import { useState } from 'react'
+import { DockIcon } from './DockIcon'
 
 export const Dock = () => {
     const apps = useOsStore((state) => state.apps);
@@ -15,41 +16,70 @@ export const Dock = () => {
     const [menu, setMenu] = useState(false);
 
     return (
-        <div className="Dock">
-            <div onClick={() => {
+        <div className="Dock relative">
+            <DockIcon
+                iconsource={map}
+                appName={"map"}
+                itsTerminal={"terminalMap"}
+                isOpen={apps?.map?.isOpen}
+                openApp={openApp}
+                startCloseApp={startCloseApp}
+                closeApp={closeApp}
+                Class={"map"}
 
-                if (apps?.map?.isOpen) {
-                    startCloseApp();
-                } else {
-                    openApp("map");
-                }
-            }} className='map icon flex items-center justify-center gap-1.5 flex-col'>
-                <img className='icons' src={map} alt="mapicon" />
-                <i className={`ri-circle-fill text-[5px]  ${apps?.map?.isOpen ? "opacity-100" : "opacity-0"}`}></i>
+            />
 
-            </div>
-            <div className='weather icon flex items-center justify-center gap-1 flex-col'>
-                <img className='icons' src={weather} alt="weathericon" />
-                <i className={`ri-circle-fill text-[5px] opacity-0`}></i>
+            <DockIcon
+                iconsource={weather}
+                appName={"weather"}
+                itsTerminal={"terminalWeather"}
+                isOpen={false}
+                openApp={openApp}
+                startCloseApp={startCloseApp}
+                closeApp={closeApp}
+                Class={"weather"}
+            />
 
-            </div>
-            <div className='clock icon flex items-center justify-center gap-1 flex-col'>
-                <img className='icons' src={clock} alt="clockicon" />
-                <i className={`ri-circle-fill text-[5px] opacity-0`}></i>
-            </div>
-            <div className='widget icon flex items-center justify-center gap-1 flex-col'>
-                <img className='icons' src={widgets} alt="widgeticon" />
-                <i className={`ri-circle-fill text-[5px] opacity-0`}></i>
-            </div>
-            <div className='notification icon flex items-center justify-center gap-1 flex-col'>
-                <img className='icons' src={notification} alt="notificationicon" />
-                <i className={`ri-circle-fill text-[5px] opacity-0`}></i>
-            </div>
-            <div className='settings icon flex items-center justify-center gap-1 flex-col'>
-                <img className='icons' src={settings} alt="settingsicon" />
-                <i className={`ri-circle-fill text-[5px] opacity-0`}></i>
-            </div>
-
+            <DockIcon
+                iconsource={clock}
+                appName={"clock"}
+                itsTerminal={"terminalclock"}
+                isOpen={false}
+                openApp={openApp}
+                startCloseApp={startCloseApp}
+                closeApp={closeApp}
+                Class={"clock"}
+            />
+            <DockIcon
+                iconsource={widgets}
+                appName={"widgets"}
+                itsTerminal={"none"}
+                isOpen={false}
+                openApp={openApp}
+                startCloseApp={startCloseApp}
+                closeApp={closeApp}
+                Class={"widget"}
+            />
+            <DockIcon
+                iconsource={notification}
+                appName={"notification"}
+                itsTerminal={"terminalNotification"}
+                isOpen={false}
+                openApp={openApp}
+                startCloseApp={startCloseApp}
+                closeApp={closeApp}
+                Class={"notification"}
+            />
+            <DockIcon
+                iconsource={settings}
+                appName={"settings"}
+                itsTerminal={"terminalSettings"}
+                isOpen={false}
+                openApp={openApp}
+                startCloseApp={startCloseApp}
+                closeApp={closeApp}
+                Class={"settings"}
+            />
         </div>
     )
 }
