@@ -8,8 +8,11 @@ import { useOsStore } from "../../store/useOsStore";
 export const Searchbar = () => {
     const [inputvalue, setInputValue] = useState("");
     const [isSubmitted, setIsSubmitted] = useState(false);
-    const [prev,setPrev] = useState(false);
+    const [prev, setPrev] = useState(false);
     const setSystemTelemetry = useOsStore((state) => state.setSystemTelemetry)
+    const addSearchToHistory = useOsStore((state) => state.addSearchToHistory);
+    const searchHistory = useOsStore((state) => state.searchHistory);
+    const allSearches = searchHistory;
     const formRef = useRef(null);
     const isFirstRender = useRef(true);
     const searchWrapperRef = useRef(null);
@@ -43,21 +46,26 @@ export const Searchbar = () => {
         const handleClickOutside = (event) => {
             // If the wrapper exists AND the click target is NOT inside the wrapper
             if (searchWrapperRef.current && !searchWrapperRef.current.contains(event.target)) {
-                setPrev(false); 
+                setPrev(false);
             }
         };
 
-        
+
         document.addEventListener("mousedown", handleClickOutside);
-        
+
         return () => {
             document.removeEventListener("mousedown", handleClickOutside);
         };
     }, []);
+
+
     const { mutate, isPending, isSuccess, isError } = useMutation({
         mutationFn: fetchLocationTelemetry,
         onSuccess: (data, submittedLocation) => {
+
             setSystemTelemetry(submittedLocation, data);
+            addSearchToHistory(data.location.name, data.location.country);
+
         }
     })
 
@@ -112,7 +120,7 @@ export const Searchbar = () => {
                 { y: 0, opacity: 1, duration: 0.4, ease: "back.out(1.5)", delay: 0.1 }
             );
         }
-    }, { scope: formRef, dependencies: [isPending, isFirstRender] })
+    }, { scope: formRef, dependencies: [isPending] })
 
     const handlesumbit = (e) => {
         e.preventDefault();
@@ -129,15 +137,14 @@ export const Searchbar = () => {
                 <div className="logoAndbar">
                     {/* <img src={sunGif} alt="searcbarlogo" /> */
                     }
-                    <form  onSubmit={handlesumbit} className="form">
+                    <form onSubmit={handlesumbit} className="form">
                         <input type="text"
                             className="input"
                             value={inputvalue}
                             placeholder="Enter Your Location"
-                            onFocus={()=>{
+                            onClick={() => {
                                 setPrev(true);
                             }}
-                          
 
                             onChange={(e) => {
                                 setInputValue(e.target.value);
@@ -151,13 +158,21 @@ export const Searchbar = () => {
                 </div>
             </div >
 
-            <div className={`PrevSearches flex-col justify-center items-start  p-4  border-2 border-white/80 rounded-2xl bg-white text-black ${prev?"flex":"hidden"} `}>
-                <span onClick={()=>{
-                    setPrev(false)
-                }}><i class="ri-history-line"></i>  ludhiana, india</span>
-                <span><i class="ri-history-line"></i>  london, UK</span>
-                <span><i class="ri-history-line"></i>  california, Usa</span>
-                <span><i class="ri-history-line"></i>  Delhi ,India</span>
+            <div className={`PrevSearches flex-col justify-center items-start  p-4  border-2 border-white/80 rounded-2xl bg-white text-black ${prev && allSearches.length > 0 ? "flex" : "hidden"} `}>
+                {allSearches.map((loc, index) => (
+                    <div
+                        key={`${loc.city}-${index}`}
+                        onClick={() => {
+                            addSearchToHistory(loc.city, loc.country);
+                            setInputValue(loc.city);
+                            mutate(loc.city)
+                            setPrev(false)
+                        }}
+                        className="flex gap-1 items-center justify-center">
+                        <i class="ri-history-line"></i>
+                        <span>{loc.city}, {loc.country}</span>
+                    </div>
+                ))}
             </div>
         </div>
     )

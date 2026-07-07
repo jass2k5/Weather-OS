@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-export const useOsStore = create(persist((set) =>({
+export const useOsStore = create(persist((set,get) =>({
     isClosing: false,
     startCloseApp:()=>{set({isClosing:true})},
     isDay:true,
@@ -15,7 +15,6 @@ export const useOsStore = create(persist((set) =>({
     setSystemTelemetry: (location,data) => set({
         activeLocation:location,
         telemetryData:data,
-        
     }),
     
     apps:{
@@ -42,9 +41,27 @@ export const useOsStore = create(persist((set) =>({
                 isOpen:true
             }
         }
-    }))
+    })),
+    searchHistory: [],
+            
+            addSearchToHistory: (cityName, countryName) => {
+                const currentHistory = get().searchHistory; 
+                
+                const filteredHistory = currentHistory.filter(
+                    (loc) => loc.city.toLowerCase() !== cityName.toLowerCase()
+                );
+                
+                const updatedHistory = [
+                    { city: cityName, country: countryName }, 
+                    ...filteredHistory
+                ].slice(0, 4);
+                
+                set({ searchHistory: updatedHistory }); 
+            }
 
 })),
+
+
 {
     name:'weatherOsStorage',
 })
