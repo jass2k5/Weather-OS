@@ -43,8 +43,8 @@ export const Dock = () => {
             <DockIcon
                 iconsource={clock}
                 appName={"clock"}
-                itsTerminal={"terminalclock"}
-                isOpen={false}
+                itsTerminal={"terminalClock"}
+                isOpen={apps?.clock?.isOpen}
                 openApp={openApp}
                 startCloseApp={startCloseApp}
                 closeApp={closeApp}

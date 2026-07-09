@@ -19,6 +19,9 @@ const getCoord = (data) => {
 };
 
 export const WeatherMap = () => {
+    const windowOrder = useOsStore((state)=> state.windowOrder);
+    const focusApp = useOsStore((state)=>state.focusApp);
+    const myZIndex = 10 + windowOrder.indexOf('map');
     const [isMapLoaded, setIsMapLoaded] = useState(false);
     const [mapError, setMapError] = useState("");
     const containerRef = useRef(null);
@@ -61,11 +64,11 @@ export const WeatherMap = () => {
     }, [isClosing]);
 
     return (
-        <div ref={containerRef} className="mapContainer relative h-full w-full overflow-hidden bg-slate-950">
+        <div ref={containerRef} style={{zIndex:myZIndex}} className="mapContainer relative h-full w-full overflow-hidden bg-slate-950">
             {!isMapLoaded && (
                 <div
                     className="absolute inset-0 z-50 flex flex-col items-center justify-center"
-                    style={{ background: "linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%)" }}
+                    style={{ background: "linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%)"}}
                 >
                     <SkeletonTheme baseColor="rgba(255,255,255,0.05)" highlightColor="rgba(255,255,255,0.15)">
                         <Skeleton count={1} className="w-full h-full absolute inset-0" />

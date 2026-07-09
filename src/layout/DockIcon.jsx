@@ -1,20 +1,26 @@
 import { useState } from "react";
+import { useOsStore } from "../store/useOsStore";
 export const DockIcon = ({ iconsource, appName, itsTerminal, isOpen, openApp, Class, startCloseApp, closeApp }) => {
     const [Menu, setMenu] = useState(false);
+    const windowOrder = useOsStore((state) => state.windowOrder);
+    const focusApp = useOsStore((state) => state.focusApp);
+    const myZIndex = 10 + windowOrder.indexOf(appName);
     return (
 
         <div onClick={() => {
-            if(Menu){
+            if (Menu) {
                 setMenu(!Menu)
             }
 
-            if (isOpen) {
-                if (appName === "map") {
-                    startCloseApp();
-                }
-            } else {
+            if (!isOpen) {
                 openApp(appName);
+                focusApp(appName);
             }
+             else {
+                focusApp(appName);
+            }
+
+           
         }}
             onContextMenu={(e) => {
                 e.preventDefault();
@@ -22,33 +28,32 @@ export const DockIcon = ({ iconsource, appName, itsTerminal, isOpen, openApp, Cl
             }}
             className={`${Class} icon flex items-center justify-center gap-1.5 flex-col`}>
             {Menu && (
-                <div onClick={(e)=>{
+                <div onClick={(e) => {
                     e.stopPropagation();
                 }} className=" rightclick absolute -top-38 bg-[#1a1a1a]/90 backdrop-blur-md border border-white/10 p-2 rounded-xl flex flex-col gap-1 z-50 min-w-[130px] shadow-2xl cursor-default">
-                 <span className="text-white/40 text-[16px] text-left ml-2.5 uppercase tracking-wider mb-1 pointer-events-none">
+                    <span className="text-white/40 text-[16px] text-left ml-2.5 uppercase tracking-wider mb-1 pointer-events-none">
                         {appName}
                     </span>
 
-                       <div className="h-[1px] w-full bg-white/10 my-0.5"></div>
-                    
-                    <button 
+                    <div className="h-[1px] w-full bg-white/10 my-0.5"></div>
+
+                    <button
                         onClick={(e) => {
                             e.stopPropagation();
-                            openApp(itsTerminal); 
+                            openApp(itsTerminal);
                             setMenu(false);
                         }}
                         className="text-white/90 text-sm hover:bg-white/10 hover:text-white px-3 py-1.5 rounded-lg text-left transition-colors"
                     >
                         Terminal
                     </button>
-                    
+
                     <div className="h-[1px] w-full bg-white/10 my-0.5"></div>
-                    
-                    {/* Close App Button */}
-                    <button 
+
+                    <button
                         onClick={(e) => {
                             e.stopPropagation();
-                            if (isOpen) startCloseApp(appName);
+                            if (isOpen) closeApp(appName);
                             setMenu(false);
                         }}
                         className="text-red-400 text-sm hover:bg-red-500/20 px-3 py-1.5 rounded-lg text-left flex justify-between items-center transition-colors"
@@ -58,7 +63,7 @@ export const DockIcon = ({ iconsource, appName, itsTerminal, isOpen, openApp, Cl
                     </button>
                 </div>
 
-                
+
             )}
 
             <img className='icons' src={iconsource} alt="icon" />

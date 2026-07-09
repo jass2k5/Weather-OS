@@ -16,8 +16,6 @@ export const Searchbar = () => {
     const formRef = useRef(null);
     const isFirstRender = useRef(true);
     const searchWrapperRef = useRef(null);
-
-
     const Api_Key = import.meta.env.VITE_WEATHER_API_KEY;
     const BASE_URL = 'https://api.weatherapi.com/v1';
 
@@ -64,8 +62,7 @@ export const Searchbar = () => {
         onSuccess: (data, submittedLocation) => {
 
             setSystemTelemetry(submittedLocation, data);
-            addSearchToHistory(data.location.name, data.location.country);
-
+            addSearchToHistory(data.location.name, data.location.country,data.location.tz_id);
         }
     })
 
@@ -132,7 +129,8 @@ export const Searchbar = () => {
 
 
     return (
-        <div ref={searchWrapperRef} className="expandsearch ">
+        <div 
+        ref={searchWrapperRef} className="expandsearch ">
             <div ref={formRef} className="SearchContainer">
                 <div className="logoAndbar">
                     {/* <img src={sunGif} alt="searcbarlogo" /> */
@@ -163,13 +161,13 @@ export const Searchbar = () => {
                     <div
                         key={`${loc.city}-${index}`}
                         onClick={() => {
-                            addSearchToHistory(loc.city, loc.country);
+                            addSearchToHistory(loc.city, loc.country,loc.tz_id);
                             setInputValue(loc.city);
                             mutate(loc.city)
                             setPrev(false)
                         }}
                         className="flex gap-1 items-center justify-center">
-                        <i class="ri-history-line"></i>
+                        <i className="ri-history-line"></i>
                         <span>{loc.city}, {loc.country}</span>
                     </div>
                 ))}

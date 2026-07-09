@@ -4,6 +4,7 @@ import { DraggableWindow } from "./DraggableWindow"
 import {TerminalMap} from '../terminals/TerminalMap'
 import { WeatherMap } from "../pages/map/Map"
 import { TopRightDate } from "../layout/TopRightDate"
+import { Clock } from "../pages/clock/Clock"
 import { Dock } from "../layout/Dock"
 
 export const Desktop = ()=>{
@@ -20,6 +21,8 @@ export const Desktop = ()=>{
                 {apps?.map?.isOpen && <WeatherMap/>}
                 {apps?.terminalMap?.isOpen && 
                 (<DraggableWindow title={"TerminalMap"} Appid = {"terminalMap"}><TerminalMap/></DraggableWindow>)}
+                {apps?.clock?.isOpen && <Clock/>}
+                
                 <Dock/>
             </div>
             
