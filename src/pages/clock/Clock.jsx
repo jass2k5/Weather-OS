@@ -51,8 +51,8 @@ export const Clock = () => {
 
     return (
         <div style={{ zIndex: myZIndex }} className="Clock h-full w-full absolute top-0 left-0 bg-black p-10 flex items-center justify-center">
-            <div className="h-[70vh] w-[70vw] overflow-y-scrol scrollbar-none relative rounded-3xl">
-                <div className="data h-full w-full border-2 rounded-3xl -translate-y-3.5 border-white/25 ">
+            <div className="h-[70vh] w-[55vw] overflow-y-scrol scrollbar-none relative rounded-3xl -translate-y-5">
+                <div className="data h-full w-full border-2 rounded-3xl  border-white/25 ">
                     <img className="h-full w-full object-center object-cover rounded-3xl z-0" src={isDay ? Day : Night} alt="daynight" />
                     <div className="topLeft h-auto w-auto bg-transparent absolute top-[4%] left-[4%] z-10 flex flex-col justify-center items-start gap-0.5">
                         <span className={`countrySpan uppercase text-1xl font-medium ${isDay ? "text-gray-600 " : "text-white/60"}`}><i className="ri-map-pin-line"></i> {telemetryData?.location?.country}</span>
@@ -81,7 +81,7 @@ export const Clock = () => {
                             <span>{windSpeed} Km/h</span>
                         </div>
                         <div className="wind flex flex-col justify-start items-start gap-1 border-2 border-white/20 rounded-xl pr-6 pl-4 pt-2 pb-2 bg-white/10 backdrop-blur-2xl">
-                            <i className="ri-eye-line capitalize text-[14px] text-white/50 "> wind</i>
+                            <i className="ri-eye-line capitalize text-[14px] text-white/50 "> visibility</i>
                             <span>{visibility} Km</span>
                         </div>
                     </div> 
