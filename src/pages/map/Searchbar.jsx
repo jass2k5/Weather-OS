@@ -10,6 +10,7 @@ export const Searchbar = () => {
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [prev, setPrev] = useState(false);
     const setSystemTelemetry = useOsStore((state) => state.setSystemTelemetry)
+    const telemetryData = useOsStore((state)=>state.telemetryData);
     const addSearchToHistory = useOsStore((state) => state.addSearchToHistory);
     const searchHistory = useOsStore((state) => state.searchHistory);
     const allSearches = searchHistory;
@@ -65,7 +66,11 @@ export const Searchbar = () => {
             addSearchToHistory(data.location.name, data.location.country,data.location.tz_id);
         }
     })
-
+    useEffect(()=>{
+      if(telemetryData?.location?.name){
+        mutate(telemetryData.location.name);
+      }
+    },[]);
 
     useGSAP(() => {
 

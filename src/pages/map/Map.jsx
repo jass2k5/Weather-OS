@@ -63,6 +63,8 @@ export const WeatherMap = () => {
         );
     }, [isClosing]);
 
+    
+
     return (
         <div ref={containerRef} style={{zIndex:myZIndex}} className="mapContainer relative h-full w-full overflow-hidden bg-slate-950">
             {!isMapLoaded && (

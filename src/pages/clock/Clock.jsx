@@ -15,7 +15,7 @@ export const Clock = () => {
             className="clock  flex items-center justify-center absolute top-0 left-0 bg-black h-full w-full">
             {allSearches.map((el,index)=>{
                
-                    <h1 className="text-white text-8xl">{el.city}</h1>
+                    <h1 className="text-white text-8xl z-[30]">{el.city}</h1>
                 
             })}
         </div>
