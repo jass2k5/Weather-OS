@@ -63,7 +63,7 @@ export const Searchbar = () => {
         onSuccess: (data, submittedLocation) => {
 
             setSystemTelemetry(submittedLocation, data);
-            addSearchToHistory(data.location.name, data.location.country,data.location.tz_id);
+            addSearchToHistory(data.location.name);
         }
     })
     useEffect(()=>{
@@ -166,7 +166,7 @@ export const Searchbar = () => {
                     <div
                         key={`${loc.city}-${index}`}
                         onClick={() => {
-                            addSearchToHistory(loc.city, loc.country,loc.tz_id);
+                            addSearchToHistory(loc.city);
                             setInputValue(loc.city);
                             mutate(loc.city)
                             setPrev(false)
