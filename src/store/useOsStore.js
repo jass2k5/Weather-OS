@@ -7,6 +7,8 @@ export const useOsStore = create(persist((set, get) => ({
     isDay: true,
     setNight: () => { set({ isDay: false }) },
     setDay: () => { set({ isDay: true }) },
+    isScrollHovered: false,
+    setIsScrollHovered: (val) => set({ isScrollHovered: val }),
     isBooted: false,
     systemBg: "bg-[url(/stage1bg.png)]",
     finishBoot: () => { set({ isBooted: true }) },
@@ -65,7 +67,8 @@ export const useOsStore = create(persist((set, get) => ({
       humidity: apiData.current.humidity,
       wind: apiData.current.wind_kph,
       visibility: apiData.current.vis_km,
-      feelsLike: apiData.current.feelslike_c
+      feelsLike: apiData.current.feelslike_c,
+      isDay: apiData.current.is_day === 1,
     };
 
 
