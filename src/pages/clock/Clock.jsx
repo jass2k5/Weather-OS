@@ -41,7 +41,7 @@ export const Clock = () => {
                 }
             });
         });
-    }, { dependencies: [searchHistory] });
+    }, { dependencies: [searchHistory,telemetryData],scope:containerRef });
 
 
 
@@ -62,12 +62,12 @@ export const Clock = () => {
                         className={`data will-change-transform h-full w-full border-2 rounded-3xl sticky top-0 border-white/25 top-0`}>
                         <img className="h-full w-full object-center object-cover rounded-3xl z-0" src={loc.isDay ? Day : Night} alt="daynight" />
                         <div className="topLeft h-auto w-auto bg-transparent absolute top-[4%] left-[4%] z-10 flex flex-col justify-center items-start gap-0.5">
-                            <span className={`countrySpan uppercase text-1xl font-medium ${loc.isDay ? "text-black " : "text-white/60"}`}><i className="ri-map-pin-line"></i> {loc.country}</span>
-                            <span className={`citySpan uppercase text-7xl font-[Lora]  ${loc.isDay ? "text-black " : "text-white/60"} `}>{loc.city}</span>
-                            <span className={`conditionSpan uppercase text-1xl ${loc.isDay ? "text-black " : "text-white/60"}`}>{loc.isDay ? <i className="ri-sun-line text-orange-400"></i> : <i className="ri-moon-line"></i>}  {loc.liveCondition}</span>
+                            <span className={`countrySpan uppercase text-1xl font-medium ${loc.isDay ? "text-black/60 " : "text-white/60"}`}><i className="ri-map-pin-line"></i> {loc.country}</span>
+                            <span className={`citySpan uppercase text-7xl font-[Lora]  ${loc.isDay ? "text-black/60 " : "text-white/60"} `}>{loc.city}</span>
+                            <span className={`conditionSpan uppercase text-1xl ${loc.isDay ? "text-black/60 " : "text-white/60"}`}>{loc.isDay ? <i className="ri-sun-line text-orange-400"></i> : <i className="ri-moon-line"></i>}  {loc.liveCondition}</span>
                         </div>
                         <div className="bottomLeft absolute bottom-[6%] left-[3%] flex flex-col items-start justify-center">
-                            <span className={`temp text-8xl  font-[Lora] drop-shadow-2xl ${loc.isDay ? "text-black " : "text-white"}`}>{loc.liveTemp}°C</span>
+                            <span className={`temp text-8xl  font-[Lora] drop-shadow-2xl ${loc.isDay ? "text-white/60 " : "text-white/60"}`}>{loc.liveTemp}°C</span>
                         </div>
 
                         <MiniCardClock
