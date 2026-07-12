@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-
+import axios from "axios";
 export const useOsStore = create(persist((set, get) => ({
     isClosing: false,
     startCloseApp: () => { set({ isClosing: true }) },
@@ -46,50 +46,43 @@ export const useOsStore = create(persist((set, get) => ({
     })),
     searchHistory: [],
 
-    addSearchToHistory: async (cityName) => {
-    try {
-      const state = get();
-     const API_KEY = import.meta.env.VITE_WEATHER_API_KEY;
-      
-     const response = await axios.get(`https://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=${cityName}`);
+    addSearchToHistory: (apiData) => {
+    const state = get();
     
-      if (!data || !data.location) {
-        console.error("City not found!");
-        return; 
-      }
-
-     
-      const newCityObject = {
-        city: data.location.name,
-        country: data.location.country,
-        tz_id: data.location.tz_id,
-        liveTemp: data.current.temp_c,
-        liveCondition: data.current.condition.text,
-        humidity: data.current.humidity,
-        wind: data.current.wind_kph,
-        visibility: data.current.vis_km,
-        feelsLike: data.current.feelslike_c
-      };
-
-
-      const currentHistory = state.searchHistory;
-      
-      const filteredHistory = currentHistory.filter(
-          (loc) => loc.city.toLowerCase() !== data.location.name.toLowerCase()
-      );
-
-      const updatedHistory = [
-          newCityObject,
-          ...filteredHistory
-      ].slice(0, 4);
-
-      set({ searchHistory: updatedHistory });
-
-    } catch (error) {
-      console.error("Failed to add new search:", error);
+    
+    if (!apiData || !apiData.location) {
+      console.error("Invalid data passed to history");
+      return; 
     }
-  },
 
+  
+    const newCityObject = {
+      city: apiData.location.name,
+      country: apiData.location.country,
+      tz_id: apiData.location.tz_id,
+      liveTemp: apiData.current.temp_c,
+      liveCondition: apiData.current.condition.text,
+      humidity: apiData.current.humidity,
+      wind: apiData.current.wind_kph,
+      visibility: apiData.current.vis_km,
+      feelsLike: apiData.current.feelslike_c
+    };
+
+
+    const currentHistory = state.searchHistory;
+    
+    const filteredHistory = currentHistory.filter(
+        (loc) => loc.city.toLowerCase() !== apiData.location.name.toLowerCase()
+    );
+
+    const updatedHistory = [
+        newCityObject,
+        ...filteredHistory
+    ].slice(0, 4);
+
+
+    set({ searchHistory: updatedHistory });
+  },
 
     windowOrder: ['map', 'clock', 'terminalMap','terminalClock'],
 
