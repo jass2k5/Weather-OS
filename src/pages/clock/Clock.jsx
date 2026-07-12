@@ -1,3 +1,4 @@
+import { MiniCardClock } from "./CardClock";
 import { useOsStore } from "../../store/useOsStore";
 import { useEffect, useState, useRef } from "react";
 import gsap from "gsap";
@@ -22,32 +23,7 @@ export const Clock = () => {
     const [liveDate, setLiveDate] = useState(null);
    
 
-    useEffect(() => {
-        let timer;
-        if (telemetryData?.location?.localtime) {
-            const apiTimeString = telemetryData.location.localtime.replace(/-/g, "/");
-            let currentDate = new Date(apiTimeString);
-
-            setLiveDate(currentDate);
-
-            timer = setInterval(() => {
-                currentDate = new Date(currentDate.getTime() + 1000);
-                setLiveDate(currentDate);
-            }, 1000);
-        }
-        return () => clearInterval(timer);
-    }, [telemetryData]);
-
-    if(!liveDate) return;
-     const timestring = liveDate.toLocaleTimeString("en-US", {
-        hour: "2-digit",
-        minute: "2-digit"
-    });
-
-    const dayName = liveDate.toLocaleDateString("en-US", { weekday: "short" });
-    const monthName = liveDate.toLocaleDateString("en-US", { month: "short" });
-    const dateNum = liveDate.getDate();
-    const year = liveDate.getFullYear();
+  
 
     return (
         <div style={{ zIndex: myZIndex }} className="Clock h-full w-full absolute top-0 left-0 bg-black p-10 flex items-center justify-center">
@@ -62,11 +38,10 @@ export const Clock = () => {
                     <div className="bottomLeft absolute bottom-[6%] left-[3%] flex flex-col items-start justify-center">
                         <span className={`temp text-8xl  font-[Lora] drop-shadow-2xl ${isDay ? "text-white " : "text-white"}`}>{temperature}°C</span>
                     </div>
-                    <div className="dataTime absolute top-[5%] right-[3%] flex flex-col justify-center items-center ">
-                        <span className="date capitalize text-xl font-[Lora]">{monthName} {dateNum},  {year}</span>
-                        <span className="self-end">{timestring}</span>
-                    </div>
-
+                    
+                    <MiniCardClock
+                    tz_id={telemetryData?.location?.tz_id}
+                    />
                     <div className="bottomRight absolute bottom-[5%] right-[4%] flex justify-center items-center gap-3.5">
                         <div className="feels flex flex-col justify-start items-start gap-1 border-2 border-white/20 rounded-xl pr-6 pl-4 pt-2 pb-2  bg-white/10 backdrop-blur-2xl">
                             <i className="ri-temp-hot-line capitalize text-[14px] text-white/50 "> feels</i>

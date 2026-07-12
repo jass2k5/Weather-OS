@@ -5,53 +5,63 @@ export const TopRightDate = () => {
     const telemetryData = useOsStore((state) => state.telemetryData);
     const setNight = useOsStore((state) => state.setNight);
     const setDay = useOsStore((state) => state.setDay);
-    const [liveDate, setLiveDate] = useState(null);
     
+
+    const [timeString, setTimeString] = useState("");
+    const [dateString, setDateString] = useState("");
 
 
     useEffect(() => {
         if (!telemetryData?.current) return;
-        const isDaytime = telemetryData?.current?.is_day === 1;
+        const isDaytime = telemetryData.current.is_day === 1;
         if (!isDaytime) {
-            setNight()
+            setNight();
         } else {
-            setDay()
+            setDay();
         }
-    }, [telemetryData, setDay, setNight])
+    }, [telemetryData, setDay, setNight]);
+
 
     useEffect(() => {
-        let timer;
-        if (telemetryData?.location?.localtime) {
-            const apiTimeString = telemetryData.location.localtime.replace(/-/g, "/");
-            let currentDate = new Date(apiTimeString);
 
-            setLiveDate(currentDate);
+        const tz_id = telemetryData?.location?.tz_id;
+        
+        if (!tz_id) return;
 
-            timer = setInterval(() => {
-                currentDate = new Date(currentDate.getTime() + 1000);
-                setLiveDate(currentDate);
-            }, 1000);
-        }
+        const updateClock = () => {
+            const now = new Date();
+
+
+            setTimeString(now.toLocaleTimeString("en-US", {
+                timeZone: tz_id,
+                hour: "2-digit",
+                minute: "2-digit",
+                second: "2-digit"
+            }));
+
+          
+            const dayName = now.toLocaleDateString("en-US", { timeZone: tz_id, weekday: "short" });
+            const monthName = now.toLocaleDateString("en-US", { timeZone: tz_id, month: "short" });
+            const dateNum = now.toLocaleDateString("en-US", { timeZone: tz_id, day: "numeric" });
+            const year = now.toLocaleDateString("en-US", { timeZone: tz_id, year: "numeric" });
+
+       
+            setDateString(`${dayName}, ${monthName} ${dateNum}, ${year}`);
+        };
+
+        updateClock(); 
+        const timer = setInterval(updateClock, 1000); 
+        
         return () => clearInterval(timer);
-    }, [telemetryData])
+    }, [telemetryData]); 
 
-    if (!liveDate) return null;
-
-    const timestring = liveDate.toLocaleTimeString("en-US", {
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit"
-    });
-
-    const dayName = liveDate.toLocaleDateString("en-US", { weekday: "short" });
-    const monthName = liveDate.toLocaleDateString("en-US", { month: "short" });
-    const dateNum = liveDate.getDate();
-    const year = liveDate.getFullYear();
+   
+    if (!timeString) return null;
 
     return (
         <div className="date-container absolute top-[2%] right-[6%] h-auto w-auto z-50 flex flex-col justify-center items-center">
-            <span className="consttime ">{`${timestring}`}</span>
-            <span className="constdate">{`${dayName}, ${monthName} ${dateNum}, ${year}`}</span>
+            <span className="consttime">{timeString}</span>
+            <span className="constdate">{dateString}</span>
         </div>
-    )
-}
+    );
+};
