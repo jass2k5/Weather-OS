@@ -51,16 +51,16 @@ export const Clock = () => {
 
     return (
         <div style={{ zIndex: myZIndex }} className="Clock h-full w-full absolute top-0 left-0 bg-black p-10 flex items-center justify-center">
-            <div className="h-[70vh] w-[55vw] overflow-y-scrol scrollbar-none relative rounded-3xl -translate-y-5">
-                <div className="data h-full w-full border-2 rounded-3xl  border-white/25 ">
+            <div className="h-[70vh] w-[55vw] overflow-y-auto scrollbar-none relative rounded-3xl -translate-y-5">
+                <div className="data h-full w-full border-2 rounded-3xl sticky top-4 border-white/25 ">
                     <img className="h-full w-full object-center object-cover rounded-3xl z-0" src={isDay ? Day : Night} alt="daynight" />
                     <div className="topLeft h-auto w-auto bg-transparent absolute top-[4%] left-[4%] z-10 flex flex-col justify-center items-start gap-0.5">
                         <span className={`countrySpan uppercase text-1xl font-medium ${isDay ? "text-gray-600 " : "text-white/60"}`}><i className="ri-map-pin-line"></i> {telemetryData?.location?.country}</span>
-                        <span className="citySpan uppercase text-7xl font-[Lora]">{telemetryData?.location?.name}</span>
+                        <span className={`citySpan uppercase text-7xl font-[Lora]  ${isDay ? "text-gray-600 " : "text-white/60"} `}>{telemetryData?.location?.name}</span>
                         <span className={`conditionSpan uppercase text-1xl ${isDay ? "text-gray-600 " : "text-white/60"}`}>{isDay ? <i className="ri-sun-line"></i> : <i className="ri-moon-line"></i>}  {weatherText}</span>
                     </div>
                     <div className="bottomLeft absolute bottom-[6%] left-[3%] flex flex-col items-start justify-center">
-                        <span className={`temp text-8xl  font-[Lora] drop-shadow-2xl ${isDay ? "text-gray-600 " : "text-white"}`}>{temperature}°C</span>
+                        <span className={`temp text-8xl  font-[Lora] drop-shadow-2xl ${isDay ? "text-white " : "text-white"}`}>{temperature}°C</span>
                     </div>
                     <div className="dataTime absolute top-[5%] right-[3%] flex flex-col justify-center items-center ">
                         <span className="date capitalize text-xl font-[Lora]">{monthName} {dateNum},  {year}</span>
