@@ -46,54 +46,96 @@ export const useOsStore = create(persist((set, get) => ({
             }
         }
     })),
+
     searchHistory: [],
 
     addSearchToHistory: (apiData) => {
-    const state = get();
-    
-    
-    if (!apiData || !apiData.location) {
-      console.error("Invalid data passed to history");
-      return; 
-    }
-
-  
-    const newCityObject = {
-      city: apiData.location.name,
-      country: apiData.location.country,
-      tz_id: apiData.location.tz_id,
-      liveTemp: apiData.current.temp_c,
-      liveCondition: apiData.current.condition.text,
-      humidity: apiData.current.humidity,
-      wind: apiData.current.wind_kph,
-      visibility: apiData.current.vis_km,
-      feelsLike: apiData.current.feelslike_c,
-      isDay: apiData.current.is_day === 1,
-    };
+        const state = get();
 
 
-    const currentHistory = state.searchHistory;
-    
-    const filteredHistory = currentHistory.filter(
-        (loc) => loc.city.toLowerCase() !== apiData.location.name.toLowerCase()
-    );
-
-    const updatedHistory = [
-        newCityObject,
-        ...filteredHistory
-    ].slice(0, 4);
+        if (!apiData || !apiData.location) {
+            console.error("Invalid data passed to history");
+            return;
+        }
 
 
-    set({ searchHistory: updatedHistory });
-  },
+        const newCityObject = {
+            city: apiData.location.name,
+            country: apiData.location.country,
+            tz_id: apiData.location.tz_id,
+            liveTemp: apiData.current.temp_c,
+            liveCondition: apiData.current.condition.text,
+            humidity: apiData.current.humidity,
+            wind: apiData.current.wind_kph,
+            visibility: apiData.current.vis_km,
+            feelsLike: apiData.current.feelslike_c,
+            isDay: apiData.current.is_day === 1,
+        };
 
-    windowOrder: ['map', 'clock', 'terminalMap','terminalClock'],
+
+        const currentHistory = state.searchHistory;
+
+        const filteredHistory = currentHistory.filter(
+            (loc) => loc.city.toLowerCase() !== apiData.location.name.toLowerCase()
+        );
+
+        const updatedHistory = [
+            newCityObject,
+            ...filteredHistory
+        ].slice(0, 4);
+
+
+        set({ searchHistory: updatedHistory });
+    },
+
+    windowOrder: ['map', 'clock', 'terminalMap', 'terminalClock'],
 
 
     focusApp: (appId) => set((state) => {
         const remainingApps = state.windowOrder.filter((id) => id !== appId);
         return { windowOrder: [...remainingApps, appId] };
-    })
+    }),
+    //sync system for clock 
+
+    updateCityData: (cityName,newData)=> set((state)=>({
+        searchHistory: state.searchHistory.map((loc)=>(loc.city === cityName ? {...loc,...newData} : loc))
+    })),
+    syncAllWeather: async () => {
+        const state = get();
+        const Api_Key = import.meta.env.VITE_WEATHER_API_KEY;
+        const BASE_URL = 'https://api.weatherapi.com/v1';
+        const fetchPromises = state.searchHistory.map(async (loc) => {
+           const response = await fetch(`${BASE_URL}/current.json?key=${Api_Key}&q=${loc.city}`);
+           if(!response.ok) throw new Error("Api Failed");
+           const apiData = await response.json();
+           return {city:loc.city,apiData};
+        });
+
+        const results = await Promise.allSettled(fetchPromises);
+
+        results.forEach((result)=>{
+            if(result.status  === "fulfilled"){ 
+                const{city,apiData} = result.value;
+            
+            const updatedCityObject = {
+              city: apiData.location.name,
+              country: apiData.location.country,
+              tz_id: apiData.location.tz_id,
+              liveTemp: apiData.current.temp_c,
+              liveCondition: apiData.current.condition.text,
+              humidity: apiData.current.humidity,
+              wind: apiData.current.wind_kph,
+              visibility: apiData.current.vis_km,
+              feelsLike: apiData.current.feelslike_c,
+              isDay: apiData.current.is_day === 1,
+            };
+            state.updateCityData(city,updatedCityObject);
+
+            }
+        })
+    }
+
+
 
 })),
 

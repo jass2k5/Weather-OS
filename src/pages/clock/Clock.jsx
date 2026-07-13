@@ -15,6 +15,7 @@ export const Clock = () => {
     const searchHistory = useOsStore((state) => state.searchHistory);
     // const allSearches = searchHistory;
     const telemetryData = useOsStore((state) => state.telemetryData);
+    const syncAllWeather = useOsStore((state)=>state.syncAllWeather);
     const setIsScrollHovered = useOsStore((state) => state.setIsScrollHovered)
     const [liveDate, setLiveDate] = useState(null);
     const cardRefs = useRef([]);
@@ -41,7 +42,19 @@ export const Clock = () => {
                 }
             });
         });
-    }, { dependencies: [searchHistory,telemetryData],scope:containerRef });
+    }, { dependencies: [searchHistory, telemetryData], scope: containerRef });
+
+    useEffect(()=>{
+        syncAllWeather();
+
+        const weatherTimer = setInterval(()=>{
+            console.log("Synced Clocks");
+            syncAllWeather();
+        },300000);
+
+        return ()=> clearInterval(weatherTimer);
+
+    },[])
 
 
 
@@ -55,13 +68,13 @@ export const Clock = () => {
             }}
                 onMouseLeave={() => {
                     setIsScrollHovered(false);
-                }} ref={containerRef} className="h-[70vh] w-[55vw] overflow-y-auto scrollbar-none relative rounded-3xl -translate-y-10 ">
+                }} ref={containerRef} className="h-[70vh] w-[55vw] overflow-y-auto scrollbar-none relative rounded-3xl -translate-y-10 cursor-none">
                 {searchHistory.map((loc, index) => (
                     <div key={`${loc.city}-${index}`}
                         ref={(el) => (cardRefs.current[index] = el)}
-                        className={`data will-change-transform h-full w-full border-2 rounded-3xl sticky top-0 border-white/25 top-0`}>
+                        className={`data will-change-transform h-full w-full border-2 rounded-3xl sticky top-0 border-white/25 top-0 `}>
                         <img className="h-full w-full object-center object-cover rounded-3xl z-0" src={loc.isDay ? Day : Night} alt="daynight" />
-                        <div className="topLeft h-auto w-auto bg-transparent absolute top-[4%] left-[4%] z-10 flex flex-col justify-center items-start gap-0.5">
+                        <div className="topLeft h-auto w-auto bg-transparent absolute top-[4%] left-[4%] z-10 flex flex-col justify-center items-start gap-0.5 ">
                             <span className={`countrySpan uppercase text-1xl font-medium ${loc.isDay ? "text-black/60 " : "text-white/60"}`}><i className="ri-map-pin-line"></i> {loc.country}</span>
                             <span className={`citySpan uppercase text-7xl font-[Lora]  ${loc.isDay ? "text-black/60 " : "text-white/60"} `}>{loc.city}</span>
                             <span className={`conditionSpan uppercase text-1xl ${loc.isDay ? "text-black/60 " : "text-white/60"}`}>{loc.isDay ? <i className="ri-sun-line text-orange-400"></i> : <i className="ri-moon-line"></i>}  {loc.liveCondition}</span>
@@ -95,7 +108,8 @@ export const Clock = () => {
                                 <span className={loc.isDay ? "text-black font-medium" : "text-white"}>{loc.visibility} Km</span>
                             </div>
 
-                        </div>               {searchHistory?.length > 0 && (
+                        </div>     
+                      {searchHistory?.length > 0 && (
                             <div className="h-[150px] w-full shrink-0 opacity-0 pointer-events-none"></div>
                         )}
 
