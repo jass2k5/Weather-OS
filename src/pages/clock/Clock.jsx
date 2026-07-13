@@ -1,6 +1,7 @@
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { MiniCardClock } from "./CardClock";
+import { SyncBtn } from "./SyncBtn";
 import { useOsStore } from "../../store/useOsStore";
 import { useEffect, useState, useRef } from "react";
 import gsap from "gsap";
@@ -68,7 +69,7 @@ export const Clock = () => {
             }}
                 onMouseLeave={() => {
                     setIsScrollHovered(false);
-                }} ref={containerRef} className="h-[70vh] w-[55vw] overflow-y-auto scrollbar-none relative rounded-3xl -translate-y-10 cursor-none">
+                }} ref={containerRef} className="h-[70vh] w-[55vw] overflow-y-auto scrollbar-none relative rounded-3xl -translate-y-10 ">
                 {searchHistory.map((loc, index) => (
                     <div key={`${loc.city}-${index}`}
                         ref={(el) => (cardRefs.current[index] = el)}
@@ -86,6 +87,10 @@ export const Clock = () => {
                         <MiniCardClock
                             tz_id={loc.tz_id}
                         />
+
+                        <SyncBtn/>
+
+                    
                         <div className="bottomRight absolute bottom-[6%] right-[1%] flex justify-center items-center gap-3.5">
 
                             <div className={`feels flex flex-col justify-start items-start gap-1 border-2 rounded-xl pr-6 pl-4 pt-2 pb-2 ${loc.isDay ? "bg-white/40 border-white/40" : "bg-white/10 border-white/20"} backdrop-blur-2xl`}>
