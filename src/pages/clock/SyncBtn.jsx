@@ -24,7 +24,7 @@ export const SyncBtn = () => {
   return (
     <div onClick={()=>{
       handleclick();
-    }} className="generate-btn-wrapper absolute top-[16%] right-[2%]">
+    }} className="generate-btn-wrapper absolute top-[20%] right-[2%]">
       <div className="button-wrap">
         <button>
           <span >{Buttonstate}</span>

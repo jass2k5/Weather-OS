@@ -1,0 +1,58 @@
+.Clock {//used ai to save time 
+  container-type: size;
+  container-name: weatherApp;
+  
+  /* 2. The Container Query (Fires when window is dragged shorter than 480px) */
+  @container weatherApp (max-height: 480px) {
+  
+    padding: 0 !important;
+    .holder {
+      /* Expand the holder to take up all available space in small mode */
+      height: 100% !important;
+      width: 100% !important;
+      border-radius: 16px !important;
+      transform: translateY(0) !important; /* Stop it from clipping the top */
+    }
+
+    /* Shrink the massive 'JAMMU' text so it doesn't get cut off */
+    .citySpan {
+      font-size: 3.5rem !important; 
+      line-height: 1 !important;
+    }
+
+    /* Shrink the top left container slightly */
+    .topLeft {
+      top: 2% !important;
+      left: 3% !important;
+    }
+
+    /* Shrink the massive '36.8°C' text */
+    .temp {
+      font-size: 4.5rem !important;
+    }
+
+    /* Shrink the bottom right glass cards using CSS scale */
+    .bottomRight {
+      bottom: 4% !important;
+      right: 2% !important;
+      transform: scale(0.75); /* Shrinks the entire row of cards by 25% */
+      transform-origin: bottom right; /* Anchors them to the corner while shrinking */
+    }
+  }
+
+  /* 3. Another query! (Fires if they squish the window side-to-side) */
+  @container weatherApp (max-width: 600px) {
+    padding: 0 !important;
+    .holder{
+        height: 100%;
+        width: 100%;
+    }
+     .bottomRight {
+       /* If the window is too narrow, stack the glass cards into a 2x2 grid */
+       display: grid !important;
+       grid-template-columns: 1fr 1fr;
+       gap: 8px !important;
+       bottom: 2% !important;
+     }
+  }
+}

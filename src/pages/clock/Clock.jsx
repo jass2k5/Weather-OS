@@ -69,7 +69,7 @@ export const Clock = () => {
             }}
                 onMouseLeave={() => {
                     setIsScrollHovered(false);
-                }} ref={containerRef} className="h-[70vh] w-[55vw] overflow-y-auto scrollbar-none relative rounded-3xl -translate-y-10 ">
+                }} ref={containerRef} className=" holder h-[75%] w-[98%] max-w-[900px] overflow-y-auto scrollbar-none relative rounded-3xl -translate-y-10 ">
                 {searchHistory.map((loc, index) => (
                     <div key={`${loc.city}-${index}`}
                         ref={(el) => (cardRefs.current[index] = el)}

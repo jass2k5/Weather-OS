@@ -20,8 +20,9 @@ export const Desktop = ()=>{
 
                 {apps?.map?.isOpen && <WeatherMap/>}
                 {apps?.terminalMap?.isOpen && 
-                (<DraggableWindow title={"TerminalMap"} Appid = {"terminalMap"}><TerminalMap/></DraggableWindow>)}
+                (<DraggableWindow title={"TerminalMap"} Appid = {"terminalMap"} ><TerminalMap/></DraggableWindow>)}
                 {apps?.clock?.isOpen && <Clock/>}
+                {apps?.terminalClock?.isOpen && (<DraggableWindow title={"TerminalClock"} Appid={"terminalClock"}><Clock/></DraggableWindow>)}
                 
                 <Dock/>
             </div>

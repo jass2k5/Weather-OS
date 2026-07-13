@@ -12,6 +12,7 @@ import './scss/Text.scss'
 import './scss/TopRightDate.scss'
 import './scss/Dock.scss'
 import './scss/Button.scss'
+import './scss/ClockTerminal.scss'
 import './index.css'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 const queryClient = new QueryClient();
