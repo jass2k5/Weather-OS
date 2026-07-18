@@ -14,8 +14,8 @@ export const Text = () => {
     const focusApp = useOsStore((state) => state.focusApp);
     const myZIndex = 20 + windowOrder.indexOf('map');
 
-    const city = telemetryData?.location?.name ?? "Unknown Location";
-    const country = telemetryData?.location?.country ?? "Unknow Country";
+    const city = telemetryData?.location?.name?.trim() ?? "Unknown Location";
+    const country = telemetryData?.location?.country?.trim() ?? "Unknow Country";
     const temperature = telemetryData?.current?.temp_c ?? 0;
     const weatherText = telemetryData?.current?.condition?.text ?? "Couldn't fetch the data";
 
@@ -72,7 +72,7 @@ export const Text = () => {
         style={{zIndex:myZIndex}}
          className="conditionContainer">
             <span className="searchedlocation">Searched Location</span>
-            <h1 ref={cityRef} className="countryCity">{`${city}, ${country}`}</h1>
+            <h1 ref={cityRef} className="countryCity">{`${city},${country}`}</h1>
             <span ref={tempRef} className="temperature">{`${temperature}°C`}</span>
             <span ref={weatherTextRef} className="condition">{`${weatherText}`}</span>
         </div>

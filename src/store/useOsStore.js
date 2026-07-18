@@ -133,8 +133,31 @@ export const useOsStore = create(persist((set, get) => ({
 
             }
         })
-    }
+    },
+    notificationHistory: [],
+    activeNotifications: [],
 
+    addNotification: (message,type = "info")=>{
+        const id = crypto.randomUUID();
+        const newNoti = {
+            id,
+            message,
+            type,
+            timestamp: new Date().toLocaleTimeString([],{hour:'2-digit',minute:"2-digit"})
+        };
+
+        set((state)=>({
+            notificationHistory:[newNoti,...state.notificationHistory],
+            activeNotifications:[newNoti,...state.activeNotifications]
+        }));
+
+        setTimeout(()=>{
+            set((state)=>({
+                activeNotifications:state.activeNotifications.filter((n)=> n.id !== id)
+            }))
+        },4000)
+
+    },
 
 
 })),
