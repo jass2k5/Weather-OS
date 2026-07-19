@@ -15,7 +15,7 @@ export const NotificationApp = ()=>{
             {notificationHistory.length > 0 && notificationHistory.map((notify,index)=>(
                 <div key={`${notify.id}`} className=" w-full h-auto flex items-start justify-start gap-2.5">
                     <span className="text-s text-white/60">{notify.timestamp}</span>
-                    <span className={`text-s uppercase  ${notify.type === 'success' && 'text-green-400'} ${notify.type === 'error' && 'text-red-400'} ${notify.type ==='warning' && 'text-yellow-400' } ${notify.type === 'info' && "text-blue-400"}`}>[{notify.type}]</span>
+                    <span className={`text-s uppercase  ${notify.type === 'success' && 'text-green-400'} ${notify.type === 'error' && 'text-red-400'} ${notify.type ==='warning' && 'text-yellow-400' } ${notify.type === 'info' && "text-blue-400"} ${notify.type === 'offline' && 'text-red-400'}  ${notify.type === 'online' && 'text-green-400'}`}>[{notify.type}]</span>
                     <span className="text-s ">{notify.message}</span>
                 </div>
             ))}

@@ -5,8 +5,8 @@ export const useConnectivity = ()=>{
     const addNotification = useOsStore((state) => state.addNotification);
 
     useEffect(()=>{
-        const handleOnline = ()=> {addNotification("Connection Gained!","net")}
-        const handleOffline = ()=> {addNotification("Connection Lost!","nonet")}
+        const handleOnline = ()=> {addNotification("Connection Gained!","online")}
+        const handleOffline = ()=> {addNotification("Connection Lost!","offline")}
 
         window.addEventListener("offline",handleOffline);
         window.addEventListener("online",handleOnline);
