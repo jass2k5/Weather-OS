@@ -8,6 +8,7 @@ import { Clock } from "../pages/clock/Clock"
 import { Dock } from "../layout/Dock"
 import { NotificationManager } from "./Notification";
 import { NotificationApp } from "../pages/notification/NotificationApp"
+import { useConnectivity } from "../hooks/useConnectivity"
 
 export const Desktop = () => {
     const bgClr = useOsStore((state) => state.systemBg)
@@ -23,6 +24,7 @@ export const Desktop = () => {
             <div className="glassmorph "></div>
 
             <div className="absolute inset-0 z-10 bg ">
+                
                 <NotificationManager />
                 <TopRightDate />
                 {apps?.notification?.isOpen && (<DraggableWindow

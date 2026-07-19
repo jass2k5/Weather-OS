@@ -38,6 +38,8 @@ const NotificationItem = ({ notif, index }) => {
                     {notif.type === 'error' && <i className="ri-error-warning-fill text-red-400"></i>}
                     {notif.type === 'info' && <i className="ri-information-fill text-blue-400"></i>}
                     {notif.type === 'warning' && <i className="ri-alert-fill text-yellow-400"></i>}
+                    {notif.type === 'nonet'  && <i className="ri-wifi-off-line text-white/70"></i>}
+                    {notif.type === 'net' && <i className="ri-wifi-fill text-white/70"></i>}
                 </div>
                 
                 <div className="content flex-1">
