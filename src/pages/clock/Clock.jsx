@@ -16,11 +16,12 @@ export const Clock = () => {
     const searchHistory = useOsStore((state) => state.searchHistory);
     // const allSearches = searchHistory;
     const telemetryData = useOsStore((state) => state.telemetryData);
-    const syncAllWeather = useOsStore((state)=>state.syncAllWeather);
+    const syncAllWeather = useOsStore((state) => state.syncAllWeather);
     const setIsScrollHovered = useOsStore((state) => state.setIsScrollHovered)
     const [liveDate, setLiveDate] = useState(null);
     const cardRefs = useRef([]);
     const containerRef = useRef(null);
+    const addNotification = useOsStore((state) => state.addNotification);
 
     gsap.registerPlugin(ScrollTrigger);
 
@@ -45,17 +46,28 @@ export const Clock = () => {
         });
     }, { dependencies: [searchHistory, telemetryData], scope: containerRef });
 
-    useEffect(()=>{
+    useEffect(() => {
         syncAllWeather();
+        let timer;
 
-        const weatherTimer = setInterval(()=>{
+        const weatherTimer = setInterval(() => {
             console.log("Synced Clocks");
             syncAllWeather();
-        },300000);
+        }, 300000);
 
-        return ()=> clearInterval(weatherTimer);
+        let length = searchHistory.length;
+        addNotification(`${length} locations have been initialised`,"info");
+        timer = setTimeout(()=>{
+            addNotification(`All locations will be synced every 5 minutes`,"info");
+        },4000);
 
-    },[])
+
+        return () => {
+            clearInterval(weatherTimer)
+            clearTimeout(timer);
+        };
+
+    }, [])
 
 
 
@@ -88,9 +100,9 @@ export const Clock = () => {
                             tz_id={loc.tz_id}
                         />
 
-                        <SyncBtn/>
+                        <SyncBtn />
 
-                    
+
                         <div className="bottomRight absolute bottom-[6%] right-[1%] flex justify-center items-center gap-3.5">
 
                             <div className={`feels flex flex-col justify-start items-start gap-1 border-2 rounded-xl pr-6 pl-4 pt-2 pb-2 ${loc.isDay ? "bg-white/40 border-white/40" : "bg-white/10 border-white/20"} backdrop-blur-2xl`}>
@@ -113,8 +125,8 @@ export const Clock = () => {
                                 <span className={loc.isDay ? "text-black font-medium" : "text-white"}>{loc.visibility} Km</span>
                             </div>
 
-                        </div>     
-                      {searchHistory?.length > 0 && (
+                        </div>
+                        {searchHistory?.length > 0 && (
                             <div className="h-[150px] w-full shrink-0 opacity-0 pointer-events-none"></div>
                         )}
 

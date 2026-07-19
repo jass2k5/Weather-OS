@@ -23,7 +23,8 @@ export const useOsStore = create(persist((set, get) => ({
         map: { isOpen: true },
         terminalMap: { isOpen: false },
         clock: { isOpen: false },
-        terminalClock: { isOpen: false }
+        terminalClock: { isOpen: false },
+        notification: { isOpen: false }
     },
 
     closeApp: (Appid) => set((state) => ({
@@ -89,7 +90,7 @@ export const useOsStore = create(persist((set, get) => ({
         set({ searchHistory: updatedHistory });
     },
 
-    windowOrder: ['map', 'clock', 'terminalMap', 'terminalClock'],
+    windowOrder: ['map', 'clock', 'terminalMap', 'terminalClock', "notification"],
 
 
     focusApp: (appId) => set((state) => {
@@ -98,40 +99,40 @@ export const useOsStore = create(persist((set, get) => ({
     }),
     //sync system for clock 
 
-    updateCityData: (cityName,newData)=> set((state)=>({
-        searchHistory: state.searchHistory.map((loc)=>(loc.city === cityName ? {...loc,...newData} : loc))
+    updateCityData: (cityName, newData) => set((state) => ({
+        searchHistory: state.searchHistory.map((loc) => (loc.city === cityName ? { ...loc, ...newData } : loc))
     })),
     syncAllWeather: async () => {
         const state = get();
         const Api_Key = import.meta.env.VITE_WEATHER_API_KEY;
         const BASE_URL = 'https://api.weatherapi.com/v1';
         const fetchPromises = state.searchHistory.map(async (loc) => {
-           const response = await fetch(`${BASE_URL}/current.json?key=${Api_Key}&q=${loc.city}`);
-           if(!response.ok) throw new Error("Api Failed");
-           const apiData = await response.json();
-           return {city:loc.city,apiData};
+            const response = await fetch(`${BASE_URL}/current.json?key=${Api_Key}&q=${loc.city}`);
+            if (!response.ok) throw new Error("Api Failed");
+            const apiData = await response.json();
+            return { city: loc.city, apiData };
         });
 
         const results = await Promise.allSettled(fetchPromises);
 
-        results.forEach((result)=>{
-            if(result.status  === "fulfilled"){ 
-                const{city,apiData} = result.value;
-            
-            const updatedCityObject = {
-              city: apiData.location.name,
-              country: apiData.location.country,
-              tz_id: apiData.location.tz_id,
-              liveTemp: apiData.current.temp_c,
-              liveCondition: apiData.current.condition.text,
-              humidity: apiData.current.humidity,
-              wind: apiData.current.wind_kph,
-              visibility: apiData.current.vis_km,
-              feelsLike: apiData.current.feelslike_c,
-              isDay: apiData.current.is_day === 1,
-              aqi: apiData.current.air_quality ? apiData.current.air_quality['us-epa-index'] : null,
-            };
-            state.updateCityData(city,updatedCityObject);
+        results.forEach((result) => {
+            if (result.status === "fulfilled") {
+                const { city, apiData } = result.value;
+
+                const updatedCityObject = {
+                    city: apiData.location.name,
+                    country: apiData.location.country,
+                    tz_id: apiData.location.tz_id,
+                    liveTemp: apiData.current.temp_c,
+                    liveCondition: apiData.current.condition.text,
+                    humidity: apiData.current.humidity,
+                    wind: apiData.current.wind_kph,
+                    visibility: apiData.current.vis_km,
+                    feelsLike: apiData.current.feelslike_c,
+                    isDay: apiData.current.is_day === 1,
+                    aqi: apiData.current.air_quality ? apiData.current.air_quality['us-epa-index'] : null,
+                };
+                state.updateCityData(city, updatedCityObject);
 
             }
         })
@@ -139,35 +140,38 @@ export const useOsStore = create(persist((set, get) => ({
     notificationHistory: [],
     activeNotifications: [],
 
-    addNotification: (message,type = "info")=>{
+    addNotification: (message, type = "info") => {
         const id = crypto.randomUUID();
         const newNoti = {
             id,
             message,
             type,
-            timestamp: new Date().toLocaleTimeString([],{hour:'2-digit',minute:"2-digit"})
+            timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: "2-digit" })
         };
 
-        set((state)=>({
-            notificationHistory:[newNoti,...state.notificationHistory],
-            activeNotifications:[newNoti,...state.activeNotifications]
+        set((state) => ({
+            notificationHistory: [newNoti, ...state.notificationHistory],
+            activeNotifications: [newNoti, ...state.activeNotifications]
         }));
 
-        let timer = setTimeout(()=>{
-            set((state)=>({
-                activeNotifications:state.activeNotifications.filter((n)=> n.id !== id)
+        let timer = setTimeout(() => {
+            set((state) => ({
+                activeNotifications: state.activeNotifications.filter((n) => n.id !== id)
             }))
-        },4000)
+        }, 4000)
 
-        return  ()=> clearTimeout(timer);
+        return () => clearTimeout(timer);
 
     },
 
 
-})),
+}
 
+),
 
-    {
-        name: 'weatherOsStorage',
-    })
-
+{
+    name: 'weatherOsStorage',
+    partialize: (state) => Object.fromEntries(
+        Object.entries(state).filter(([key]) => key !== 'notificationHistory')
+    ),
+}))

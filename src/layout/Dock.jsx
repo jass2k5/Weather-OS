@@ -23,7 +23,6 @@ export const Dock = () => {
                 itsTerminal={"terminalMap"}
                 isOpen={apps?.map?.isOpen}
                 openApp={openApp}
-                startCloseApp={startCloseApp}
                 closeApp={closeApp}
                 Class={"map"}
 
@@ -35,7 +34,6 @@ export const Dock = () => {
                 itsTerminal={"terminalWeather"}
                 isOpen={false}
                 openApp={openApp}
-                startCloseApp={startCloseApp}
                 closeApp={closeApp}
                 Class={"weather"}
             />
@@ -46,7 +44,6 @@ export const Dock = () => {
                 itsTerminal={"terminalClock"}
                 isOpen={apps?.clock?.isOpen}
                 openApp={openApp}
-                startCloseApp={startCloseApp}
                 closeApp={closeApp}
                 Class={"clock"}
             />
@@ -56,7 +53,6 @@ export const Dock = () => {
                 itsTerminal={"none"}
                 isOpen={false}
                 openApp={openApp}
-                startCloseApp={startCloseApp}
                 closeApp={closeApp}
                 Class={"widget"}
             />
@@ -64,9 +60,8 @@ export const Dock = () => {
                 iconsource={notification}
                 appName={"notification"}
                 itsTerminal={"terminalNotification"}
-                isOpen={false}
+                isOpen={apps?.notification?.isOpen}
                 openApp={openApp}
-                startCloseApp={startCloseApp}
                 closeApp={closeApp}
                 Class={"notification"}
             />
@@ -76,7 +71,6 @@ export const Dock = () => {
                 itsTerminal={"terminalSettings"}
                 isOpen={false}
                 openApp={openApp}
-                startCloseApp={startCloseApp}
                 closeApp={closeApp}
                 Class={"settings"}
             />

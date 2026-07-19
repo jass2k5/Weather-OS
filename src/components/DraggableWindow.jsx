@@ -15,7 +15,7 @@ const resizeHandleStyles = {
     topLeft: { width: "18px", height: "18px", left: 0, top: 0, zIndex: 101 },
 };
 
-export const DraggableWindow = ({ children, title, Appid, defaultpos = { x: 300, y: 100 } }) => {
+export const DraggableWindow = ({ children, title, Appid, defaultpos = { x: 300, y: 100 } ,isResizable = true,defaultSize = { width: 1000, height: 500 } }) => {
     const closeApp = useOsStore((state) => state.closeApp);
     const windowRef = useRef(null);
     
@@ -51,13 +51,14 @@ export const DraggableWindow = ({ children, title, Appid, defaultpos = { x: 300,
             default={{
                 x: defaultpos.x,
                 y: defaultpos.y,
-                width: 1000,
-                height: 500,
+                width: defaultSize.width,
+                height: defaultSize.height,
             }}
             minWidth={300}
             minHeight={250}
             dragHandleClassName="window-header"
             bounds=".desktop"
+            enableResizing={isResizable}
             resizeHandleStyles={resizeHandleStyles}
             style={{ display: "flex", flexDirection: "column" }}
             className="window-wrapper pointer-events-auto z-50"

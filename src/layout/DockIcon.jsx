@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useOsStore } from "../store/useOsStore";
-export const DockIcon = ({ iconsource, appName, itsTerminal, isOpen, openApp, Class, startCloseApp, closeApp }) => {
+export const DockIcon = ({ iconsource, appName, itsTerminal, isOpen, openApp, Class, closeApp }) => {
     const [Menu, setMenu] = useState(false);
     const windowOrder = useOsStore((state) => state.windowOrder);
     const focusApp = useOsStore((state) => state.focusApp);
@@ -37,7 +37,7 @@ export const DockIcon = ({ iconsource, appName, itsTerminal, isOpen, openApp, Cl
 
                     <div className="h-[1px] w-full bg-white/10 my-0.5"></div>
 
-                    <button
+                   {appName!=="notification" &&  <button
                         onClick={(e) => {
                             e.stopPropagation();
                             openApp(itsTerminal);
@@ -46,7 +46,7 @@ export const DockIcon = ({ iconsource, appName, itsTerminal, isOpen, openApp, Cl
                         className="text-white/90 text-sm hover:bg-white/10 hover:text-white px-3 py-1.5 rounded-lg text-left transition-colors"
                     >
                         Terminal
-                    </button>
+                    </button>}
 
                     <div className="h-[1px] w-full bg-white/10 my-0.5"></div>
 
