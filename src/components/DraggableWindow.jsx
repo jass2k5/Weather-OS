@@ -18,6 +18,9 @@ const resizeHandleStyles = {
 export const DraggableWindow = ({ children, title, Appid, defaultpos = { x: 300, y: 100 } ,isResizable = true,defaultSize = { width: 1000, height: 500 } }) => {
     const closeApp = useOsStore((state) => state.closeApp);
     const windowRef = useRef(null);
+    const focusApp = useOsStore((state) => state.focusApp);
+    const windowOrder = useOsStore((state) => state.windowOrder);
+    const zIndex = 15 + windowOrder.indexOf(Appid);
     
     gsap.registerPlugin(useGSAP);
     
@@ -54,14 +57,15 @@ export const DraggableWindow = ({ children, title, Appid, defaultpos = { x: 300,
                 width: defaultSize.width,
                 height: defaultSize.height,
             }}
+            onMouseDown={() => focusApp(Appid)}
             minWidth={300}
             minHeight={250}
             dragHandleClassName="window-header"
             bounds=".desktop"
             enableResizing={isResizable}
             resizeHandleStyles={resizeHandleStyles}
-            style={{ display: "flex", flexDirection: "column" }}
-            className="window-wrapper pointer-events-auto z-50"
+            style={{ display: "flex", flexDirection: "column" ,zIndex:zIndex}}
+            className="window-wrapper pointer-events-auto"
         >
             <div 
                 ref={windowRef} 

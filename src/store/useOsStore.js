@@ -90,7 +90,7 @@ export const useOsStore = create(persist((set, get) => ({
         set({ searchHistory: updatedHistory });
     },
 
-    windowOrder: ['map', 'clock', 'terminalMap', 'terminalClock', "notification"],
+    windowOrder: ['map', 'clock', 'terminalMap', "notification"],
 
 
     focusApp: (appId) => set((state) => {

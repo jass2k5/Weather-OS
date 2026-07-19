@@ -6,9 +6,12 @@ import { useOsStore } from "../../store/useOsStore"
 export const NotificationApp = ()=>{
 
     const notificationHistory = useOsStore((state)=> state.notificationHistory);
+    const windowOrder = useOsStore((state) => state.windowOrder);
+    const focusApp = useOsStore((state) => state.focusApp);
+    const myZIndex = 10 + windowOrder.indexOf('notification');
     
     return(
-        <div className="Notify h-auto rounded-[0.8rem] w-max p-4  bg-[rgba(0,0,0,0.63)] absolute inset-0 flex items-center justify-start flex-col gap-[1rem] overflow-y-auto scrollbar-none">
+        <div style={{zIndex:myZIndex}} className="Notify h-auto rounded-[0.8rem] w-max p-4  bg-[rgba(0,0,0,0.63)] absolute inset-0 flex items-center justify-start flex-col gap-[1rem] overflow-y-auto scrollbar-none">
   
       
             <span className="text-m text-white/60 self-start ">$ tail -f ~/.notifications --follow</span>
