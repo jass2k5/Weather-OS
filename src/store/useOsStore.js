@@ -70,6 +70,7 @@ export const useOsStore = create(persist((set, get) => ({
             visibility: apiData.current.vis_km,
             feelsLike: apiData.current.feelslike_c,
             isDay: apiData.current.is_day === 1,
+            aqi: apiData.current.air_quality ? apiData.current.air_quality['us-epa-index'] : null,
         };
 
 
@@ -128,6 +129,7 @@ export const useOsStore = create(persist((set, get) => ({
               visibility: apiData.current.vis_km,
               feelsLike: apiData.current.feelslike_c,
               isDay: apiData.current.is_day === 1,
+              aqi: apiData.current.air_quality ? apiData.current.air_quality['us-epa-index'] : null,
             };
             state.updateCityData(city,updatedCityObject);
 
@@ -151,11 +153,13 @@ export const useOsStore = create(persist((set, get) => ({
             activeNotifications:[newNoti,...state.activeNotifications]
         }));
 
-        setTimeout(()=>{
+        let timer = setTimeout(()=>{
             set((state)=>({
                 activeNotifications:state.activeNotifications.filter((n)=> n.id !== id)
             }))
         },4000)
+
+        return  ()=> clearTimeout(timer);
 
     },
 

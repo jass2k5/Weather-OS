@@ -33,6 +33,7 @@ export const WeatherMap = () => {
     const isClosing = useOsStore((state)=>state.isClosing);
     const telemetryData = useOsStore((state) => state.telemetryData);
     const coord = getCoord(telemetryData);
+     const addNotification = useOsStore((state) => state.addNotification); 
 
     useEffect(() => {
         const coord = getCoord(telemetryData);
@@ -43,6 +44,8 @@ export const WeatherMap = () => {
                 duration: 2500,
                 essential: true,
             });
+            addNotification(`Telemetry stream active: ${telemetryData?.location?.name}`,"info")
+
         }
     }, [telemetryData, isMapLoaded]);
 

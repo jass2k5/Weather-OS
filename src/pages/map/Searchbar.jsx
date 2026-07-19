@@ -61,7 +61,6 @@ export const Searchbar = () => {
     const { mutate, isPending, isSuccess, isError } = useMutation({
         mutationFn: fetchLocationTelemetry,
         onSuccess: (data, submittedLocation) => {
-
             setSystemTelemetry(submittedLocation, data);
             addSearchToHistory(data);
         }

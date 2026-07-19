@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRef } from "react";
 import { useOsStore } from "../store/useOsStore";
+import { NotificationManager } from "./Notification";
 import { RunAct1 } from "../animations/Stage1";
 import { RunAct2 } from "../animations/Stage2";
 import { RunAct3 } from "../animations/Stage3";
@@ -16,15 +17,19 @@ export const BootSequence = () => {
     const logoRef = useRef(null);
     const [visible] = useState(0);
     const [current,setCurrent] = useState("Stage1");
-  
+    const addNotification = useOsStore((state) => state.addNotification);
+    useEffect(() => {
+        addNotification("Welcome to weather Os", "success");
+    }, []);
     return (
-        <div className={` bootContainer h-full  w-full relative bg-no-repeat bg-center bg-cover ${bgClr}`}>
+        <div className={` bootContainer h-full  w-full relative bg-no-repeat bg-center bg-cover overflow-hidden ${bgClr}`}>
            
             <div ref={logoRef} className="nameCapsule">
                 <i className="ri-circle-fill animate-pulse"></i>
                 <span> Weather Os</span>
             </div>
             <div className="glassmorph "></div>
+            <NotificationManager/>
             <div className="textContainer absolute flex flex-col items-center jus">
                 <h1 ref={firsth1Ref} >A quiet interface for <span className="italic">high-</span></h1>
                 <h1 ref={secondh1Ref} ><span className="italic">fidelity</span>orbital data.</h1>

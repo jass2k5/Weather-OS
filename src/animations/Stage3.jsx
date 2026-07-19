@@ -5,7 +5,6 @@ import { useGSAP } from "@gsap/react";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { useOsStore } from "../store/useOsStore";
-
 import { SplitText } from "gsap/SplitText";
 
 gsap.registerPlugin(SplitText);
@@ -45,40 +44,48 @@ export const RunAct3 = ({ onComplete }) => {
     const info = useRef(null);
     const setSystemTelemetry = useOsStore((state) => state.setSystemTelemetry);
     const timeoutIdRef = useRef(null);
+    const addNotification = useOsStore((state) => state.addNotification);
     const { contextSafe } = useGSAP();
     const { mutate, isPending, isSuccess, isError } = useMutation({
         mutationFn: fetchLocationTelemetry,
         onSuccess: (data, submittedLocation) => {
             setSystemTelemetry(submittedLocation, data);
+            addNotification(`Current Telemetry ${submittedLocation}`, "success");
             timeoutIdRef.current = setTimeout(() => {
                 contextSafe(() => {
                     const tl = gsap.timeline({
-                        delay:0.3,
-                        onComplete:()=>{
+                        delay: 0.3,
+                        onComplete: () => {
                             console.log("oncomplete run")
                             onComplete();
                         }
                     });
 
-                   
+
                     tl.to(inputRef.current, {
                         autoAlpha: 0,
                         y: -20,
                         duration: 0.8,
                         ease: "power3.inOut"
                     })
-                      
+
                         .to(info.current, {
                             autoAlpha: 0,
                             y: -20,
-                            delay:0.3,
+                            delay: 0.3,
                             duration: 0.8,
                             ease: "power3.inOut"
                         });
                 })();
             }, 3000);
-
+        },
+                
+            onError: (error, submittedLocation) => {
+            addNotification(`Telemetry failed for node: ${submittedLocation}`, "error");
         }
+
+    
+        
     });
 
     useGSAP(() => {
@@ -102,15 +109,15 @@ export const RunAct3 = ({ onComplete }) => {
         })
 
     }, { dependencies: [] })
+
     useEffect(() => {
-
-
         return () => {
             if (timeoutIdRef.current) {
                 clearTimeout(timeoutIdRef.current);
             }
         }
     }, [])
+
     const handlesumbit = (e) => {
         e.preventDefault();
         const cleanValue = inputValue.trim();
@@ -121,7 +128,7 @@ export const RunAct3 = ({ onComplete }) => {
         <div ref={containerRef} className=" main-container absolute h-full top-0 left-[50%] transform  w-[50%] flex flex-col gap-5 justify-center items-center">
 
             <div className="flex flex-col justify-center items-center h-auto w-full gap-4">
-              
+
                 <form onSubmit={handlesumbit} className="flex flex-col justify-center items-center">
                     <input
                         ref={inputRef}
@@ -153,6 +160,7 @@ export const RunAct3 = ({ onComplete }) => {
                     <span className="text-red-500 absolute inset-0 flex items-center justify-center font-mono text-[1rem] tracking-wider uppercase">
                         [ ERROR: UNKNOWN LOCATION NODE ]
                     </span>
+                
                 )}
 
                 {isSuccess && (
