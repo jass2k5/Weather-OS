@@ -63,7 +63,10 @@ export const WeatherMap = () => {
 
     useEffect(()=>{
         if(!mapError) return;
-        addNotification(`${mapError}`,"warning")
+       let timer = setTimeout(() => {
+         addNotification(`${mapError}`,"warning")
+       },2000);
+       return ()=> clearTimeout(timer);
     },[mapError])
 
      useEffect(() => {
