@@ -37,7 +37,6 @@ export const WeatherMap = () => {
 
     useEffect(() => {
         const coord = getCoord(telemetryData);
-        let timer;
         const currentAqi = telemetryData?.current?.air_quality?.['us-epa-index'];
         if (isMapLoaded && coord) {
             mapRef.current.getMap().flyTo({
