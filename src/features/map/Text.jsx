@@ -1,6 +1,6 @@
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import { useOsStore } from "../../store/useOsStore";
+import { useOsStore } from "../../shared/store/useOsStore";
 import { useRef } from "react";
 import { SplitText } from "gsap/SplitText";
 
@@ -11,7 +11,7 @@ export const Text = () => {
 
     const telemetryData = useOsStore((state) => state.telemetryData);
     const windowOrder = useOsStore((state) => state.windowOrder);
-    const focusApp = useOsStore((state) => state.focusApp);
+
     const myZIndex = 20 + windowOrder.indexOf('map');
 
     const city = telemetryData?.location?.name?.trim() ?? "Unknown Location";

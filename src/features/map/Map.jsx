@@ -5,7 +5,7 @@ import "maplibre-gl/dist/maplibre-gl.css";
 import { NavigationControl } from "react-map-gl/maplibre";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import { useOsStore } from "../../store/useOsStore";
+import { useOsStore } from "../../shared/store/useOsStore";
 import { Searchbar } from "./Searchbar";
 import { Text } from "./Text";
 import gsap from "gsap";
@@ -19,7 +19,7 @@ const getCoord = (data) => {
 
 export const WeatherMap = () => {
     const windowOrder = useOsStore((state)=> state.windowOrder);
-    const focusApp = useOsStore((state)=>state.focusApp);
+
     const myZIndex = 10 + windowOrder.indexOf('map');
     const [isMapLoaded, setIsMapLoaded] = useState(false);
     const [mapError, setMapError] = useState("");
@@ -27,9 +27,9 @@ export const WeatherMap = () => {
     const mapRef = useRef(null);
     const MAPTILER_KEY = import.meta.env.VITE_MAPTILER_KEY;
     const mapStyleUrl = `https://api.maptiler.com/maps/dataviz-dark/style.json?key=${MAPTILER_KEY}`;
-    const apps = useOsStore((state) => state.apps);
+
     const closeApp = useOsStore((state) => state.closeApp);
-    const isOpen = useOsStore((state)=>state.isOpen);
+
     const isClosing = useOsStore((state)=>state.isClosing);
     const telemetryData = useOsStore((state) => state.telemetryData);
     const coord = getCoord(telemetryData);

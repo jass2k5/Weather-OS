@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { useOsStore } from "../store/useOsStore";
+import { useOsStore } from "../shared/store/useOsStore";
 export const DockIcon = ({ iconsource, appName, itsTerminal, isOpen, openApp, Class, closeApp }) => {
     const [Menu, setMenu] = useState(false);
-    const windowOrder = useOsStore((state) => state.windowOrder);
+
     const focusApp = useOsStore((state) => state.focusApp);
-    const myZIndex = 10 + windowOrder.indexOf(appName);
+
     return (
 
         <div onClick={() => {

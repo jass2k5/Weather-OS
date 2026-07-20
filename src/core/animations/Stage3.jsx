@@ -4,7 +4,7 @@ import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
-import { useOsStore } from "../store/useOsStore";
+import { useOsStore } from "../../shared/store/useOsStore";
 import { SplitText } from "gsap/SplitText";
 
 gsap.registerPlugin(SplitText);
@@ -40,7 +40,7 @@ export const RunAct3 = ({ onComplete }) => {
     const [inputValue, setInputValue] = useState("");
     const inputRef = useRef(null);
     const containerRef = useRef(null);
-    const beforeInput = useRef(null);
+
     const info = useRef(null);
     const setSystemTelemetry = useOsStore((state) => state.setSystemTelemetry);
     const timeoutIdRef = useRef(null);

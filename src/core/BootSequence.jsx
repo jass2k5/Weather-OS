@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { useRef } from "react";
-import { useOsStore } from "../store/useOsStore";
-import { NotificationManager } from "./Notification";
-import { RunAct1 } from "../animations/Stage1";
-import { RunAct2 } from "../animations/Stage2";
-import { RunAct3 } from "../animations/Stage3";
-import { RunAct4 } from "../animations/Stage4";
+import { useOsStore } from "../shared/store/useOsStore";
+import { NotificationManager } from "../layout/NotificationFly";
+import { RunAct1 } from "./animations/Stage1";
+import { RunAct2 } from "./animations/Stage2";
+import { RunAct3 } from "./animations/Stage3";
+import { RunAct4 } from "./animations/Stage4";
 
 export const BootSequence = () => {
     const firsth1Ref = useRef(null);

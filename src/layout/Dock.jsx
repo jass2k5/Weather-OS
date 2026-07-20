@@ -1,19 +1,18 @@
-import weather from '../assets/ios-weather.svg'
-import map from '../assets/map.png'
-import clock from '../assets/apple-clock.svg'
-import widgets from '../assets/widgets.png'
-import notification from '../assets/notification.png'
-import settings from '../assets/apple-settings.svg'
-import { useOsStore } from '../store/useOsStore'
-import { useState } from 'react'
+import weather from '../shared/assets/ios-weather.svg'
+import map from '../shared/assets/map.png'
+import clock from '../shared/assets/apple-clock.svg'
+import widgets from '../shared/assets/widgets.png'
+import notification from '../shared/assets/notification.png'
+import settings from '../shared/assets/apple-settings.svg'
+import { useOsStore } from '../shared/store/useOsStore'
 import { DockIcon } from './DockIcon'
 
 export const Dock = () => {
     const apps = useOsStore((state) => state.apps);
     const closeApp = useOsStore((state) => state.closeApp);
     const openApp = useOsStore((state) => state.openApp);
-    const startCloseApp = useOsStore((state) => state.startCloseApp);
-    const [menu, setMenu] = useState(false);
+
+
 
     return (
         <div className="Dock relative">

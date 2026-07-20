@@ -15,14 +15,14 @@ export const RunAct1 = ({ firsth1Ref, secondh1Ref, paraRef, onComplete }) => {
             const para = SplitText.create(paraRef.current, { type: "words" });
 
             const allChar1 = split.chars;
-            const char2 = split2.chars;
+
             const word2 = split2.words;
             const words1= split.words;
             const word1 = words1.slice(1);
             const parawords = para.words;
 
             const A = allChar1[0];
-            const otherChar = allChar1.slice(1);
+
 
             const t1 = gsap.timeline({
                 onComplete: () => {
