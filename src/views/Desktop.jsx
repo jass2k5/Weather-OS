@@ -3,9 +3,9 @@ import { useOsStore } from "../shared/store/useOsStore"
 import { DraggableWindow } from "../shared/components/DraggableWindow"
 import { TerminalMap } from "../features/terminals/TerminalMap"
 import { WeatherMap } from "../features/map/Map"
-import { TopRightDate } from "../layout/TopRightDate"
+import { TopRightDate } from "../layout/date/TopRightDate"
 import { Clock } from "../features/clock/Clock"
-import { Dock } from "../layout/Dock"
+import { Dock } from "../layout/dock/Dock"
 import { NotificationManager } from "../layout/NotificationFly";
 import { NotificationApp } from "../features/notification/Notification"
 

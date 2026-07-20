@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useOsStore } from "../shared/store/useOsStore";
+import { useOsStore } from "../../shared/store/useOsStore";
 export const DockIcon = ({ iconsource, appName, itsTerminal, isOpen, openApp, Class, closeApp }) => {
     const [Menu, setMenu] = useState(false);
 

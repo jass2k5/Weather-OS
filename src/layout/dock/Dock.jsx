@@ -1,10 +1,10 @@
-import weather from '../shared/assets/ios-weather.svg'
-import map from '../shared/assets/map.png'
-import clock from '../shared/assets/apple-clock.svg'
-import widgets from '../shared/assets/widgets.png'
-import notification from '../shared/assets/notification.png'
-import settings from '../shared/assets/apple-settings.svg'
-import { useOsStore } from '../shared/store/useOsStore'
+import weather from '../../shared/assets/ios-weather.svg'
+import map from '../../shared/assets/map.png'
+import clock from '../../shared/assets/apple-clock.svg'
+import widgets from '../../shared/assets/widgets.png'
+import notification from '../../shared/assets/notification.png'
+import settings from '../../shared/assets/apple-settings.svg'
+import { useOsStore } from '../../shared/store/useOsStore'
 import { DockIcon } from './DockIcon'
 
 export const Dock = () => {

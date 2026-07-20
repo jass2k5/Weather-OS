@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useOsStore } from "../shared/store/useOsStore";
+import { useOsStore } from "../../shared/store/useOsStore";
 
 export const TopRightDate = () => {
     const telemetryData = useOsStore((state) => state.telemetryData);
