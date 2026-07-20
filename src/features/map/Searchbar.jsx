@@ -4,7 +4,7 @@ import axios from "axios";
 import { useMutation } from "@tanstack/react-query";
 import { useState, useEffect, useRef } from "react";
 
-import { useOsStore } from "../../store/useOsStore";
+import { useOsStore } from "../../shared/store/useOsStore";
 export const Searchbar = () => {
     const [inputvalue, setInputValue] = useState("");
 

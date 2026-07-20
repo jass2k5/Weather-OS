@@ -5,8 +5,8 @@ import { SyncBtn } from "./SyncBtn";
 import { useOsStore } from "../../shared/store/useOsStore";
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
-import Night from "../../assets/night.jpg"
-import Day from "../../assets/day.jpg"
+import Night from "../../shared/assets/night.jpg"
+import Day from "../../shared/assets/day.jpg"
 
 
 export const Clock = () => {

@@ -4,7 +4,7 @@ import { Marker } from "react-map-gl/maplibre";
 import "maplibre-gl/dist/maplibre-gl.css";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import { useOsStore } from "../../store/useOsStore";
+import { useOsStore } from "../../shared/store/useOsStore";
 
 
 const getCoord = (data) => {

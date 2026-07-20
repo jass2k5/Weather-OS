@@ -1,6 +1,6 @@
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import { useOsStore } from "../../store/useOsStore";
+import { useOsStore } from "../../shared/store/useOsStore";
 import { useRef } from "react";
 import { SplitText } from "gsap/SplitText";
 

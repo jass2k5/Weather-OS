@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import { useOsStore } from "../../store/useOsStore";
+import { useOsStore } from "../../shared/store/useOsStore";
 import { Draggable } from "gsap/Draggable";
 gsap.registerPlugin(Draggable, useGSAP);
 
