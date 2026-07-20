@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { useOsStore } from "../store/useOsStore";
+import { useOsStore } from "../shared/store/useOsStore";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 

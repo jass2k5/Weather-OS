@@ -1,14 +1,13 @@
 import { useEffect } from "react"
 import { useOsStore } from "../store/useOsStore"
-import { DraggableWindow } from "./DraggableWindow"
-import { TerminalMap } from '../terminals/TerminalMap'
-import { WeatherMap } from "../pages/map/Map"
+import { DraggableWindow } from "../components/DraggableWindow"
+import { TerminalMap } from "../apps/terminals/TerminalMap"
+import { WeatherMap } from "../apps/map/Map"
 import { TopRightDate } from "../layout/TopRightDate"
-import { Clock } from "../pages/clock/Clock"
+import { Clock } from "../apps/clock/Clock"
 import { Dock } from "../layout/Dock"
-import { NotificationManager } from "./Notification";
-import { NotificationApp } from "../pages/notification/NotificationApp"
-import { useConnectivity } from "../hooks/useConnectivity"
+import { NotificationManager } from "../layout/Notification";
+import { NotificationApp } from "../apps/notification/NotificationApp"
 
 export const Desktop = () => {
     const bgClr = useOsStore((state) => state.systemBg)

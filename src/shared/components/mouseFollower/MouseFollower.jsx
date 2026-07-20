@@ -1,6 +1,6 @@
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import sunGif from "../../assets/sunGif.gif";
 import batGif from "../../assets/batGif.svg";
 import { useOsStore } from "../../store/useOsStore";
@@ -8,7 +8,7 @@ export const MouseFollower = () => {
 const cursorRef = useRef(null);
 const isDay = useOsStore((state)=> state.isDay);
 const isScrollHovered = useOsStore((state)=>state.isScrollHovered);
-const  setIsScrollHovered = useOsStore((state)=>state.setIsScrollHovered);
+
 // useEffect(()=>{
 //  let timer;
 // if(isScrollHovered){

@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { useOsStore } from "../../store/useOsStore";
+import { useState } from "react";
+import { useOsStore } from "../../shared/store/useOsStore";
 export const SyncBtn = () => {
 
   const syncAllWeather = useOsStore((state) => state.syncAllWeather);

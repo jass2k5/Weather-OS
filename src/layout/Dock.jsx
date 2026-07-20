@@ -4,16 +4,15 @@ import clock from '../assets/apple-clock.svg'
 import widgets from '../assets/widgets.png'
 import notification from '../assets/notification.png'
 import settings from '../assets/apple-settings.svg'
-import { useOsStore } from '../store/useOsStore'
-import { useState } from 'react'
+import { useOsStore } from '../shared/store/useOsStore'
 import { DockIcon } from './DockIcon'
 
 export const Dock = () => {
     const apps = useOsStore((state) => state.apps);
     const closeApp = useOsStore((state) => state.closeApp);
     const openApp = useOsStore((state) => state.openApp);
-    const startCloseApp = useOsStore((state) => state.startCloseApp);
-    const [menu, setMenu] = useState(false);
+
+
 
     return (
         <div className="Dock relative">

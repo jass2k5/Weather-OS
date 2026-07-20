@@ -1,10 +1,10 @@
 import { useState,useEffect } from "react";
-import { useOsStore } from "../../store/useOsStore";
+import { useOsStore } from "../../shared/store/useOsStore";
 
 
 export const MiniCardClock = ({ tz_id }) => {
     const [time, setTime] = useState("");
-    const[dayName,setDayName] = useState("");
+
     const [monthName,setMonthName] = useState("");
     const [dateNum,setDateNum] = useState("");
     const [year,setYear] = useState("");
@@ -20,7 +20,7 @@ export const MiniCardClock = ({ tz_id }) => {
                 hour: "2-digit",
                 minute: "2-digit"
             }));
-            setDayName(now.toLocaleDateString("en-US", { timeZone:tz_id, weekday: "short" }));
+
             setMonthName(now.toLocaleDateString("en-US", { timeZone:tz_id, month: "short" }));
             setDateNum(now.toLocaleDateString("en-US", {
                 timeZone: tz_id,

@@ -1,9 +1,8 @@
-import { useState } from "react"
-import { BootSequence } from "./components/BootSequence"
-import { Desktop } from "./components/Desktop"
-import { MouseFollower } from "./components/mouseFollower/MouseFollower"
-import { useOsStore } from "./store/useOsStore"
-import { useConnectivity } from "./hooks/useConnectivity"
+import { BootSequence } from "../core/BootSequence"
+import { Desktop } from "../views/Desktop"
+import { MouseFollower } from "../components/mouseFollower/MouseFollower"
+import { useOsStore } from "../store/useOsStore"
+import { useConnectivity } from "../hooks/useConnectivity"
 export const App = ()=>{
 const isBooted = useOsStore((state) => state.isBooted);
 useConnectivity()

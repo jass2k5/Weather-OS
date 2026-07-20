@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import axios from "axios";
+
 export const useOsStore = create(persist((set, get) => ({
     isClosing: false,
     startCloseApp: () => { set({ isClosing: true }) },

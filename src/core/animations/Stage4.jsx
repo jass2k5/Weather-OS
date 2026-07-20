@@ -1,18 +1,15 @@
-import { useState, useRef, useEffect } from "react";
+import { useEffect } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import { useMutation } from "@tanstack/react-query";
-import axios from "axios";
-import { useOsStore } from "../store/useOsStore";
-import { BootSequence } from "../components/BootSequence";
+import { useOsStore } from "../../store/useOsStore";
 import { Draggable } from "gsap/Draggable";
 gsap.registerPlugin(Draggable, useGSAP);
 
 export const RunAct4 = ({ dragBoxRef, firsth1Ref, secondh1Ref, paraRef, jassRef,logoRef,onComplete }) => {
-    const containerRef = useRef(null);
-    const columnRef = useRef(null);
-    const [count, SetCount] = useState(null);
-    const [block, setBlock] = useState(300)
+
+
+
+
     // const timeoutRef = useRef(null);
     const finishBoot = useOsStore(state => state.finishBoot);
     useEffect(() => {

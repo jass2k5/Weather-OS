@@ -2,8 +2,8 @@ import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { MiniCardClock } from "./CardClock";
 import { SyncBtn } from "./SyncBtn";
-import { useOsStore } from "../../store/useOsStore";
-import { useEffect, useState, useRef } from "react";
+import { useOsStore } from "../../shared/store/useOsStore";
+import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import Night from "../../assets/night.jpg"
 import Day from "../../assets/day.jpg"
@@ -11,14 +11,14 @@ import Day from "../../assets/day.jpg"
 
 export const Clock = () => {
     const windowOrder = useOsStore((state) => state.windowOrder);
-    const focusApp = useOsStore((state) => state.focusApp);
+
     const myZIndex = 10 + windowOrder.indexOf('clock');
     const searchHistory = useOsStore((state) => state.searchHistory);
     // const allSearches = searchHistory;
     const telemetryData = useOsStore((state) => state.telemetryData);
     const syncAllWeather = useOsStore((state) => state.syncAllWeather);
     const setIsScrollHovered = useOsStore((state) => state.setIsScrollHovered)
-    const [liveDate, setLiveDate] = useState(null);
+
     const cardRefs = useRef([]);
     const containerRef = useRef(null);
     const addNotification = useOsStore((state) => state.addNotification);
@@ -28,7 +28,7 @@ export const Clock = () => {
     useGSAP(() => {
         if (cardRefs.current.length === 0) return;
 
-        cardRefs.current.forEach((card, index) => {
+        cardRefs.current.forEach((card) => {
             if (!card) return;
 
             gsap.to(card, {

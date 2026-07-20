@@ -3,11 +3,11 @@ import { useGSAP } from "@gsap/react";
 import axios from "axios";
 import { useMutation } from "@tanstack/react-query";
 import { useState, useEffect, useRef } from "react";
-import sunGif from "../../assets/sunGif.gif";
+
 import { useOsStore } from "../../store/useOsStore";
 export const Searchbar = () => {
     const [inputvalue, setInputValue] = useState("");
-    const [isSubmitted, setIsSubmitted] = useState(false);
+
     const [prev, setPrev] = useState(false);
     const setSystemTelemetry = useOsStore((state) => state.setSystemTelemetry)
     const telemetryData = useOsStore((state)=>state.telemetryData);
@@ -58,7 +58,7 @@ export const Searchbar = () => {
     }, []);
 
 
-    const { mutate, isPending, isSuccess, isError } = useMutation({
+    const { mutate, isPending } = useMutation({
         mutationFn: fetchLocationTelemetry,
         onSuccess: (data, submittedLocation) => {
             setSystemTelemetry(submittedLocation, data);

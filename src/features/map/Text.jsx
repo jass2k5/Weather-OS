@@ -11,7 +11,7 @@ export const Text = () => {
 
     const telemetryData = useOsStore((state) => state.telemetryData);
     const windowOrder = useOsStore((state) => state.windowOrder);
-    const focusApp = useOsStore((state) => state.focusApp);
+
     const myZIndex = 20 + windowOrder.indexOf('map');
 
     const city = telemetryData?.location?.name?.trim() ?? "Unknown Location";
