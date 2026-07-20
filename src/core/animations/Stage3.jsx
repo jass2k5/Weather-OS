@@ -40,7 +40,6 @@ export const RunAct3 = ({ onComplete }) => {
     const [inputValue, setInputValue] = useState("");
     const inputRef = useRef(null);
     const containerRef = useRef(null);
-
     const info = useRef(null);
     const setSystemTelemetry = useOsStore((state) => state.setSystemTelemetry);
     const timeoutIdRef = useRef(null);

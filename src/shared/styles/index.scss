@@ -1,15 +1,13 @@
-
-@import '../../core/bootSequence.scss';
-@import '../../views/Desktop.scss';
-@import '../components/mouseFollower/MouseFollower.scss';
-@import '../../features/terminals/terminal.scss';
-@import '../../features/map/Searchbar.scss';
-@import '../../features/map/Text.scss';
-@import '../../layout/date/TopRightDate.scss';
-@import '../../layout/dock/Dock.scss';
-@import '../../features/clock/Button.scss';
-@import '../../features/clock/ClockTerminal.scss';
-
+@use '../../core/bootSequence';
+@use '../../views/Desktop';
+@use '../components/mouseFollower/MouseFollower';
+@use '../../features/terminals/terminal';
+@use '../../features/map/Searchbar';
+@use '../../features/map/Text';
+@use '../../layout/date/TopRightDate';
+@use '../../layout/dock/Dock';
+@use '../../features/clock/Button';
+@use '../../features/clock/ClockTerminal';
 
 @layer base {
     *, *::before, *::after {
@@ -21,8 +19,8 @@
         padding: 0;
     }
 
-    html,body {
-       height: 100%;
-       width: 100%;
+    html, body {
+        height: 100%;
+        width: 100%;
     }
 }

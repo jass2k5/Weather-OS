@@ -13,6 +13,7 @@ export const Searchbar = () => {
     const telemetryData = useOsStore((state)=>state.telemetryData);
     const addSearchToHistory = useOsStore((state) => state.addSearchToHistory);
     const searchHistory = useOsStore((state) => state.searchHistory);
+    const addNotification = useOsStore((state) => state.addNotification);
     const allSearches = searchHistory;
     const formRef = useRef(null);
     const isFirstRender = useRef(true);
@@ -58,13 +59,30 @@ export const Searchbar = () => {
     }, []);
 
 
-    const { mutate, isPending } = useMutation({
-        mutationFn: fetchLocationTelemetry,
-        onSuccess: (data, submittedLocation) => {
-            setSystemTelemetry(submittedLocation, data);
-            addSearchToHistory(data);
-        }
-    })
+
+const { mutate, isPending } = useMutation({
+    mutationFn: fetchLocationTelemetry,
+    onSuccess: (data, submittedLocation) => {
+        setSystemTelemetry(submittedLocation, data);
+        addSearchToHistory(data);
+
+        const currentAqi = data?.current?.air_quality?.['us-epa-index'];
+        const locName = data?.location?.name;
+
+        addNotification(`Telemetry stream active: ${locName}`, "info");
+
+        setTimeout(() => {
+            if (currentAqi <= 2) {
+                addNotification(`Aqi quality is Good for ${locName}`, "success");
+            } else if (currentAqi === 3) {
+                addNotification(`Moderate Aqi quality in ${locName}`, "warning");
+            } else {
+                addNotification(`Critical: Hazardous AQI! in ${locName}`, "error");
+            }
+        }, 4000);
+    }
+});
+
     useEffect(()=>{
       if(telemetryData?.location?.name){
         mutate(telemetryData.location.name);

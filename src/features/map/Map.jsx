@@ -45,19 +45,7 @@ export const WeatherMap = () => {
                 duration: 2500,
                 essential: true,
             });
-            addNotification(`Telemetry stream active: ${telemetryData?.location?.name}`,"info")
-            let timer = setTimeout(() => {
-                if(currentAqi<=2){
-                    addNotification(`Aqi quality is Good for ${telemetryData?.location?.name}`,"success");
-                }else if(currentAqi === 3){
-                    addNotification(`Moderate Aqi quality in ${telemetryData?.location?.name}`,"warning");
-                }else{
-                    addNotification(`Critical: Hazardous AQI! in ${telemetryData?.location?.name}`,"error");
-                }
-              
-            }, 4000);
-            
-            return ()=> clearTimeout(timer);
+           
         }
     }, [telemetryData, isMapLoaded]);
 
