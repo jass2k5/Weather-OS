@@ -61,6 +61,11 @@ export const WeatherMap = () => {
         }
     }, [telemetryData, isMapLoaded]);
 
+    useEffect(()=>{
+        if(!mapError) return;
+        addNotification(`${mapError}`,"warning")
+    },[mapError])
+
      useEffect(() => {
         if (!isClosing) return;
         gsap.fromTo(containerRef.current,
@@ -76,6 +81,7 @@ export const WeatherMap = () => {
             }
         );
     }, [isClosing]);
+
 
     
 

@@ -57,9 +57,11 @@ export const Clock = () => {
 
         let length = searchHistory.length;
         addNotification(`${length} locations have been initialised`,"info");
-        timer = setTimeout(()=>{
-            addNotification(`All locations will be synced every 5 minutes`,"info");
+        if(length >0){
+         timer = setTimeout(()=>{
+            addNotification(`locations will be synced every 5 minutes`,"info");
         },4000);
+        }
 
 
         return () => {
