@@ -4,6 +4,7 @@ export const SyncBtn = () => {
 
   const syncAllWeather = useOsStore((state) => state.syncAllWeather);
   const [Buttonstate,setButtonstate] = useState("Sync");
+  const addNotification = useOsStore((state) => state.addNotification);
 
   const handleclick = async ()=>{
     if(Buttonstate === "syncing") return;
@@ -11,6 +12,7 @@ export const SyncBtn = () => {
     try{
       setButtonstate("Syncing");
       await syncAllWeather();
+      addNotification("Synced Done through Button","info");
       setButtonstate("Synced");
       setTimeout(() => {
         setButtonstate("Sync");

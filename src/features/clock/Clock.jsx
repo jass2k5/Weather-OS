@@ -11,7 +11,6 @@ import Day from "../../shared/assets/day.jpg"
 
 export const Clock = () => {
     const windowOrder = useOsStore((state) => state.windowOrder);
-
     const myZIndex = 10 + windowOrder.indexOf('clock');
     const searchHistory = useOsStore((state) => state.searchHistory);
     // const allSearches = searchHistory;
@@ -53,6 +52,7 @@ export const Clock = () => {
         const weatherTimer = setInterval(() => {
             console.log("Synced Clocks");
             syncAllWeather();
+            addNotification("Auto Synced","success")
         }, 300000);
 
         let length = searchHistory.length;
