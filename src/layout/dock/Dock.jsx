@@ -58,7 +58,7 @@ export const Dock = () => {
             <DockIcon
                 iconsource={notification}
                 appName={"notification"}
-                itsTerminal={"terminalNotification"}
+                itsTerminal={"none"}
                 isOpen={apps?.notification?.isOpen}
                 openApp={openApp}
                 closeApp={closeApp}
@@ -67,8 +67,8 @@ export const Dock = () => {
             <DockIcon
                 iconsource={settings}
                 appName={"settings"}
-                itsTerminal={"terminalSettings"}
-                isOpen={false}
+                itsTerminal={"none"}
+                isOpen={apps?.settings?.isOpen}
                 openApp={openApp}
                 closeApp={closeApp}
                 Class={"settings"}

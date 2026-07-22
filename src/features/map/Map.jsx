@@ -19,7 +19,6 @@ const getCoord = (data) => {
 
 export const WeatherMap = () => {
     const windowOrder = useOsStore((state)=> state.windowOrder);
-
     const myZIndex = 10 + windowOrder.indexOf('map');
     const [isMapLoaded, setIsMapLoaded] = useState(false);
     const [mapError, setMapError] = useState("");

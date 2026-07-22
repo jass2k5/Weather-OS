@@ -8,6 +8,7 @@ import { Clock } from "../features/clock/Clock"
 import { Dock } from "../layout/dock/Dock"
 import { NotificationManager } from "../layout/NotificationFly";
 import { NotificationApp } from "../features/notification/Notification"
+import { Settings } from "../features/settings/Settings"
 
 export const Desktop = () => {
     const bgClr = useOsStore((state) => state.systemBg)
@@ -23,18 +24,32 @@ export const Desktop = () => {
             <div className="glassmorph "></div>
 
             <div className="absolute inset-0 z-10 bg ">
-                
+
                 <NotificationManager />
                 <TopRightDate />
                 {apps?.notification?.isOpen && (<DraggableWindow
-                title={"Notification History"}
-                Appid={"notification"}
-                isResizable={false}
-                defaultSize={{ width: 520, height: 380 }}
+                    title={"Notification History"}
+                    Appid={"notification"}
+                    isResizable={false}
+                    defaultSize={{ width: 520, height: 380 }}
                 >
-                    <NotificationApp/>
-                </DraggableWindow>) }
+                    <NotificationApp />
+                </DraggableWindow>)}
                 {apps?.map?.isOpen && <WeatherMap />}
+                {apps?.settings?.isOpen && <DraggableWindow
+                    defaultSize={{
+                        width: window.innerWidth * 0.94,
+                        height: window.innerHeight * 0.94
+                    }}
+                    defaultpos={{
+                        x: Math.floor(window.innerWidth * 0.03),
+                        y: Math.floor(window.innerHeight * 0.03)
+                    }}
+                    Appid={"settings"}
+                    title={"Settings"}
+                >
+                    <Settings />
+                </DraggableWindow>}
                 {apps?.terminalMap?.isOpen &&
                     (<DraggableWindow title={"TerminalMap"} Appid={"terminalMap"} ><TerminalMap /></DraggableWindow>)}
                 {apps?.clock?.isOpen && <Clock />}

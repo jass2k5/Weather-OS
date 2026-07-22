@@ -37,7 +37,7 @@ export const DockIcon = ({ iconsource, appName, itsTerminal, isOpen, openApp, Cl
 
                     <div className="h-[1px] w-full bg-white/10 my-0.5"></div>
 
-                   {appName!=="notification" &&  <button
+                   {appName!=="notification" && appName!=="settings" &&  <button
                         onClick={(e) => {
                             e.stopPropagation();
                             openApp(itsTerminal);

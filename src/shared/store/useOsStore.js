@@ -24,7 +24,8 @@ export const useOsStore = create(persist((set, get) => ({
         terminalMap: { isOpen: false },
         clock: { isOpen: false },
         terminalClock: { isOpen: false },
-        notification: { isOpen: false }
+        notification: { isOpen: false },
+        settings:{isOpen:false}
     },
 
     closeApp: (Appid) => set((state) => ({
@@ -90,7 +91,8 @@ export const useOsStore = create(persist((set, get) => ({
         set({ searchHistory: updatedHistory });
     },
 
-    windowOrder: ['map', 'clock', 'terminalMap', "notification"],
+    windowOrder: ['map', 'clock','settings', 'terminalMap', 'terminalClock',"notification"],
+    
 
 
     focusApp: (appId) => set((state) => {
