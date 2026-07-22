@@ -75,7 +75,7 @@ export const Clock = () => {
 
 
     return (
-        <div style={{ zIndex: myZIndex }} className="Clock h-full w-full absolute top-0 left-0 bg-black p-10 flex items-center justify-center">
+        <div style={{ zIndex: myZIndex }} className="Clock h-full w-full absolute top-0 left-0 bg-black pt-10 pb-0 flex items-center justify-center">
             <div onMouseEnter={() => {
                 if (searchHistory.length > 1) {
                     setIsScrollHovered(true);

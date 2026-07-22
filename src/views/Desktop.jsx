@@ -32,6 +32,8 @@ export const Desktop = () => {
                     Appid={"notification"}
                     isResizable={false}
                     defaultSize={{ width: 520, height: 380 }}
+                    minHeight={380}
+                    minWidth={520}
                 >
                     <NotificationApp />
                 </DraggableWindow>)}
@@ -45,15 +47,19 @@ export const Desktop = () => {
                         x: Math.floor(window.innerWidth * 0.03),
                         y: Math.floor(window.innerHeight * 0.03)
                     }}
+                    minWidth={750}
+                    minHeight={450}
                     Appid={"settings"}
                     title={"Settings"}
                 >
                     <Settings />
                 </DraggableWindow>}
+
                 {apps?.terminalMap?.isOpen &&
                     (<DraggableWindow title={"TerminalMap"} Appid={"terminalMap"} ><TerminalMap /></DraggableWindow>)}
                 {apps?.clock?.isOpen && <Clock />}
-                {apps?.terminalClock?.isOpen && (<DraggableWindow title={"TerminalClock"} Appid={"terminalClock"}><Clock /></DraggableWindow>)}
+
+                {apps?.terminalClock?.isOpen && (<DraggableWindow title={"TerminalClock"} Appid={"terminalClock"} minHeight={406} minWidth={459}><Clock /></DraggableWindow>)}
 
                 <Dock />
             </div>
