@@ -20,7 +20,9 @@ export const Desktop = () => {
 
 
     return (
-        <div className={` desktop h-screen w-screen relative bg-cover bg-center bg-no-repeat overflow-hidden ${bgClr}`}>
+        <div
+        style={{ backgroundImage: `url('${bgClr}')` }}
+         className={` desktop h-screen w-screen relative bg-cover bg-center bg-no-repeat overflow-hidden `}>
             <div className="glassmorph "></div>
 
             <div className="absolute inset-0 z-10 bg ">

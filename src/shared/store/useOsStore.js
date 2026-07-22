@@ -11,6 +11,9 @@ export const useOsStore = create(persist((set, get) => ({
     setIsScrollHovered: (val) => set({ isScrollHovered: val }),
     isBooted: false,
     systemBg: "bg-[url(/stage1bg.png)]",
+    setBg:(bg)=> set(()=>({
+        systemBg:bg,
+    })),
     finishBoot: () => { set({ isBooted: true }) },
     activeLocation: null,
     telemetryData: null,

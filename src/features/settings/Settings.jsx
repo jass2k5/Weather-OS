@@ -1,13 +1,13 @@
 import { useEffect, useState, useRef } from "react";
 import { useOsStore } from "../../shared/store/useOsStore";
-
-
+import { SystemSettings } from "./system/System";
 export const Settings = () => {
     const focusApp = useOsStore((state) => state.focusApp);
     const windowOrder = useOsStore((state) => state.windowOrder);
     const zIndex = 15 + windowOrder.indexOf('settings');
     const [active, setActive] = useState('Maps');
     const options = [
+        {id:"System",icon:<i class="ri-window-line"></i>},
         { id: "Maps", icon: <i className="ri-road-map-line"></i> },
         { id: "Clock", icon: <i className="ri-time-line"></i> },
         { id: "Notification", icon: <i className="ri-notification-line"></i> },
@@ -26,12 +26,13 @@ export const Settings = () => {
             case "Clock": return <ClockSettings/>;
             case "Notification": return <NotificationSettings/>;
             case "Widgets": return <WidgetSettings/>;
+            case "System": return <SystemSettings/>
             default: return <MapSettings />;
         }
     }
 
     return (
-        <div className="settings absolute inset-0 bg-black p-6">
+        <div style={{zIndex:zIndex}} className="settings absolute inset-0 bg-black ">
             <aside>
                 <span className="personal">Personalization</span>
                 <div className="navigators">
@@ -40,9 +41,9 @@ export const Settings = () => {
                         onClick={()=>{
                             setActive(option.id);
                         }}
-                         className="option flex">
+                         className={`option flex ${active === option.id?"bg-[#ffffffc3] text-black/70! rounded-[0.4rem]":"bg-none"}`}>
                             {option.icon}
-                            <span>{option.id}</span>
+                            <span >{option.id}</span>
                         </div>
                     ))}
                 </div>

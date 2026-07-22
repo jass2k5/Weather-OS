@@ -104,7 +104,7 @@ export const DraggableWindow = ({ children, title, Appid, defaultpos = { x: 300,
                 ref={windowRef}
                 className="w-full h-full flex flex-col border border-cyan-500/20 bg-black backdrop-blur-md rounded-[0.6rem] overflow-hidden shadow-2xl"
             >
-                <div className="window-header shrink-0 w-full h-7 cursor-grab active:cursor-grabbing bg-zinc-800 p-4 flex items-center justify-center relative border-b border-cyan-500/10">
+                <div className="window-header shrink-0 w-full h-7 cursor-grab active:cursor-grabbing bg-zinc-800 p-4 flex items-center justify-center relative border-b border-[rgba(255,255,255,0.1)]">
                     <div className="flex items-center gap-2 absolute left-[1%] top-[20%] cursor-pointer">
                         <button
                             onClick={() => handleclose()}

@@ -71,7 +71,7 @@ export const Dock = () => {
                 isOpen={apps?.settings?.isOpen}
                 openApp={openApp}
                 closeApp={closeApp}
-                Class={"settings"}
+                Class={"setting"}
             />
         </div>
     )

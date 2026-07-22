@@ -8,6 +8,7 @@
 @use '../../layout/dock/Dock';
 @use '../../features/clock/Button';
 @use '../../features/clock/ClockTerminal';
+@use '../../features/settings/SettingsOs';
 
 @layer base {
     *, *::before, *::after {
