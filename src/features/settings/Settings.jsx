@@ -5,9 +5,9 @@ export const Settings = () => {
     const focusApp = useOsStore((state) => state.focusApp);
     const windowOrder = useOsStore((state) => state.windowOrder);
     const zIndex = 15 + windowOrder.indexOf('settings');
-    const [active, setActive] = useState('Maps');
+    const [active, setActive] = useState('System');
     const options = [
-        {id:"System",icon:<i class="ri-window-line"></i>},
+        {id:"System",icon:<i className="ri-window-line"></i>},
         { id: "Maps", icon: <i className="ri-road-map-line"></i> },
         { id: "Clock", icon: <i className="ri-time-line"></i> },
         { id: "Notification", icon: <i className="ri-notification-line"></i> },
@@ -27,7 +27,7 @@ export const Settings = () => {
             case "Notification": return <NotificationSettings/>;
             case "Widgets": return <WidgetSettings/>;
             case "System": return <SystemSettings/>
-            default: return <MapSettings />;
+            default: return <SystemSettings/>;
         }
     }
 

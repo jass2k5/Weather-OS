@@ -5,11 +5,20 @@ export const TopRightDate = () => {
     const telemetryData = useOsStore((state) => state.telemetryData);
     const setNight = useOsStore((state) => state.setNight);
     const setDay = useOsStore((state) => state.setDay);
-    
+    const dateTimeSettings = useOsStore((state)=>state.dateTimeSettings);
 
     const [timeString, setTimeString] = useState("");
     const [dateString, setDateString] = useState("");
-
+    
+    const getPositionClasses = (pos) => {
+        switch(pos) {
+            case 'top-left': return 'top-[2%] left-[6%]';
+            case 'bottom-left': return 'bottom-[2%] left-[6%]';
+            case 'bottom-right': return 'bottom-[2%] right-[6%]';
+            case 'top-right': return 'top-[2%] right-[6%]';
+            default: return 'top-[2%] right-[6%]';
+        }
+    };
 
     useEffect(() => {
         if (!telemetryData?.current) return;
@@ -32,12 +41,18 @@ export const TopRightDate = () => {
             const now = new Date();
 
 
-            setTimeString(now.toLocaleTimeString("en-US", {
+            const timeOptions = {
                 timeZone: tz_id,
                 hour: "2-digit",
                 minute: "2-digit",
-                second: "2-digit"
-            }));
+                hour12: dateTimeSettings?.format === "12h"
+            };
+
+            if (dateTimeSettings?.showSeconds) {
+                timeOptions.second = "2-digit";
+            }
+
+            setTimeString(now.toLocaleTimeString("en-US", timeOptions));
 
           
             const dayName = now.toLocaleDateString("en-US", { timeZone: tz_id, weekday: "short" });
@@ -53,13 +68,13 @@ export const TopRightDate = () => {
         const timer = setInterval(updateClock, 1000); 
         
         return () => clearInterval(timer);
-    }, [telemetryData]); 
+    }, [telemetryData,dateTimeSettings]); 
 
    
     if (!timeString) return null;
 
     return (
-        <div className="date-container absolute top-[2%] right-[6%] h-auto w-auto z-50 flex flex-col justify-center items-center">
+        <div className={`date-container absolute ${getPositionClasses(dateTimeSettings.position)} h-auto w-auto z-50 flex flex-col justify-center items-center`}>
             <span className="consttime">{timeString}</span>
             <span className="constdate">{dateString}</span>
         </div>

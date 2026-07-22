@@ -10,7 +10,7 @@ export const useOsStore = create(persist((set, get) => ({
     isScrollHovered: false,
     setIsScrollHovered: (val) => set({ isScrollHovered: val }),
     isBooted: false,
-    systemBg: "bg-[url(/stage1bg.png)]",
+    systemBg: "/stage1bg.png",
     setBg:(bg)=> set(()=>({
         systemBg:bg,
     })),
@@ -168,6 +168,21 @@ export const useOsStore = create(persist((set, get) => ({
         return () => clearTimeout(timer);
 
     },
+    //settings section
+    dateTimeSettings: {
+        showDateTime: true,
+        showSeconds: true,
+        format: '24h', 
+        color: '#ffffff',
+        position: 'top-right' 
+    },
+
+    updateDateTimeSetting: (key, value) => set((state) => ({
+        dateTimeSettings: {
+            ...state.dateTimeSettings,
+            [key]: value
+        }
+    })),
 
 
 }
