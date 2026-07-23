@@ -11,9 +11,10 @@ import { NotificationApp } from "../features/notification/Notification"
 import { Settings } from "../features/settings/Settings"
 
 export const Desktop = () => {
-    const bgClr = useOsStore((state) => state.systemBg)
+    const bgUrl = useOsStore((state) => state.systemBg)
     const apps = useOsStore((state) => state.apps);
     const addNotification = useOsStore((state) => state.addNotification);
+    const glassSettings = useOsStore((state) => state.glassSettings);
     useEffect(() => {
         addNotification("System booted successfully.", "success");
     }, [])
@@ -21,9 +22,14 @@ export const Desktop = () => {
 
     return (
         <div
-        style={{ backgroundImage: `url('${bgClr}')` }}
-         className={` desktop h-screen w-screen relative bg-cover bg-center bg-no-repeat overflow-hidden `}>
-            <div className="glassmorph "></div>
+            style={{ backgroundImage: `url('${bgUrl}')` }}
+            className={` desktop h-screen w-screen relative bg-cover bg-center bg-no-repeat overflow-hidden `}>
+            {glassSettings?.enabled && (
+                <div style={{
+                    backdropFilter: `blur(${glassSettings.blurValue || 0}px)`,
+                    WebkitBackdropFilter: `blur(${glassSettings.blurValue || 0}px)`
+                }} className="glassmorph"></div>
+            )}
 
             <div className="absolute inset-0 z-10 bg ">
 
@@ -42,8 +48,8 @@ export const Desktop = () => {
                 {apps?.map?.isOpen && <WeatherMap />}
                 {apps?.settings?.isOpen && <DraggableWindow
                     defaultSize={{
-                        width: window.innerWidth * 0.94,
-                        height: window.innerHeight * 0.94
+                        width: window.innerWidth * 0.9,
+                        height: window.innerHeight * 0.9
                     }}
                     defaultpos={{
                         x: Math.floor(window.innerWidth * 0.03),

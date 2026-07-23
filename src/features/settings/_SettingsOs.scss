@@ -1,62 +1,65 @@
-.settings{
+.settings {
     display: grid;
     grid-template-columns: 0.5fr 4.5fr;
     grid-template-rows: 1fr;
     grid-template-areas: "aside Right";
 
-    
-    .Right{
+
+    .Right {
         display: flex;
-        align-items: center; 
+        align-items: center;
         justify-content: center;
         padding: 4rem;
 
-        
+
     }
-    aside{
+
+    aside {
         grid-area: aside;
-        border-right: 1px solid rgba(255,255,255,0.1);
-        background-color:  rgb(39, 39, 42);
-       display: flex;
-       gap: 0.9rem;
-       justify-content: start;
-       align-items: center;
-       flex-direction: column;
-       padding-top: 2rem;
-      
-       .personal{
-        color: rgba(255, 255, 255, 0.54);
-        text-transform: uppercase;
-        font-family: sans-serif;
-        font-size: clamp(0.2rem,4vh,0.9rem);
-        font-weight: 500;
-       }
-
-       .navigators{
-        user-select: none;
-        cursor: pointer;
+        border-right: 1px solid rgba(255, 255, 255, 0.1);
+        background-color: rgb(39, 39, 42);
         display: flex;
+        gap: 0.9rem;
+        justify-content: start;
+        align-items: center;
         flex-direction: column;
-        gap: 0.3rem;
-        padding-right: 2rem;
+        padding-top: 2rem;
+       
+        .personal {
+            color: rgba(255, 255, 255, 0.54);
+            text-transform: uppercase;
+            font-family: sans-serif;
+            font-size: clamp(0.2rem, 4vh, 0.9rem);
+            font-weight: 500;
+        }
 
-        .option{
+        .navigators {
+             padding-left: 0.4rem;
+            user-select: none;
+            cursor: pointer;
             display: flex;
-            flex-direction: row;
-            gap: 0.4rem;
-            color: rgba(255, 255, 255, 0.77);
-            padding: 0.3rem;
-            transition: transform 0.3s ease-in-out;
+            flex-direction: column;
+            gap: 0.3rem;
+            padding-right: 2rem;
 
-            &:hover{
-                color: rgba(0, 0, 0, 0.719);
-                background-color: #ffffffc3;
-                border-radius: 0.4rem;
-            }
-            &:active{
-                transform: scale(0.9);
+            .option {
+                display: flex;
+                flex-direction: row;
+                gap: 0.4rem;
+                color: rgba(255, 255, 255, 0.77);
+                padding: 0.3rem;
+                transition: transform 0.3s ease-in-out;
+
+                &:hover {
+                    color: rgba(0, 0, 0, 0.719);
+                    background-color: #ffffffc3;
+                    border-radius: 0.4rem;
+                }
+
+                &:active {
+                    transform: scale(0.9);
+                }
             }
         }
-       }
     }
 }

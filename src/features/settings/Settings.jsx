@@ -48,7 +48,7 @@ export const Settings = () => {
                     ))}
                 </div>
             </aside>
-            <section className="Right">
+            <section className="Right h-full overflow-y-auto scrollbar-none ">
                 {renderContent()}
             </section>
         </div>

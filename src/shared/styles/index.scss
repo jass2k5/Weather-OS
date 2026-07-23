@@ -10,6 +10,7 @@
 @use '../../features/clock/ClockTerminal';
 @use '../../features/settings/SettingsOs';
 @use '../components/ToggleBtn';
+@use '../components/ThemeBtn';
 
 @layer base {
     *, *::before, *::after {

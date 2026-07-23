@@ -2,8 +2,7 @@ import { Rnd } from "react-rnd";
 import { useOsStore } from "../store/useOsStore";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import { useRef } from "react";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 const resizeHandleStyles = {
     right: { width: "14px", right: 0, zIndex: 100 },
@@ -53,14 +52,16 @@ export const DraggableWindow = ({ children, title, Appid, defaultpos = { x: 300,
             }
         });
     };
+
     const handleMinimize = () => {
         setPrevBounds({ size, position });
         setSize({ width: minWidth ?? 300, height: minHeight ?? 250 });
     };
+
     const handleMaximize = () => {
         if (isMaximized) {
-            setSize(prevBounds.size);
-            setPosition(prevBounds.position);
+            setSize(defaultSize);
+            setPosition(defaultpos);
             setIsMaximized(false);
         } else {
             setPrevBounds({ size, position });
@@ -72,12 +73,6 @@ export const DraggableWindow = ({ children, title, Appid, defaultpos = { x: 300,
 
     return (
         <Rnd
-            // default={{
-            //     x: defaultpos.x,
-            //     y: defaultpos.y,
-            //     width: defaultSize.width,
-            //     height: defaultSize.height,
-            // }}
             size={size}
             position={position}
             onDragStop={(e, d) => {

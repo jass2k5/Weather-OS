@@ -17,7 +17,7 @@ export const Clock = () => {
     const telemetryData = useOsStore((state) => state.telemetryData);
     const syncAllWeather = useOsStore((state) => state.syncAllWeather);
     const setIsScrollHovered = useOsStore((state) => state.setIsScrollHovered)
-
+    const mouseFollower = useOsStore((state)=>state.mouseFollower);
     const cardRefs = useRef([]);
     const containerRef = useRef(null);
     const addNotification = useOsStore((state) => state.addNotification);
@@ -77,12 +77,16 @@ export const Clock = () => {
     return (
         <div style={{ zIndex: myZIndex }} className="Clock h-full w-full absolute top-0 left-0 bg-black pt-10 pb-0 flex items-center justify-center">
             <div onMouseEnter={() => {
-                if (searchHistory.length > 1) {
+                if(mouseFollower?.clockFollower){
+                    if (searchHistory.length > 1) {
                     setIsScrollHovered(true);
+                }
                 }
             }}
                 onMouseLeave={() => {
-                    setIsScrollHovered(false);
+                    if(mouseFollower?.clockFollower){
+                        setIsScrollHovered(false);
+                    }
                 }} ref={containerRef} className=" holder h-[75%] w-[98%] max-w-[900px] overflow-y-auto scrollbar-none relative rounded-3xl -translate-y-10 ">
                 {searchHistory.map((loc, index) => (
                     <div key={`${loc.city}-${index}`}

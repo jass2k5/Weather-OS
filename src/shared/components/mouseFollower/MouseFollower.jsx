@@ -8,18 +8,7 @@ export const MouseFollower = () => {
 const cursorRef = useRef(null);
 const isDay = useOsStore((state)=> state.isDay);
 const isScrollHovered = useOsStore((state)=>state.isScrollHovered);
-
-// useEffect(()=>{
-//  let timer;
-// if(isScrollHovered){
-//    timer = setTimeout(()=>{
-//        setIsScrollHovered(false);
-//  },4000)
-// }
-
-// return ()=> clearTimeout(timer);
-
-// })
+const mouseFollower = useOsStore((state)=>state.mouseFollower)
 
    useGSAP(()=>{
 
@@ -40,7 +29,9 @@ const isScrollHovered = useOsStore((state)=>state.isScrollHovered);
     }
 
     
-   },{dependencies:[]});
+   },{dependencies:[mouseFollower]});
+
+   if(!mouseFollower?.enabled) return null;
 
    return(
  <div ref={cursorRef} className="cursorFollower pointer-events-none fixed top-0 left-0 z-[9999]">

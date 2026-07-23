@@ -6,7 +6,6 @@ export const TopRightDate = () => {
     const setNight = useOsStore((state) => state.setNight);
     const setDay = useOsStore((state) => state.setDay);
     const dateTimeSettings = useOsStore((state)=>state.dateTimeSettings);
-
     const [timeString, setTimeString] = useState("");
     const [dateString, setDateString] = useState("");
     
@@ -45,7 +44,7 @@ export const TopRightDate = () => {
                 timeZone: tz_id,
                 hour: "2-digit",
                 minute: "2-digit",
-                hour12: dateTimeSettings?.format === "12h"
+                hour12: dateTimeSettings?.format?.hour === "12h"
             };
 
             if (dateTimeSettings?.showSeconds) {
@@ -73,10 +72,12 @@ export const TopRightDate = () => {
    
     if (!timeString) return null;
 
+   if(!dateTimeSettings?.showDateTime) return null;
+
     return (
         <div className={`date-container absolute ${getPositionClasses(dateTimeSettings.position)} h-auto w-auto z-50 flex flex-col justify-center items-center`}>
-            <span className="consttime">{timeString}</span>
-            <span className="constdate">{dateString}</span>
+            <span style={{color:dateTimeSettings.color?.clr}} className={`consttime drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)] font-medium`}>{timeString}</span>
+            <span  style={{color:dateTimeSettings.color?.clr}}  className="constdate drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)] font-medium">{dateString}</span>
         </div>
     );
 };

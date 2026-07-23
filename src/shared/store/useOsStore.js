@@ -172,14 +172,39 @@ export const useOsStore = create(persist((set, get) => ({
     dateTimeSettings: {
         showDateTime: true,
         showSeconds: true,
-        format: '24h', 
-        color: '#ffffff',
+        format: {hour:"12h",bol:false}, 
+        color: {clr:"white",bol:true },
         position: 'top-right' 
     },
 
     updateDateTimeSetting: (key, value) => set((state) => ({
         dateTimeSettings: {
             ...state.dateTimeSettings,
+            [key]: value
+        }
+    })),
+    //glassmorph settings
+
+    glassSettings: {
+        enabled: true,
+        blurValue: 2, 
+    },
+    updateGlassSetting: (key, value) => set((state) => ({
+        glassSettings: {
+            ...state.glassSettings,
+            [key]: value
+        }
+    })),
+
+    //mousefollower 
+
+    mouseFollower: {
+        enabled: true, 
+        clockFollower:true,
+    },
+    updateFollowerSetting: (key, value) => set((state) => ({
+        mouseFollower: {
+            ...state.mouseFollower,
             [key]: value
         }
     })),

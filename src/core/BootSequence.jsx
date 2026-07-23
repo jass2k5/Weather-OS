@@ -10,7 +10,7 @@ import { RunAct4 } from "./animations/Stage4";
 export const BootSequence = () => {
     const firsth1Ref = useRef(null);
     const secondh1Ref = useRef(null);
-    const bgClr = useOsStore((state) => state.systemBg);
+    const bgUrl = useOsStore((state) => state.systemBg);
     const dragBoxRef = useRef(null);
     const paraRef = useRef(null);
     const jassRef = useRef(null);
@@ -22,7 +22,8 @@ export const BootSequence = () => {
         addNotification("Welcome to weather Os", "success");
     }, []);
     return (
-        <div className={` bootContainer h-full  w-full relative bg-no-repeat bg-center bg-cover overflow-hidden ${bgClr}`}>
+        <div style={{backgroundImage: `url('${bgUrl}')`}} className={` bootContainer h-full  w-full relative bg-no-repeat bg-center bg-cover overflow-hidden`}>
+
            
             <div ref={logoRef} className="nameCapsule">
                 <i className="ri-circle-fill animate-pulse"></i>
