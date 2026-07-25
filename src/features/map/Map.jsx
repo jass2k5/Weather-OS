@@ -25,7 +25,15 @@ export const WeatherMap = () => {
     const containerRef = useRef(null);
     const mapRef = useRef(null);
     const MAPTILER_KEY = import.meta.env.VITE_MAPTILER_KEY;
-    const mapStyleUrl = `https://api.maptiler.com/maps/dataviz-dark/style.json?key=${MAPTILER_KEY}`;
+    const mapSetting = useOsStore((state)=> state.mapSetting);
+    const apps = useOsStore((state)=>state.apps)
+
+    const mapThemes = {
+    dark: `https://api.maptiler.com/maps/dataviz-dark/style.json?key=${MAPTILER_KEY}`,
+    light: `https://api.maptiler.com/maps/topo-v4/style.json?key=${MAPTILER_KEY}`,
+    satellite: `https://api.maptiler.com/maps/satellite/style.json?key=${MAPTILER_KEY}`
+};
+    const mapStyleUrl = mapSetting?.theme === "dark"?mapThemes.dark:mapSetting.theme === "light"?mapThemes.light:mapThemes.satellite
 
     const closeApp = useOsStore((state) => state.closeApp);
 
@@ -37,17 +45,24 @@ export const WeatherMap = () => {
     useEffect(() => {
         const coord = getCoord(telemetryData);
         const currentAqi = telemetryData?.current?.air_quality?.['us-epa-index'];
+        
         if (isMapLoaded && coord) {
-            mapRef.current.getMap().flyTo({
-                center: [coord.lon, coord.lat],
-                zoom: 12,
-                duration: 2500,
-                essential: true,
-            });
-           
+            if (mapSetting?.flyby) {
+                mapRef.current.getMap().flyTo({
+                    center: [coord.lon, coord.lat],
+                    zoom: 12,
+                    duration: 2500,
+                    essential: true,
+                });
+            } else {
+                mapRef.current.getMap().jumpTo({
+                    center: [coord.lon, coord.lat],
+                    zoom: 12
+                });
+            }
         }
-    }, [telemetryData, isMapLoaded]);
-
+    }, [telemetryData, isMapLoaded, mapSetting?.flyby]);
+    
     useEffect(()=>{
         if(!mapError) return;
        let timer = setTimeout(() => {
@@ -55,23 +70,6 @@ export const WeatherMap = () => {
        },2000);
        return ()=> clearTimeout(timer);
     },[mapError])
-
-     useEffect(() => {
-        if (!isClosing) return;
-        gsap.fromTo(containerRef.current,
-            { scale: 1, transformOrigin: "top center" },
-            {
-                duration: 1,
-                scale: 0,
-                ease: "power4.inOut",
-                opacity: 0,
-                onComplete: () => {
-                    closeApp("map");
-                },
-            }
-        );
-    }, [isClosing]);
-
 
     
 
@@ -108,7 +106,7 @@ export const WeatherMap = () => {
                     onError={() => setMapError("MAP STYLE LOAD FAILED")}
                     style={{ width: "100%", height: "100%" }}
                 >
-                    {coord && (
+                    {coord && mapSetting?.marker && (
                         <Marker
                             longitude={coord.lon}
                             latitude={coord.lat}
@@ -116,12 +114,14 @@ export const WeatherMap = () => {
                             anchor="bottom"
                         />
                     )}
-                    <NavigationControl
+                    {mapSetting?.Navigations && (
+                        <NavigationControl
                         position="bottom-right"
                         showCompass={true}
                         showZoom={true}
                         visualizePitch={true}
                     />
+                    )}
                 </Map>
             </div>
         </div>

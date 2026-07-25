@@ -11,6 +11,7 @@ export const Text = () => {
 
     const telemetryData = useOsStore((state) => state.telemetryData);
     const windowOrder = useOsStore((state) => state.windowOrder);
+    const mapSetting = useOsStore((state)=>state.mapSetting);
 
     const myZIndex = 20 + windowOrder.indexOf('map');
 
@@ -70,7 +71,7 @@ export const Text = () => {
     return (
         <div
         style={{zIndex:myZIndex}}
-         className="conditionContainer">
+         className={`conditionContainer ${mapSetting.theme ==="dark"?"text-white":"text-yellow-500"} `}>
             <span className="searchedlocation">Searched Location</span>
             <h1 ref={cityRef} className="countryCity">{`${city},${country}`}</h1>
             <span ref={tempRef} className="temperature">{`${temperature}°C`}</span>

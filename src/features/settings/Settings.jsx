@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { useOsStore } from "../../shared/store/useOsStore";
 import { SystemSettings } from "./system/System";
+import { MapSet } from "./mapsetting/MapSettings";
 export const Settings = () => {
     const focusApp = useOsStore((state) => state.focusApp);
     const windowOrder = useOsStore((state) => state.windowOrder);
@@ -15,14 +16,13 @@ export const Settings = () => {
     ]
 
     ///dummy function
-    const MapSettings = () => <div className="text-white p-6">Map Settings Content Here...</div>;
     const ClockSettings = () => <div className="text-white p-6">Clock Settings Content Here...</div>;
     const NotificationSettings = () => <div className="text-white p-6">Notification Settings Content...</div>;
     const WidgetSettings = () => <div className="text-white p-6">Widget Settings Content Here...</div>;
 
     const renderContent = () => {
         switch (active) {
-            case "Maps": return <MapSettings/>;
+            case "Maps": return <MapSet/>;
             case "Clock": return <ClockSettings/>;
             case "Notification": return <NotificationSettings/>;
             case "Widgets": return <WidgetSettings/>;

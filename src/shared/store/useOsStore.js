@@ -2,8 +2,7 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
 export const useOsStore = create(persist((set, get) => ({
-    isClosing: false,
-    startCloseApp: () => { set({ isClosing: true }) },
+   
     isDay: true,
     setNight: () => { set({ isDay: false }) },
     setDay: () => { set({ isDay: true }) },
@@ -32,7 +31,6 @@ export const useOsStore = create(persist((set, get) => ({
     },
 
     closeApp: (Appid) => set((state) => ({
-        isClosing: false,
         apps: {
             ...state.apps,
             [Appid]: {
@@ -42,7 +40,6 @@ export const useOsStore = create(persist((set, get) => ({
         }
     })),
     openApp: (Appid) => set((state) => ({
-        isClosing: false,
         apps: {
             ...state.apps,
             [Appid]: {
@@ -209,7 +206,26 @@ export const useOsStore = create(persist((set, get) => ({
         }
     })),
 
-
+    //map settings
+    mapSetting:{
+        theme: "dark",
+        terminalMapTheme:{
+            theme:"light",
+            bol:false,
+            flyby:true,
+            marker:true
+        },
+        Navigations:true,
+        flyby:true,
+        marker:true
+    },
+    
+    setMapSetting:(key,value) => set((state)=>({
+        mapSetting:{
+            ...state.mapSetting,
+            [key]:value
+        }
+    }))
 }
 
 ),

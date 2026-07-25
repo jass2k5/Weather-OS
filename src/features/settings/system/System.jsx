@@ -2,9 +2,10 @@ import { useState, useRef } from "react";
 import { useOsStore } from "../../../shared/store/useOsStore";
 import { Switch } from "../../../shared/components/ToggleBtn";
 import { Stepper } from "../../../shared/components/ArrowStepper";
-import { SettingRow } from "./SettingRow";
+import { SettingRow } from "../../../shared/components/SettingRow";
 import { DayNightSwitch } from "../../../shared/components/ThemeBtn";
 import { PositionPicker } from "../../../shared/components/PositionPicker";
+import { SettingGroup } from "../../../shared/components/SettingGroup";
 export const SystemSettings = () => {
     const setBg = useOsStore((state) => state.setBg)
     const addNotification = useOsStore((state) => state.addNotification)
@@ -33,7 +34,7 @@ export const SystemSettings = () => {
         const reader = new FileReader();
         reader.onload = (e) => {
             setBg(e.target.result);
-            addNotification("Walpaper Changed", "success");
+            addNotification("Wallpaper Changed", "success");
         };
         reader.onerror = () => {
             addNotification("Failed to read image", "error");
@@ -64,7 +65,7 @@ export const SystemSettings = () => {
     };
 
     return (
-        <div className="h-full w-full flex flex-col p-6 gap-3.5">
+        <div className="h-full w-full flex flex-col p-6 gap-1">
             <div className="w-[80%] mx-auto flex flex-col gap-3">
                 <span className="text-white/60 uppercase tracking-wider text-sm font-semibold">
                     Background Preferences
@@ -76,7 +77,7 @@ export const SystemSettings = () => {
                             setBg("/stage1bg.png");
                             addNotification("Wallpaper Changed", "success")
                         }}
-                        className="flex-1 min-w-[250px] h-[200px] border-2 border-white/30 rounded-lg overflow-hidden cursor-pointer hover:border-cyan-400 hover:scale-105 transition-all duration-400 ease-in-out"
+                        className="flex-1 min-w-[250px] h-[200px] border-2 border-white/30 rounded-lg overflow-hidden cursor-pointer hover:border-white/60 hover:scale-104 transition-all duration-400 ease-in-out"
                     >
                         <img className="h-full w-full object-cover object-center" src="/stage1bg.png" alt="bg1" />
                     </div>
@@ -86,7 +87,7 @@ export const SystemSettings = () => {
                             setBg("/stage2bg.png");
                             addNotification("Wallpaper Changed", "success")
                         }}
-                        className="flex-1 min-w-[250px] h-[200px] border-2 border-white/30 rounded-lg overflow-hidden cursor-pointer hover:border-cyan-400 hover:scale-105 transition-all duration-400 ease-in-out"
+                        className="flex-1 min-w-[250px] h-[200px] border-2 border-white/30 rounded-lg overflow-hidden cursor-pointer hover:border-white/60 hover:scale-104 transition-all duration-400 ease-in-out"
                     >
                         <img className="h-full w-full object-cover object-center" src="/stage2bg.png" alt="bg2" />
                     </div>
@@ -116,10 +117,9 @@ export const SystemSettings = () => {
             </div>
 
 
-            <div className="Set  min-h-[25%] h-auto w-[80%] flex flex-wrap items-stretch gap-4 mx-auto mt-6">
+            <div className="Set  min-h-[25%] h-auto w-[80%] flex flex-wrap  gap-4 mx-auto mt-6">
 
-
-                <div className="flex-1 min-w-[440px] rounded-[0.8rem] bg-zinc-800 border border-white/50 flex flex-col">
+                <SettingGroup>
                     <SettingRow
                         title="Glass Layer"
                         subtitle="glass layer above the Wallpaper"
@@ -144,9 +144,11 @@ export const SystemSettings = () => {
                         }
                         showDivider={false}
                     />
-                </div>
+                </SettingGroup>
 
-                <div className="flex-1 min-w-[440px] rounded-[0.8rem] bg-zinc-800 border border-white/50 flex flex-col ">
+
+
+                <SettingGroup>
 
                     <SettingRow
                         title="Mouse Follower"
@@ -170,15 +172,15 @@ export const SystemSettings = () => {
                         }
                         showDivider={false}
                     />
-                </div>
+                </SettingGroup>
 
-                <div className="flex-1 min-w-[440px] rounded-[0.8rem] bg-zinc-800 border border-white/50 flex flex-col">
+                <SettingGroup>
                     <SettingRow
                         title="Date & Time"
                         subtitle="date and time on screen"
                         control={<Switch
                             checked={dateTimeSettings.showDateTime}
-                            onChange={(e)=>updateDateTimeSetting('showDateTime',e.target.checked)} />}
+                            onChange={(e) => updateDateTimeSetting('showDateTime', e.target.checked)} />}
                     />
 
                     <SettingRow
@@ -186,17 +188,17 @@ export const SystemSettings = () => {
                         subtitle="disable & enable seconds on screen"
                         control={<Switch
                             checked={dateTimeSettings.showSeconds}
-                            onChange={(e)=>updateDateTimeSetting('showSeconds',e.target.checked)} />}
+                            onChange={(e) => updateDateTimeSetting('showSeconds', e.target.checked)} />}
                     />
 
                     <SettingRow
                         title="Time Format"
                         subtitle="change format to 24h or 12h"
-                        control={<Switch 
+                        control={<Switch
                             checked={dateTimeSettings?.format?.bol}
-                            onChange={(e)=>updateDateTimeSetting('format',{
-                                bol:e.target.checked,
-                                hour:e.target.checked?"24h":"12h"
+                            onChange={(e) => updateDateTimeSetting('format', {
+                                bol: e.target.checked,
+                                hour: e.target.checked ? "24h" : "12h"
                             })}
                         />}
                     />
@@ -208,7 +210,7 @@ export const SystemSettings = () => {
                             checked={dateTimeSettings?.color?.bol}
                             onChange={(e) => updateDateTimeSetting('color', {
                                 bol: e.target.checked,
-                                clr: e.target.checked? "#fde047": "white"
+                                clr: e.target.checked ? "#fde047" : "white"
                             })}
                         />}
 
@@ -221,9 +223,7 @@ export const SystemSettings = () => {
                             onChange={(newPos) => updateDateTimeSetting('position', newPos)} />}
                         showDivider={false}
                     />
-
-
-                </div>
+                </SettingGroup>
 
             </div>
         </div>

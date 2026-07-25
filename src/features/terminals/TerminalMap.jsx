@@ -18,29 +18,40 @@ export const TerminalMap = () => {
     const [mapError, setMapError] = useState("");
     const containerRef = useRef(null);
     const mapRef = useRef(null);
+    const mapSetting = useOsStore((state) => state.mapSetting);
     const MAPTILER_KEY = import.meta.env.VITE_MAPTILER_KEY;
-    const mapStyleUrl = `https://api.maptiler.com/maps/topo-v4/style.json?key=${MAPTILER_KEY}`;
+    const mapStyleUrl = mapSetting?.terminalMapTheme?.theme === "light"? `https://api.maptiler.com/maps/topo-v4/style.json?key=${MAPTILER_KEY}`:`https://api.maptiler.com/maps/dataviz-dark/style.json?key=${MAPTILER_KEY}`;
     const telemetryData = useOsStore((state) => state.telemetryData);
     const coord = getCoord(telemetryData);
-   
+
     useEffect(() => {
         const resizeObserver = new ResizeObserver(() => mapRef.current?.getMap().resize());
         if (containerRef.current) resizeObserver.observe(containerRef.current);
         return () => resizeObserver.disconnect();
     }, []);
 
-  
-    useEffect(() => {
+
+  useEffect(() => {
         const coord = getCoord(telemetryData);
+        
         if (isMapLoaded && coord) {
-            mapRef.current.getMap().flyTo({
-                center: [coord.lon, coord.lat],
-                zoom: 12,
-                duration: 2500,
-                essential: true,
-            });
+            
+            if (mapSetting?.terminalMapTheme?.flyby) {
+                mapRef.current.getMap().flyTo({
+                    center: [coord.lon, coord.lat],
+                    zoom: 12,
+                    duration: 2500,
+                    essential: true,
+                });
+            } else {
+             
+                mapRef.current.getMap().jumpTo({
+                    center: [coord.lon, coord.lat],
+                    zoom: 12
+                });
+            }
         }
-    }, [telemetryData, isMapLoaded]);
+    }, [telemetryData, isMapLoaded, mapSetting?.terminalMapTheme?.flyby]);
 
     return (
         <div ref={containerRef} className="mapContainer relative h-full w-full overflow-hidden bg-slate-950">
@@ -62,8 +73,8 @@ export const TerminalMap = () => {
             )}
 
             <div className="map-layer w-full h-full absolute inset-0 z-0">
-         <Map
-           ref={mapRef}
+                <Map
+                    ref={mapRef}
                     initialViewState={{ longitude: 0, latitude: 20, zoom: 1.5 }}
                     mapStyle={mapStyleUrl}
                     onLoad={(event) => {
@@ -72,15 +83,15 @@ export const TerminalMap = () => {
                     }}
                     onError={() => setMapError("MAP STYLE LOAD FAILED")}
                     style={{ width: "100%", height: "100%" }}>
-                        {coord && (
-                                                <Marker
-                                                    longitude={coord.lon}
-                                                    latitude={coord.lat}
-                                                    color="rgba(255, 0, 0, 0.867)"
-                                                    anchor="bottom"
-                                                />
-                                            )}
-                    </Map>
+                    {coord && mapSetting?.terminalMapTheme?.marker && (
+                        <Marker
+                            longitude={coord.lon}
+                            latitude={coord.lat}
+                            color="rgba(255, 0, 0, 0.867)"
+                            anchor="bottom"
+                        />
+                    )}
+                </Map>
             </div>
         </div>
     );
