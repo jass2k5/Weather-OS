@@ -225,6 +225,24 @@ export const useOsStore = create(persist((set, get) => ({
             ...state.mapSetting,
             [key]:value
         }
+    })),
+
+    //clock setting
+    clockSetting:{
+        liveNight:false,
+        liveDay:false,
+        format:{
+            hour:'12h',
+            bol:false
+        },
+        celsius:true,
+
+    },
+    setClockSetting:(key,value)=>set((state)=>({
+        clockSetting:{
+            ...state.clockSetting,
+            [key]:value
+        }
     }))
 }
 

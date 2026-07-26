@@ -71,7 +71,7 @@ export const Text = () => {
     return (
         <div
         style={{zIndex:myZIndex}}
-         className={`conditionContainer ${mapSetting.theme ==="dark"?"text-white":"text-yellow-500"} `}>
+         className={`conditionContainer ${mapSetting.theme ==="light"?"text-yellow-500":"text-white"} `}>
             <span className="searchedlocation">Searched Location</span>
             <h1 ref={cityRef} className="countryCity">{`${city},${country}`}</h1>
             <span ref={tempRef} className="temperature">{`${temperature}°C`}</span>

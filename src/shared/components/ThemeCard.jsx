@@ -1,0 +1,26 @@
+export const ThemeCard = ({ src, alt, onClick,videoSrc }) => {
+    return (
+        <div
+            onClick={onClick}
+            className="flex-1 relative min-w-[250px] h-[200px] border-2 border-white/30 rounded-lg overflow-hidden cursor-pointer hover:border-white/40 hover:scale-104 transition-all duration-400 ease-in-out" 
+        >
+          {videoSrc ? (
+                <video 
+                    className="absolute inset-0 w-full h-full object-cover object-top pointer-events-none scale-[1.35]"
+                    src={videoSrc}
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                />
+            ) : (
+                <img 
+                    className="h-full w-full object-cover object-center" 
+                    src={src} 
+                    alt={alt || "theme-image"} 
+                />
+            )}
+
+        </div>
+    );
+};

@@ -6,6 +6,8 @@ import { SettingRow } from "../../../shared/components/SettingRow";
 import { DayNightSwitch } from "../../../shared/components/ThemeBtn";
 import { PositionPicker } from "../../../shared/components/PositionPicker";
 import { SettingGroup } from "../../../shared/components/SettingGroup";
+import { ThemeCard } from "../../../shared/components/ThemeCard";
+import { ThemeContainer } from "../../../shared/components/ThemeContainer";
 export const SystemSettings = () => {
     const setBg = useOsStore((state) => state.setBg)
     const addNotification = useOsStore((state) => state.addNotification)
@@ -18,16 +20,35 @@ export const SystemSettings = () => {
     const dateTimeSettings = useOsStore((state) => state.dateTimeSettings)
     const updateDateTimeSetting = useOsStore((state) => state.updateDateTimeSetting)
 
+    const Walpapers = [
+        {
+            id: "firstWalpaper",
+            src: "/stage1bg.png",
+            alt: "stage1"
+        },
+        {
+            id: "secondWalpaper",
+            src: "/stage2bg.png",
+            alt: "stage2"
+        },
+        {
+            id: "thirdWalpaper",
+            src: "/stage3bg.png",
+            alt: "stage3"
+        }
+
+    ]
+
     const processFile = (file) => {
         if (!file) return;
         if (!file.type.startsWith("image/")) {
-            addNotification("Please select an valid image", "warning");
+            addNotification("Please select a valid image", "warning");
             return;
         }
 
-        const Max_Mb = 2;
-        if (file.size > Max_Mb * 1024 * 1024) {
-            addNotification("Image too large ", "error");
+        const MAX_MB = 2;
+        if (file.size > MAX_MB * 1024 * 1024) {
+            addNotification("Image too large", "error");
             return;
         }
 
@@ -66,31 +87,23 @@ export const SystemSettings = () => {
 
     return (
         <div className="h-full w-full flex flex-col p-6 gap-1">
-            <div className="w-[80%] mx-auto flex flex-col gap-3">
-                <span className="text-white/60 uppercase tracking-wider text-sm font-semibold">
-                    Background Preferences
-                </span>
+            <ThemeContainer 
+            title={"Background Preferences"}
+            >
 
-                <div className="flex flex-wrap gap-4 w-full">
-                    <div
-                        onClick={() => {
-                            setBg("/stage1bg.png");
-                            addNotification("Wallpaper Changed", "success")
-                        }}
-                        className="flex-1 min-w-[250px] h-[200px] border-2 border-white/30 rounded-lg overflow-hidden cursor-pointer hover:border-white/60 hover:scale-104 transition-all duration-400 ease-in-out"
-                    >
-                        <img className="h-full w-full object-cover object-center" src="/stage1bg.png" alt="bg1" />
-                    </div>
+           
 
-                    <div
-                        onClick={() => {
-                            setBg("/stage2bg.png");
-                            addNotification("Wallpaper Changed", "success")
-                        }}
-                        className="flex-1 min-w-[250px] h-[200px] border-2 border-white/30 rounded-lg overflow-hidden cursor-pointer hover:border-white/60 hover:scale-104 transition-all duration-400 ease-in-out"
-                    >
-                        <img className="h-full w-full object-cover object-center" src="/stage2bg.png" alt="bg2" />
-                    </div>
+                    {Walpapers.map((wal) => (
+                        <ThemeCard
+                            key={wal.id}
+                            src={wal.src}
+                            onClick={() => {
+                                setBg(wal.src);
+                                addNotification("Wallpaper Changed", "success");
+                            }}
+
+                        />
+                    ))}
 
                     <div
                         onClick={() => fileInputRef.current?.click()}
@@ -113,8 +126,11 @@ export const SystemSettings = () => {
                             className="hidden"
                         />
                     </div>
-                </div>
-            </div>
+
+
+            
+            </ThemeContainer>
+
 
 
             <div className="Set  min-h-[25%] h-auto w-[80%] flex flex-wrap  gap-4 mx-auto mt-6">
@@ -210,7 +226,7 @@ export const SystemSettings = () => {
                             checked={dateTimeSettings?.color?.bol}
                             onChange={(e) => updateDateTimeSetting('color', {
                                 bol: e.target.checked,
-                                clr: e.target.checked ? "#fde047" : "white"
+                                clr: e.target.checked ? "red" : "white"
                             })}
                         />}
 
