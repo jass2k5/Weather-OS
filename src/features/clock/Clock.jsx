@@ -94,9 +94,9 @@ export const Clock = () => {
                 {searchHistory.map((loc, index) => (
                     <div key={`${loc.city}-${index}`}
                         ref={(el) => (cardRefs.current[index] = el)}
-                        className={`data will-change-transform h-full w-full border-2 rounded-3xl sticky top-0 border-white/25 top-0 `}>
+                        className={`data will-change-transform h-full w-full border-2 rounded-3xl overflow-hidden sticky top-0 border-white/25 top-0 `}>
                         {loc.isDay && clockSetting.liveDay && (<video
-                            className="h-full w-full object-center object-cover rounded-3xl z-0 "
+                            className="h-full w-full object-center object-cover scale-x-[1.07] rounded-3xl z-0 "
                             src={"./DayVideo.mp4"}
                             autoPlay
                             loop
@@ -156,12 +156,12 @@ export const Clock = () => {
                             </div>
 
                         </div>
-                        {searchHistory?.length > 0 && (
-                            <div className="h-[150px] w-full shrink-0 opacity-0 pointer-events-none"></div>
-                        )}
 
                     </div>
                 ))}
+                {searchHistory?.length > 0 && (
+                    <div className="h-[150px] w-full shrink-0 opacity-0 pointer-events-none"></div>
+                )}
             </div>
 
         </div>
