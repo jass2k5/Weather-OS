@@ -17,10 +17,13 @@ export const Clock = () => {
     const telemetryData = useOsStore((state) => state.telemetryData);
     const syncAllWeather = useOsStore((state) => state.syncAllWeather);
     const setIsScrollHovered = useOsStore((state) => state.setIsScrollHovered)
-    const mouseFollower = useOsStore((state)=>state.mouseFollower);
+    const mouseFollower = useOsStore((state) => state.mouseFollower);
     const cardRefs = useRef([]);
     const containerRef = useRef(null);
     const addNotification = useOsStore((state) => state.addNotification);
+    const clockSetting = useOsStore((state) => state.clockSetting);
+
+
 
     gsap.registerPlugin(ScrollTrigger);
 
@@ -52,15 +55,15 @@ export const Clock = () => {
         const weatherTimer = setInterval(() => {
             console.log("Synced Clocks");
             syncAllWeather();
-            addNotification("Auto Synced","success")
+            addNotification("Auto Synced", "success")
         }, 300000);
 
         let length = searchHistory.length;
-        addNotification(`${length} locations have been initialised`,"info");
-        if(length >0){
-         timer = setTimeout(()=>{
-            addNotification(`locations will be synced every 5 minutes`,"info");
-        },4000);
+        addNotification(`${length} locations have been initialised`, "info");
+        if (length > 0) {
+            timer = setTimeout(() => {
+                addNotification(`locations will be synced every 5 minutes`, "info");
+            }, 4000);
         }
 
 
@@ -77,14 +80,14 @@ export const Clock = () => {
     return (
         <div style={{ zIndex: myZIndex }} className="Clock h-full w-full absolute top-0 left-0 bg-black pt-10 pb-0 flex items-center justify-center">
             <div onMouseEnter={() => {
-                if(mouseFollower?.clockFollower){
+                if (mouseFollower?.clockFollower) {
                     if (searchHistory.length > 1) {
-                    setIsScrollHovered(true);
-                }
+                        setIsScrollHovered(true);
+                    }
                 }
             }}
                 onMouseLeave={() => {
-                    if(mouseFollower?.clockFollower){
+                    if (mouseFollower?.clockFollower) {
                         setIsScrollHovered(false);
                     }
                 }} ref={containerRef} className=" holder h-[75%] w-[98%] max-w-[900px] overflow-y-auto scrollbar-none relative rounded-3xl -translate-y-10 ">
@@ -92,7 +95,28 @@ export const Clock = () => {
                     <div key={`${loc.city}-${index}`}
                         ref={(el) => (cardRefs.current[index] = el)}
                         className={`data will-change-transform h-full w-full border-2 rounded-3xl sticky top-0 border-white/25 top-0 `}>
-                        <img className="h-full w-full object-center object-cover rounded-3xl z-0" src={loc.isDay ? Day : Night} alt="daynight" />
+                        {loc.isDay && clockSetting.liveDay && (<video
+                            className="h-full w-full object-center object-cover rounded-3xl z-0 "
+                            src={"./DayVideo.mp4"}
+                            autoPlay
+                            loop
+                            muted
+                            playsInline
+                        />)}
+                        {!loc.isDay && clockSetting.liveNight && (<video
+                            className="h-full w-full object-center object-cover rounded-3xl z-0"
+                            src={"./NightVideo.mp4"}
+                            autoPlay
+                            loop
+                            muted
+                            playsInline
+                        />)}
+
+                        {!loc.isDay && !clockSetting.liveNight && (
+                            <img className="h-full w-full object-center object-cover rounded-3xl z-0" src={Night} alt="night" />
+                        )}
+                        {loc.isDay && !clockSetting.liveDay && ( <img className="h-full w-full object-center object-cover rounded-3xl z-0" src={Day} alt="night" />)}
+
                         <div className="topLeft h-auto w-auto bg-transparent absolute top-[4%] left-[4%] z-10 flex flex-col justify-center items-start gap-0.5 ">
                             <span className={`countrySpan uppercase text-1xl font-medium ${loc.isDay ? "text-black/60 " : "text-white/60"}`}><i className="ri-map-pin-line"></i> {loc.country}</span>
                             <span className={`citySpan uppercase text-7xl font-[Lora]  ${loc.isDay ? "text-black/60 " : "text-white/60"} `}>{loc.city}</span>

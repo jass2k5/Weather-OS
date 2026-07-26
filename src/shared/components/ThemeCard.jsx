@@ -6,7 +6,7 @@ export const ThemeCard = ({ src, alt, onClick,videoSrc }) => {
         >
           {videoSrc ? (
                 <video 
-                    className="absolute inset-0 w-full h-full object-cover object-top pointer-events-none scale-[1.35]"
+                    className="absolute inset-0 w-full h-full object-cover object-center pointer-events-none scale-[1.35]"
                     src={videoSrc}
                     autoPlay
                     loop

@@ -85,7 +85,7 @@ export const useOsStore = create(persist((set, get) => ({
         const updatedHistory = [
             newCityObject,
             ...filteredHistory
-        ].slice(0, 4);
+        ].slice(0, 5);
 
 
         set({ searchHistory: updatedHistory });
