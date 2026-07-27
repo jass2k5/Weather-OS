@@ -90,6 +90,10 @@ export const useOsStore = create(persist((set, get) => ({
 
         set({ searchHistory: updatedHistory });
     },
+    
+    removeSearchItem: (cityName) => set((state) => ({
+        searchHistory: state.searchHistory.filter((loc) => loc.city !== cityName)
+    })),
 
     windowOrder: ['map', 'clock', 'settings', 'terminalMap', 'terminalClock', "notification"],
 
@@ -178,6 +182,8 @@ export const useOsStore = create(persist((set, get) => ({
     clearNotification: () => set((state => ({
         notificationHistory: []
     }))),
+
+
     //settings section
     dateTimeSettings: {
         showDateTime: true,

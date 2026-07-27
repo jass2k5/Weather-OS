@@ -8,8 +8,9 @@ import { useOsStore } from "../../shared/store/useOsStore";
 export const Searchbar = () => {
     const [inputvalue, setInputValue] = useState("");
     const [prev, setPrev] = useState(false);
-    const setSystemTelemetry = useOsStore((state) => state.setSystemTelemetry)
-    const telemetryDataloc = useOsStore((state)=>state.telemetryData?.location?.name);
+    const setSystemTelemetry = useOsStore((state) => state.setSystemTelemetry);
+    const removeSearchItem = useOsStore((state)=>state.removeSearchItem);
+    const telemetryDataloc = useOsStore((state) => state.telemetryData?.location?.name);
     const addSearchToHistory = useOsStore((state) => state.addSearchToHistory);
     const searchHistory = useOsStore((state) => state.searchHistory);
     const addNotification = useOsStore((state) => state.addNotification);
@@ -58,34 +59,34 @@ export const Searchbar = () => {
 
 
 
-const { mutate, isPending } = useMutation({
-    mutationFn: fetchLocationTelemetry,
-    onSuccess: (data, submittedLocation) => {
-        setSystemTelemetry(submittedLocation, data);
-        addSearchToHistory(data);
+    const { mutate, isPending } = useMutation({
+        mutationFn: fetchLocationTelemetry,
+        onSuccess: (data, submittedLocation) => {
+            setSystemTelemetry(submittedLocation, data);
+            addSearchToHistory(data);
 
-        const currentAqi = data?.current?.air_quality?.['us-epa-index'];
-        const locName = data?.location?.name;
+            const currentAqi = data?.current?.air_quality?.['us-epa-index'];
+            const locName = data?.location?.name;
 
-        addNotification(`Telemetry stream active: ${locName}`, "info");
+            addNotification(`Telemetry stream active: ${locName}`, "info");
 
-        setTimeout(() => {
-            if (currentAqi <= 2) {
-                addNotification(`Aqi quality is Good for ${locName}`, "success");
-            } else if (currentAqi === 3) {
-                addNotification(`Moderate Aqi quality in ${locName}`, "warning");
-            } else {
-                addNotification(`Critical: Hazardous AQI! in ${locName}`, "error");
-            }
-        }, 4000);
-    }
-});
+            setTimeout(() => {
+                if (currentAqi <= 2) {
+                    addNotification(`Aqi quality is Good for ${locName}`, "success");
+                } else if (currentAqi === 3) {
+                    addNotification(`Moderate Aqi quality in ${locName}`, "warning");
+                } else {
+                    addNotification(`Critical: Hazardous AQI! in ${locName}`, "error");
+                }
+            }, 4000);
+        }
+    });
 
-    useEffect(()=>{
-      if(telemetryDataloc){
-        mutate(telemetryDataloc);
-      }
-    },[]);
+    useEffect(() => {
+        if (telemetryDataloc) {
+            mutate(telemetryDataloc);
+        }
+    }, []);
 
     useGSAP(() => {
 
@@ -150,8 +151,8 @@ const { mutate, isPending } = useMutation({
 
 
     return (
-        <div 
-        ref={searchWrapperRef} className="expandsearch ">
+        <div
+            ref={searchWrapperRef} className="expandsearch ">
             <div ref={formRef} className="SearchContainer">
                 <div className="logoAndbar">
                     {/* <img src={sunGif} alt="searcbarlogo" /> */
@@ -186,9 +187,21 @@ const { mutate, isPending } = useMutation({
                             mutate(loc.city)
                             setPrev(false)
                         }}
-                        className="flex gap-1 items-center justify-center">
-                        <i className="ri-history-line"></i>
-                        <span>{loc.city}, {loc.country}</span>
+                        className="flex  items-center justify-between holder h-full w-full holder">
+
+                        <div className="flex flex-row items-center gap-0.5 "><i className="ri-history-line"></i>
+                            <span>{loc.city}, {loc.country}</span></div>
+                        <button
+                            
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                removeSearchItem(loc.city);
+                                addNotification(`${loc.city} removed from history`, "info");
+                            }}
+                        >
+                            <i className="ri-close-line text-lg"></i>
+                        </button>
+
                     </div>
                 ))}
             </div>
