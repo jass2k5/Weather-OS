@@ -8,11 +8,10 @@ const options = [
     { id: "Maps", icon: <i className="ri-road-map-line"></i> },
     { id: "Clock", icon: <i className="ri-time-line"></i> },
     { id: "Notification", icon: <i className="ri-notification-line"></i> },
-    { id: "Widgets", icon: <i className="ri-function-line"></i> }
 ]
 ///dummy function
 const NotificationSettings = () => <div className="text-white p-6">Notification Settings Content...</div>;
-const WidgetSettings = () => <div className="text-white p-6">Widget Settings Content Here...</div>;
+
 export const Settings = () => {
     const zIndex = useOsStore((state)=> 15 + state.windowOrder.indexOf('settings'));
     const [active, setActive] = useState('System');

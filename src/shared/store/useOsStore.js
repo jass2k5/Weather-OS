@@ -142,6 +142,10 @@ focusApp: (appId) => set((state) => ({
     activeNotifications: [],
 
     addNotification: (message, type = "info") => {
+        const state = get();
+        if (state.notificationSetting && state.notificationSetting.enabled === false) {
+        return; 
+    }
         const id = crypto.randomUUID();
         const newNoti = {
             id,
@@ -155,15 +159,25 @@ focusApp: (appId) => set((state) => ({
             activeNotifications: [newNoti, ...state.activeNotifications]
         }));
 
+   if (state.notificationSetting?.sound) {
+        const audio = new Audio("./notificationBell.mp3");
+        audio.volume = 0.5;
+        audio.play().catch((err) => console.log("Audio play blocked by browser", err));
+    }
+
         let timer = setTimeout(() => {
             set((state) => ({
                 activeNotifications: state.activeNotifications.filter((n) => n.id !== id)
             }))
         }, 4000)
 
-        return () => clearTimeout(timer);
+   
 
     },
+    
+    clearNotification:()=>set((state=>({
+        notificationHistory:[]
+    }))),
     //settings section
     dateTimeSettings: {
         showDateTime: true,
@@ -244,6 +258,16 @@ focusApp: (appId) => set((state) => ({
             ...state.clockSetting,
             [key]:value
         }
+    })),
+
+    //notification settings
+    notificationSetting:{
+        enabled:true,
+        sound:true,
+    },
+    setnotificationSetting:(key,value)=>set((state)=>({
+        ...state.notificationSetting,
+        [key]:value
     }))
 }
 

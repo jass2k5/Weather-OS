@@ -54,10 +54,11 @@ const NotificationItem = ({ notif, index }) => {
 
 export const NotificationManager = () => {
     const activeNotifications = useOsStore((state) => state.activeNotifications);
+    // const enabled = useOsStore((state)=>state.notificationSetting.enabled);
 
     return (
         <div className="notification-container absolute bottom-[15%] right-[3%] z-[9999] pointer-events-none w-72">
-            {activeNotifications.map((notif, index) => (
+            { activeNotifications.map((notif, index) => (
                 <NotificationItem key={notif.id} notif={notif} index={index} />
             ))}
         </div>

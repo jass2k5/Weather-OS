@@ -15,6 +15,7 @@ export const BootSequence = () => {
     const paraRef = useRef(null);
     const jassRef = useRef(null);
     const logoRef = useRef(null);
+    const [visible,setVisible] = useState(0);
     const [current,setCurrent] = useState("Stage1");
     const addNotification = useOsStore((state) => state.addNotification);
     useEffect(() => {
