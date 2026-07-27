@@ -3,14 +3,13 @@ import { useOsStore } from "../../shared/store/useOsStore";
 import { SystemSettings } from "./system/System";
 import { MapSet } from "./mapsetting/MapSettings";
 import { ClockSetting } from "./clocksetting/ClockSetting";
+import { NotifySet } from "./notificationsetting/NotificationSet";
 const options = [
     {id:"System",icon:<i className="ri-window-line"></i>},
     { id: "Maps", icon: <i className="ri-road-map-line"></i> },
     { id: "Clock", icon: <i className="ri-time-line"></i> },
     { id: "Notification", icon: <i className="ri-notification-line"></i> },
 ]
-///dummy function
-const NotificationSettings = () => <div className="text-white p-6">Notification Settings Content...</div>;
 
 export const Settings = () => {
     const zIndex = useOsStore((state)=> 15 + state.windowOrder.indexOf('settings'));
@@ -20,8 +19,7 @@ export const Settings = () => {
         switch (active) {
             case "Maps": return <MapSet/>;
             case "Clock": return <ClockSetting/>;
-            case "Notification": return <NotificationSettings/>;
-            case "Widgets": return <WidgetSettings/>;
+            case "Notification": return <NotifySet/>;
             case "System": return <SystemSettings/>
             default: return <SystemSettings/>;
         }

@@ -2,7 +2,7 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
 export const useOsStore = create(persist((set, get) => ({
-   
+
     isDay: true,
     setNight: () => { set({ isDay: false }) },
     setDay: () => { set({ isDay: true }) },
@@ -10,8 +10,8 @@ export const useOsStore = create(persist((set, get) => ({
     setIsScrollHovered: (val) => set({ isScrollHovered: val }),
     isBooted: false,
     systemBg: "/stage1bg.png",
-    setBg:(bg)=> set(()=>({
-        systemBg:bg,
+    setBg: (bg) => set(() => ({
+        systemBg: bg,
     })),
     finishBoot: () => { set({ isBooted: true }) },
     activeLocation: null,
@@ -27,7 +27,7 @@ export const useOsStore = create(persist((set, get) => ({
         clock: { isOpen: false },
         terminalClock: { isOpen: false },
         notification: { isOpen: false },
-        settings:{isOpen:false}
+        settings: { isOpen: false }
     },
 
     closeApp: (Appid) => set((state) => ({
@@ -91,13 +91,13 @@ export const useOsStore = create(persist((set, get) => ({
         set({ searchHistory: updatedHistory });
     },
 
-    windowOrder: ['map', 'clock','settings', 'terminalMap', 'terminalClock',"notification"],
-    
+    windowOrder: ['map', 'clock', 'settings', 'terminalMap', 'terminalClock', "notification"],
 
 
-focusApp: (appId) => set((state) => ({
-    windowOrder: [...state.windowOrder.filter((id) => id !== appId), appId]
-})),
+
+    focusApp: (appId) => set((state) => ({
+        windowOrder: [...state.windowOrder.filter((id) => id !== appId), appId]
+    })),
     //sync system for clock 
 
     updateCityData: (cityName, newData) => set((state) => ({
@@ -144,8 +144,8 @@ focusApp: (appId) => set((state) => ({
     addNotification: (message, type = "info") => {
         const state = get();
         if (state.notificationSetting && state.notificationSetting.enabled === false) {
-        return; 
-    }
+            return;
+        }
         const id = crypto.randomUUID();
         const newNoti = {
             id,
@@ -159,11 +159,11 @@ focusApp: (appId) => set((state) => ({
             activeNotifications: [newNoti, ...state.activeNotifications]
         }));
 
-   if (state.notificationSetting?.sound) {
-        const audio = new Audio("./notificationBell.mp3");
-        audio.volume = 0.5;
-        audio.play().catch((err) => console.log("Audio play blocked by browser", err));
-    }
+        if (state.notificationSetting?.sound) {
+            const audio = new Audio("./notificationBell.mp3");
+            audio.volume = 0.5;
+            audio.play().catch((err) => console.log("Audio play blocked by browser", err));
+        }
 
         let timer = setTimeout(() => {
             set((state) => ({
@@ -171,20 +171,20 @@ focusApp: (appId) => set((state) => ({
             }))
         }, 4000)
 
-   
+
 
     },
-    
-    clearNotification:()=>set((state=>({
-        notificationHistory:[]
+
+    clearNotification: () => set((state => ({
+        notificationHistory: []
     }))),
     //settings section
     dateTimeSettings: {
         showDateTime: true,
         showSeconds: true,
-        format: {hour:"12h",bol:false}, 
-        color: {clr:"white",bol:true },
-        position: 'top-right' 
+        format: { hour: "12h", bol: false },
+        color: { clr: "white", bol: true },
+        position: 'top-right'
     },
 
     updateDateTimeSetting: (key, value) => set((state) => ({
@@ -197,7 +197,7 @@ focusApp: (appId) => set((state) => ({
 
     glassSettings: {
         enabled: true,
-        blurValue: 2, 
+        blurValue: 2,
     },
 
     updateGlassSetting: (key, value) => set((state) => ({
@@ -210,8 +210,8 @@ focusApp: (appId) => set((state) => ({
     //mousefollower 
 
     mouseFollower: {
-        enabled: true, 
-        clockFollower:true,
+        enabled: true,
+        clockFollower: true,
     },
     updateFollowerSetting: (key, value) => set((state) => ({
         mouseFollower: {
@@ -221,61 +221,63 @@ focusApp: (appId) => set((state) => ({
     })),
 
     //map settings
-    mapSetting:{
+    mapSetting: {
         theme: "dark",
-        terminalMapTheme:{
-            theme:"light",
-            bol:false,
-            flyby:true,
-            marker:true
+        terminalMapTheme: {
+            theme: "light",
+            bol: false,
+            flyby: true,
+            marker: true
         },
-        Navigations:true,
-        flyby:true,
-        marker:true
+        Navigations: true,
+        flyby: true,
+        marker: true
     },
-    
-    setMapSetting:(key,value) => set((state)=>({
-        mapSetting:{
+
+    setMapSetting: (key, value) => set((state) => ({
+        mapSetting: {
             ...state.mapSetting,
-            [key]:value
+            [key]: value
         }
     })),
 
     //clock setting
-    clockSetting:{
-        liveNight:false,
-        liveDay:false,
-        format:{
-            hour:'12h',
-            enabled:false
+    clockSetting: {
+        liveNight: false,
+        liveDay: false,
+        format: {
+            hour: '12h',
+            enabled: false
         },
-        celsius:false,
-        km:false,
+        celsius: false,
+        km: false,
     },
 
-    setClockSetting:(key,value)=>set((state)=>({
-        clockSetting:{
+    setClockSetting: (key, value) => set((state) => ({
+        clockSetting: {
             ...state.clockSetting,
-            [key]:value
+            [key]: value
         }
     })),
 
     //notification settings
-    notificationSetting:{
-        enabled:true,
-        sound:true,
+    notificationSetting: {
+        enabled: true,
+        sound: true,
     },
-    setnotificationSetting:(key,value)=>set((state)=>({
-        ...state.notificationSetting,
-        [key]:value
+    setnotificationSetting: (key, value) => set((state) => ({
+        notificationSetting: {
+            ...state.notificationSetting,
+            [key]: value
+        }
     }))
 }
 
 ),
 
-{
-    name: 'weatherOsStorage',
-    partialize: (state) => Object.fromEntries(
-         Object.entries(state).filter(([key]) => key !== 'notificationHistory' && key !== 'activeNotifications')
-    ),
-}))
+    {
+        name: 'weatherOsStorage',
+        partialize: (state) => Object.fromEntries(
+            Object.entries(state).filter(([key]) => key !== 'notificationHistory' && key !== 'activeNotifications')
+        ),
+    }))
