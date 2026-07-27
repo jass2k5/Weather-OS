@@ -1,14 +1,13 @@
 import { useState,useEffect } from "react";
 import { useOsStore } from "../../shared/store/useOsStore";
 
-
 export const MiniCardClock = ({ tz_id }) => {
     const [time, setTime] = useState("");
-
     const [monthName,setMonthName] = useState("");
     const [dateNum,setDateNum] = useState("");
     const [year,setYear] = useState("");
-    const telemetryData = useOsStore((state)=>state.telemetryData)
+    const telemetryData = useOsStore((state)=>state.telemetryData);
+    const is12h = useOsStore((state)=>state.clockSetting?.format?.hour);
 
     useEffect(() => {
         if (!tz_id) return;
@@ -18,7 +17,8 @@ export const MiniCardClock = ({ tz_id }) => {
             setTime(now.toLocaleTimeString("en-US", {
                 timeZone: tz_id,
                 hour: "2-digit",
-                minute: "2-digit"
+                minute: "2-digit",
+                hour12: is12h === "12h"
             }));
 
             setMonthName(now.toLocaleDateString("en-US", { timeZone:tz_id, month: "short" }));
@@ -36,7 +36,7 @@ export const MiniCardClock = ({ tz_id }) => {
         updateTime();
         const timer = setInterval(updateTime, 1000);
         return () => clearInterval(timer);
-    }, [tz_id,telemetryData]);
+    }, [tz_id,telemetryData,is12h]);
 
 
     return(

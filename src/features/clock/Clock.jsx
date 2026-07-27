@@ -5,9 +5,9 @@ import { SyncBtn } from "./SyncBtn";
 import { useOsStore } from "../../shared/store/useOsStore";
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
-import Night from "../../shared/assets/night.jpg"
-import Day from "../../shared/assets/day.jpg"
-
+import Night from "../../shared/assets/night.jpg";
+import Day from "../../shared/assets/day.jpg";
+import { useTemperatureUnit } from "../../shared/hooks/useUnits";
 
 export const Clock = () => {
     const windowOrder = useOsStore((state) => state.windowOrder);
@@ -23,6 +23,8 @@ export const Clock = () => {
     const addNotification = useOsStore((state) => state.addNotification);
     const clockSetting = useOsStore((state) => state.clockSetting);
 
+    const {formatTemp,formatDistance} = useTemperatureUnit();
+  
 
 
     gsap.registerPlugin(ScrollTrigger);
@@ -123,7 +125,7 @@ export const Clock = () => {
                             <span className={`conditionSpan uppercase text-1xl ${loc.isDay ? "text-black/60 " : "text-white/60"}`}>{loc.isDay ? <i className="ri-sun-line text-orange-400"></i> : <i className="ri-moon-line"></i>}  {loc.liveCondition}</span>
                         </div>
                         <div className="bottomLeft absolute bottom-[6%] left-[3%] flex flex-col items-start justify-center">
-                            <span className={`temp text-8xl  font-[Lora] drop-shadow-2xl ${loc.isDay ? "text-white/60 " : "text-white/60"}`}>{loc.liveTemp}°C</span>
+                            <span className={`temp text-8xl  font-[Lora] drop-shadow-2xl ${loc.isDay ? "text-white/60 " : "text-white/60"}`}>{formatTemp(loc.liveTemp)}</span>
                         </div>
 
                         <MiniCardClock
@@ -137,7 +139,7 @@ export const Clock = () => {
 
                             <div className={`feels flex flex-col justify-start items-start gap-1 border-2 rounded-xl pr-6 pl-4 pt-2 pb-2 ${loc.isDay ? "bg-white/40 border-white/40" : "bg-white/10 border-white/20"} backdrop-blur-2xl`}>
                                 <i className={`ri-temp-hot-line capitalize text-[14px] ${loc.isDay ? "text-black/60" : "text-white/50"}`}> feels</i>
-                                <span className={loc.isDay ? "text-black font-medium" : "text-white"}>{loc.feelsLike} °C</span>
+                                <span className={loc.isDay ? "text-black font-medium" : "text-white"}>{formatTemp(loc.feelsLike)}</span>
                             </div>
 
                             <div className={`humidity flex flex-col justify-start items-start gap-1 border-2 rounded-xl pr-6 pl-4 pt-2 pb-2 ${loc.isDay ? "bg-white/40 border-white/40" : "bg-white/10 border-white/20"} backdrop-blur-2xl`}>
@@ -147,12 +149,12 @@ export const Clock = () => {
 
                             <div className={`wind flex flex-col justify-start items-start gap-1 border-2 rounded-xl pr-6 pl-4 pt-2 pb-2 ${loc.isDay ? "bg-white/40 border-white/40" : "bg-white/10 border-white/20"} backdrop-blur-2xl`}>
                                 <i className={`ri-cloud-windy-line capitalize text-[14px] ${loc.isDay ? "text-black/60" : "text-white/50"}`}> wind</i>
-                                <span className={loc.isDay ? "text-black font-medium" : "text-white"}>{loc.wind} Km/h</span>
+                                <span className={loc.isDay ? "text-black font-medium" : "text-white"}>{formatDistance(loc.wind)}</span>
                             </div>
 
                             <div className={`visibility flex flex-col justify-start items-start gap-1 border-2 rounded-xl pr-6 pl-4 pt-2 pb-2 ${loc.isDay ? "bg-white/40 border-white/40" : "bg-white/10 border-white/20"} backdrop-blur-2xl`}>
                                 <i className={`ri-eye-line capitalize text-[14px] ${loc.isDay ? "text-black/60" : "text-white/50"}`}> visibility</i>
-                                <span className={loc.isDay ? "text-black font-medium" : "text-white"}>{loc.visibility} Km</span>
+                                <span className={loc.isDay ? "text-black font-medium" : "text-white"}>{formatDistance(loc.visibility)}</span>
                             </div>
 
                         </div>

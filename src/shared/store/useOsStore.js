@@ -233,11 +233,12 @@ export const useOsStore = create(persist((set, get) => ({
         liveDay:false,
         format:{
             hour:'12h',
-            bol:false
+            enabled:false
         },
-        celsius:true,
-
+        celsius:false,
+        km:false,
     },
+
     setClockSetting:(key,value)=>set((state)=>({
         clockSetting:{
             ...state.clockSetting,

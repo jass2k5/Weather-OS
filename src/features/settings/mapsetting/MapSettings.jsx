@@ -7,6 +7,7 @@ import { DayNightSwitch } from "../../../shared/components/ThemeBtn";
 import { SettingGroup } from "../../../shared/components/SettingGroup";
 import { ThemeContainer } from "../../../shared/components/ThemeContainer";
 import { ThemeCard } from "../../../shared/components/ThemeCard";
+import { Alerts } from "../../../shared/components/Alerts";
   const Themes = [
         { id: "theme1", src: "/dark.png", theme: "dark" },
         { id: "theme2", src: "/light.webp", theme: "light" },
@@ -129,12 +130,7 @@ export const MapSet = () => {
                     />
                 </SettingGroup>
             </div>
-            <div className="w-[80%] mx-auto mt-auto shrink-0 flex items-center gap-2 rounded-lg border border-yellow-500/20 bg-yellow-500/10 px-4 py-2.5">
-                <i className="ri-error-warning-fill text-yellow-500 text-lg mt-0.5"></i>
-                <span className="text-white/60 text-sm leading-snug">
-                    Disabling the flyby animation and marker will decrease the load on the backend.
-                </span>
-            </div>
+          <Alerts variant="warning" paragraph=" Disabling the flyby animation and marker will decrease the load on the backend."/>
         </div>
     )
 }
