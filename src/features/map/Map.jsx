@@ -11,43 +11,37 @@ import { Text } from "./Text";
 import gsap from "gsap";
 
 
-const getCoord = (data) => {
-    const loc = data?.location || data?.coord;
-    if (loc?.lat != null && loc?.lon != null) return { lat: loc.lat, lon: loc.lon };
+const getCoord = (lat,lon) => {
+    if (lat != null && lon != null) return { lat,lon };
     return null;
 };
 
 export const WeatherMap = () => {
-    const windowOrder = useOsStore((state)=> state.windowOrder);
-    const myZIndex = 10 + windowOrder.indexOf('map');
+    
+    const myZIndex =useOsStore((state)=> 10 + state.windowOrder.indexOf('map'));
     const [isMapLoaded, setIsMapLoaded] = useState(false);
     const [mapError, setMapError] = useState("");
     const containerRef = useRef(null);
     const mapRef = useRef(null);
     const MAPTILER_KEY = import.meta.env.VITE_MAPTILER_KEY;
-    const mapSetting = useOsStore((state)=> state.mapSetting);
-    const apps = useOsStore((state)=>state.apps)
-
+    const flyby = useOsStore((state)=>state.mapSetting.flyby);
+    const marker = useOsStore((state)=>state.mapSetting.marker);
+    const theme = useOsStore((state)=>state.mapSetting.theme);
+    const navigation = useOsStore((state)=>state.mapSetting.Navigations)
     const mapThemes = {
     dark: `https://api.maptiler.com/maps/dataviz-dark/style.json?key=${MAPTILER_KEY}`,
     light: `https://api.maptiler.com/maps/topo-v4/style.json?key=${MAPTILER_KEY}`,
     satellite: `https://api.maptiler.com/maps/satellite/style.json?key=${MAPTILER_KEY}`
 };
-    const mapStyleUrl = mapSetting?.theme === "dark"?mapThemes.dark:mapSetting.theme === "light"?mapThemes.light:mapThemes.satellite
-
-    const closeApp = useOsStore((state) => state.closeApp);
-
-    const isClosing = useOsStore((state)=>state.isClosing);
-    const telemetryData = useOsStore((state) => state.telemetryData);
-    const coord = getCoord(telemetryData);
+    const mapStyleUrl = theme === "dark"?mapThemes.dark:theme === "light"?mapThemes.light:mapThemes.satellite
+    const lat = useOsStore((state)=>state.telemetryData?.location?.lat);
+    const lon = useOsStore((state)=>state.telemetryData?.location?.lon);
+    const coord = getCoord(lat,lon);
     const addNotification = useOsStore((state) => state.addNotification); 
 
-    useEffect(() => {
-        const coord = getCoord(telemetryData);
-        const currentAqi = telemetryData?.current?.air_quality?.['us-epa-index'];
-        
+    useEffect(() => {  
         if (isMapLoaded && coord) {
-            if (mapSetting?.flyby) {
+            if (flyby) {
                 mapRef.current.getMap().flyTo({
                     center: [coord.lon, coord.lat],
                     zoom: 12,
@@ -61,7 +55,7 @@ export const WeatherMap = () => {
                 });
             }
         }
-    }, [telemetryData, isMapLoaded, mapSetting?.flyby]);
+    }, [lat,lon, isMapLoaded,flyby]);
     
     useEffect(()=>{
         if(!mapError) return;
@@ -100,13 +94,13 @@ export const WeatherMap = () => {
                     initialViewState={{ longitude: 0, latitude: 20, zoom: 1.5 }}
                     mapStyle={mapStyleUrl}
                     onLoad={(event) => {
-                        event.target.resize();
+                       requestAnimationFrame(() => event.target.resize());
                         setIsMapLoaded(true);
                     }}
                     onError={() => setMapError("MAP STYLE LOAD FAILED")}
                     style={{ width: "100%", height: "100%" }}
                 >
-                    {coord && mapSetting?.marker && (
+                    {coord && marker && (
                         <Marker
                             longitude={coord.lon}
                             latitude={coord.lat}
@@ -114,7 +108,7 @@ export const WeatherMap = () => {
                             anchor="bottom"
                         />
                     )}
-                    {mapSetting?.Navigations && (
+                    {navigation && (
                         <NavigationControl
                         position="bottom-right"
                         showCompass={true}

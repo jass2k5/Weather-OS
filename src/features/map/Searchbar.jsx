@@ -7,14 +7,12 @@ import { useState, useEffect, useRef } from "react";
 import { useOsStore } from "../../shared/store/useOsStore";
 export const Searchbar = () => {
     const [inputvalue, setInputValue] = useState("");
-
     const [prev, setPrev] = useState(false);
     const setSystemTelemetry = useOsStore((state) => state.setSystemTelemetry)
-    const telemetryData = useOsStore((state)=>state.telemetryData);
+    const telemetryDataloc = useOsStore((state)=>state.telemetryData?.location?.name);
     const addSearchToHistory = useOsStore((state) => state.addSearchToHistory);
     const searchHistory = useOsStore((state) => state.searchHistory);
     const addNotification = useOsStore((state) => state.addNotification);
-    const allSearches = searchHistory;
     const formRef = useRef(null);
     const isFirstRender = useRef(true);
     const searchWrapperRef = useRef(null);
@@ -84,8 +82,8 @@ const { mutate, isPending } = useMutation({
 });
 
     useEffect(()=>{
-      if(telemetryData?.location?.name){
-        mutate(telemetryData.location.name);
+      if(telemetryDataloc){
+        mutate(telemetryDataloc);
       }
     },[]);
 
@@ -111,6 +109,7 @@ const { mutate, isPending } = useMutation({
                     ease: "back.out(2)"
                 });
             isFirstRender.current = false;
+            return;
         }
 
         if (isPending) {
@@ -178,8 +177,8 @@ const { mutate, isPending } = useMutation({
                 </div>
             </div >
 
-            <div className={`PrevSearches flex-col justify-center items-start  p-4  border-2 border-white/80 rounded-2xl bg-white text-black ${prev && allSearches.length > 0 ? "flex" : "hidden"} `}>
-                {allSearches.map((loc, index) => (
+            <div className={`PrevSearches flex-col justify-center items-start  p-4  border-2 border-white/80 rounded-2xl bg-white text-black ${prev && searchHistory.length > 0 ? "flex" : "hidden"} `}>
+                {searchHistory.map((loc, index) => (
                     <div
                         key={`${loc.city}-${index}`}
                         onClick={() => {

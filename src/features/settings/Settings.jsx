@@ -1,24 +1,21 @@
-import { useEffect, useState, useRef } from "react";
+import { useState } from "react";
 import { useOsStore } from "../../shared/store/useOsStore";
 import { SystemSettings } from "./system/System";
 import { MapSet } from "./mapsetting/MapSettings";
 import { ClockSetting } from "./clocksetting/ClockSetting";
+const options = [
+    {id:"System",icon:<i className="ri-window-line"></i>},
+    { id: "Maps", icon: <i className="ri-road-map-line"></i> },
+    { id: "Clock", icon: <i className="ri-time-line"></i> },
+    { id: "Notification", icon: <i className="ri-notification-line"></i> },
+    { id: "Widgets", icon: <i className="ri-function-line"></i> }
+]
+///dummy function
+const NotificationSettings = () => <div className="text-white p-6">Notification Settings Content...</div>;
+const WidgetSettings = () => <div className="text-white p-6">Widget Settings Content Here...</div>;
 export const Settings = () => {
-    const focusApp = useOsStore((state) => state.focusApp);
-    const windowOrder = useOsStore((state) => state.windowOrder);
-    const zIndex = 15 + windowOrder.indexOf('settings');
+    const zIndex = useOsStore((state)=> 15 + state.windowOrder.indexOf('settings'));
     const [active, setActive] = useState('System');
-    const options = [
-        {id:"System",icon:<i className="ri-window-line"></i>},
-        { id: "Maps", icon: <i className="ri-road-map-line"></i> },
-        { id: "Clock", icon: <i className="ri-time-line"></i> },
-        { id: "Notification", icon: <i className="ri-notification-line"></i> },
-        { id: "Widgets", icon: <i className="ri-function-line"></i> }
-    ]
-
-    ///dummy function
-    const NotificationSettings = () => <div className="text-white p-6">Notification Settings Content...</div>;
-    const WidgetSettings = () => <div className="text-white p-6">Widget Settings Content Here...</div>;
 
     const renderContent = () => {
         switch (active) {

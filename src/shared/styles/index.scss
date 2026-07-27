@@ -9,8 +9,9 @@
 @use '../../features/clock/Button';
 @use '../../features/clock/ClockTerminal';
 @use '../../features/settings/SettingsOs';
-@use '../components/ToggleBtn';
-@use '../components/ThemeBtn';
+@use '../components/scss/ToggleBtn';
+@use '../components/scss/ThemeBtn';
+
 
 @layer base {
     *, *::before, *::after {

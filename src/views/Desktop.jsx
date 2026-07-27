@@ -48,12 +48,12 @@ export const Desktop = () => {
                 {apps?.map?.isOpen && <WeatherMap />}
                 {apps?.settings?.isOpen && <DraggableWindow
                     defaultSize={{
-                        width: window.innerWidth * 0.9,
-                        height: window.innerHeight * 0.9
+                        width: window.innerWidth * 0.7,
+                        height: window.innerHeight * 0.7
                     }}
                     defaultpos={{
-                        x: Math.floor(window.innerWidth * 0.03),
-                        y: Math.floor(window.innerHeight * 0.03)
+                        x: Math.floor(window.innerWidth * 0.02),
+                        y: Math.floor(window.innerHeight * 0.02)
                     }}
                     minWidth={750}
                     minHeight={450}

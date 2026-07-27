@@ -7,9 +7,8 @@ import "react-loading-skeleton/dist/skeleton.css";
 import { useOsStore } from "../../shared/store/useOsStore";
 
 
-const getCoord = (data) => {
-    const loc = data?.location || data?.coord;
-    if (loc?.lat != null && loc?.lon != null) return { lat: loc.lat, lon: loc.lon };
+const getCoord = (lat,lon) => {
+    if (lat != null && lon != null) return { lat,lon };
     return null;
 };
 
@@ -18,11 +17,14 @@ export const TerminalMap = () => {
     const [mapError, setMapError] = useState("");
     const containerRef = useRef(null);
     const mapRef = useRef(null);
-    const mapSetting = useOsStore((state) => state.mapSetting);
+    const flyby = useOsStore((state)=>state.mapSetting?.terminalMapTheme?.flyby);
+    const marker = useOsStore((state)=>state.mapSetting?.terminalMapTheme?.marker);
+    const theme = useOsStore((state)=>state.mapSetting?.terminalMapTheme?.theme)
     const MAPTILER_KEY = import.meta.env.VITE_MAPTILER_KEY;
-    const mapStyleUrl = mapSetting?.terminalMapTheme?.theme === "light"? `https://api.maptiler.com/maps/topo-v4/style.json?key=${MAPTILER_KEY}`:`https://api.maptiler.com/maps/dataviz-dark/style.json?key=${MAPTILER_KEY}`;
-    const telemetryData = useOsStore((state) => state.telemetryData);
-    const coord = getCoord(telemetryData);
+    const mapStyleUrl = theme === "light"? `https://api.maptiler.com/maps/topo-v4/style.json?key=${MAPTILER_KEY}`:`https://api.maptiler.com/maps/dataviz-dark/style.json?key=${MAPTILER_KEY}`;
+    const lat = useOsStore((state) => state.telemetryData?.location?.lat);
+    const lon = useOsStore((state)=>state.telemetryData?.location?.lon);
+    const coord = getCoord(lat,lon);
 
     useEffect(() => {
         const resizeObserver = new ResizeObserver(() => mapRef.current?.getMap().resize());
@@ -32,11 +34,10 @@ export const TerminalMap = () => {
 
 
   useEffect(() => {
-        const coord = getCoord(telemetryData);
         
         if (isMapLoaded && coord) {
             
-            if (mapSetting?.terminalMapTheme?.flyby) {
+            if (flyby) {
                 mapRef.current.getMap().flyTo({
                     center: [coord.lon, coord.lat],
                     zoom: 12,
@@ -51,7 +52,7 @@ export const TerminalMap = () => {
                 });
             }
         }
-    }, [telemetryData, isMapLoaded, mapSetting?.terminalMapTheme?.flyby]);
+    }, [lat,lon, isMapLoaded,flyby]);
 
     return (
         <div ref={containerRef} className="mapContainer relative h-full w-full overflow-hidden bg-slate-950">
@@ -78,12 +79,12 @@ export const TerminalMap = () => {
                     initialViewState={{ longitude: 0, latitude: 20, zoom: 1.5 }}
                     mapStyle={mapStyleUrl}
                     onLoad={(event) => {
-                        event.target.resize();
+                        requestAnimationFrame(() => event.target.resize());
                         setIsMapLoaded(true);
                     }}
                     onError={() => setMapError("MAP STYLE LOAD FAILED")}
                     style={{ width: "100%", height: "100%" }}>
-                    {coord && mapSetting?.terminalMapTheme?.marker && (
+                    {coord && marker && (
                         <Marker
                             longitude={coord.lon}
                             latitude={coord.lat}

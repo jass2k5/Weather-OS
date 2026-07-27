@@ -6,7 +6,6 @@ export const MiniCardClock = ({ tz_id }) => {
     const [monthName,setMonthName] = useState("");
     const [dateNum,setDateNum] = useState("");
     const [year,setYear] = useState("");
-    const telemetryData = useOsStore((state)=>state.telemetryData);
     const is12h = useOsStore((state)=>state.clockSetting?.format?.hour);
 
     useEffect(() => {
@@ -36,7 +35,7 @@ export const MiniCardClock = ({ tz_id }) => {
         updateTime();
         const timer = setInterval(updateTime, 1000);
         return () => clearInterval(timer);
-    }, [tz_id,telemetryData,is12h]);
+    }, [tz_id,is12h]);
 
 
     return(

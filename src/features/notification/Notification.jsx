@@ -3,9 +3,7 @@ import { useOsStore } from "../../shared/store/useOsStore"
 export const NotificationApp = ()=>{
 
     const notificationHistory = useOsStore((state)=> state.notificationHistory);
-    const windowOrder = useOsStore((state) => state.windowOrder);
-
-    const myZIndex = 10 + windowOrder.indexOf('notification');
+    const myZIndex = useOsStore((state)=>10 + state.windowOrder.indexOf('notification'))
     
     return(
         <div style={{zIndex:myZIndex}} className="Notify h-auto rounded-[0.8rem] w-max p-4  bg-[rgba(0,0,0,0.63)] absolute inset-0 flex items-center justify-start flex-col gap-[1rem] overflow-y-auto scrollbar-none">

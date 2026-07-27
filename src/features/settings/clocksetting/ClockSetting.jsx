@@ -53,7 +53,7 @@ export const ClockSetting = () => {
                 subtitle="fahrenheit or celsius"
                 control={
                     <Switch
-                    checked={ClockSetting?.celsius}
+                    checked={clockSetting?.celsius}
                     onChange={(e)=>{
                         setClockSetting("celsius",e.target.checked)
                     }}
@@ -67,7 +67,7 @@ export const ClockSetting = () => {
                 showDivider = {false}
                 control={
                     <Switch
-                    checked={ClockSetting?.km}
+                    checked={clockSetting?.km}
                     showDivider={false}
                     onChange={(e)=>{
                         setClockSetting("km",e.target.checked)

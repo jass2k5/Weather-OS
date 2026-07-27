@@ -10,14 +10,11 @@ import Day from "../../shared/assets/day.jpg";
 import { useTemperatureUnit } from "../../shared/hooks/useUnits";
 
 export const Clock = () => {
-    const windowOrder = useOsStore((state) => state.windowOrder);
-    const myZIndex = 10 + windowOrder.indexOf('clock');
+    const myZIndex = useOsStore((state)=>10 + state.windowOrder.indexOf('clock'));
     const searchHistory = useOsStore((state) => state.searchHistory);
-    // const allSearches = searchHistory;
-    const telemetryData = useOsStore((state) => state.telemetryData);
     const syncAllWeather = useOsStore((state) => state.syncAllWeather);
     const setIsScrollHovered = useOsStore((state) => state.setIsScrollHovered)
-    const mouseFollower = useOsStore((state) => state.mouseFollower);
+    const clockFollower = useOsStore((state) => state.mouseFollower.clockFollower);
     const cardRefs = useRef([]);
     const containerRef = useRef(null);
     const addNotification = useOsStore((state) => state.addNotification);
@@ -25,7 +22,6 @@ export const Clock = () => {
 
     const {formatTemp,formatDistance} = useTemperatureUnit();
   
-
 
     gsap.registerPlugin(ScrollTrigger);
 
@@ -48,7 +44,7 @@ export const Clock = () => {
                 }
             });
         });
-    }, { dependencies: [searchHistory, telemetryData], scope: containerRef });
+    }, { dependencies: [searchHistory], scope: containerRef });
 
     useEffect(() => {
         syncAllWeather();
@@ -82,14 +78,14 @@ export const Clock = () => {
     return (
         <div style={{ zIndex: myZIndex }} className="Clock h-full w-full absolute top-0 left-0 bg-black pt-10 pb-0 flex items-center justify-center">
             <div onMouseEnter={() => {
-                if (mouseFollower?.clockFollower) {
+                if (clockFollower) {
                     if (searchHistory.length > 1) {
                         setIsScrollHovered(true);
                     }
                 }
             }}
                 onMouseLeave={() => {
-                    if (mouseFollower?.clockFollower) {
+                    if (clockFollower) {
                         setIsScrollHovered(false);
                     }
                 }} ref={containerRef} className=" holder h-[75%] w-[98%] max-w-[900px] overflow-y-auto scrollbar-none relative rounded-3xl -translate-y-10 ">

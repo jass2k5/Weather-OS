@@ -4,21 +4,16 @@ import { useOsStore } from "../../shared/store/useOsStore";
 import { useRef } from "react";
 import { SplitText } from "gsap/SplitText";
 
-
 gsap.registerPlugin(SplitText, useGSAP);
 
 export const Text = () => {
 
-    const telemetryData = useOsStore((state) => state.telemetryData);
-    const windowOrder = useOsStore((state) => state.windowOrder);
-    const mapSetting = useOsStore((state)=>state.mapSetting);
-
-    const myZIndex = 20 + windowOrder.indexOf('map');
-
-    const city = telemetryData?.location?.name?.trim() ?? "Unknown Location";
-    const country = telemetryData?.location?.country?.trim() ?? "Unknow Country";
-    const temperature = telemetryData?.current?.temp_c ?? 0;
-    const weatherText = telemetryData?.current?.condition?.text ?? "Couldn't fetch the data";
+    const mapSetting = useOsStore((state) => state.mapSetting.theme);
+    const myZIndex = useOsStore((state) => 20 + state.windowOrder.indexOf('map'));
+    const city = useOsStore((state) => state.telemetryData?.location?.name?.trim() ?? "Unknown Location");
+    const country = useOsStore((state) => state.telemetryData?.location?.country?.trim() ?? "Unknown Country");
+    const temperature = useOsStore((state) => state.telemetryData?.current?.temp_c ?? 0);
+    const weatherText = useOsStore((state) => state.telemetryData?.current?.condition?.text ?? "Couldn't fetch the data");
 
     const cityRef = useRef(null);
     const tempRef = useRef(null);
@@ -43,7 +38,7 @@ export const Text = () => {
             stagger: {
                 from: "start",
                 each: 0.5,
-                ease: "power3.inout"
+                ease: "power3.inOut"
             },
             y: 0,
         })
@@ -64,14 +59,14 @@ export const Text = () => {
                 weatherwords.revert();
             }
         })
-    }, { dependencies: [telemetryData] });
+    }, { dependencies: [city,weatherText,temperature] });
 
 
 
     return (
         <div
-        style={{zIndex:myZIndex}}
-         className={`conditionContainer ${mapSetting.theme ==="light"?"text-yellow-500":"text-white"} `}>
+            style={{ zIndex: myZIndex }}
+            className={`conditionContainer ${mapSetting === "light" ? "text-yellow-500" : "text-white"} `}>
             <span className="searchedlocation">Searched Location</span>
             <h1 ref={cityRef} className="countryCity">{`${city},${country}`}</h1>
             <span ref={tempRef} className="temperature">{`${temperature}°C`}</span>

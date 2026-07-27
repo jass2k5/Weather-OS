@@ -1,5 +1,5 @@
 import { useOsStore } from "../../../shared/store/useOsStore"
-import { useState, useRef } from "react";
+import { useState } from "react";
 import { Switch } from "../../../shared/components/ToggleBtn";
 import { Stepper } from "../../../shared/components/ArrowStepper";
 import { SettingRow } from "../../../shared/components/SettingRow";
@@ -31,7 +31,7 @@ export const MapSet = () => {
                 
                 onClick={() => {
                             setMapSetting('theme',theme.theme)
-                            addNotification("Map Theme Changed To Dark", "success")
+                            addNotification(`Map Theme Changed To ${theme.theme.toUpperCase()}`, "success")
                         }}
                         />
                 ))}

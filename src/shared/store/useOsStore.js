@@ -95,10 +95,9 @@ export const useOsStore = create(persist((set, get) => ({
     
 
 
-    focusApp: (appId) => set((state) => {
-        const remainingApps = state.windowOrder.filter((id) => id !== appId);
-        return { windowOrder: [...remainingApps, appId] };
-    }),
+focusApp: (appId) => set((state) => ({
+    windowOrder: [...state.windowOrder.filter((id) => id !== appId), appId]
+})),
     //sync system for clock 
 
     updateCityData: (cityName, newData) => set((state) => ({
@@ -186,6 +185,7 @@ export const useOsStore = create(persist((set, get) => ({
         enabled: true,
         blurValue: 2, 
     },
+
     updateGlassSetting: (key, value) => set((state) => ({
         glassSettings: {
             ...state.glassSettings,
