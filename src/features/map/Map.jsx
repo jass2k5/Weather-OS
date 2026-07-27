@@ -15,7 +15,12 @@ const getCoord = (lat,lon) => {
     if (lat != null && lon != null) return { lat,lon };
     return null;
 };
-
+const MAPTILER_KEY = import.meta.env.VITE_MAPTILER_KEY;
+const mapThemes = {
+dark: `https://api.maptiler.com/maps/dataviz-dark/style.json?key=${MAPTILER_KEY}`,
+light: `https://api.maptiler.com/maps/topo-v4/style.json?key=${MAPTILER_KEY}`,
+satellite: `https://api.maptiler.com/maps/satellite/style.json?key=${MAPTILER_KEY}`
+};
 export const WeatherMap = () => {
     
     const myZIndex =useOsStore((state)=> 10 + state.windowOrder.indexOf('map'));
@@ -23,16 +28,10 @@ export const WeatherMap = () => {
     const [mapError, setMapError] = useState("");
     const containerRef = useRef(null);
     const mapRef = useRef(null);
-    const MAPTILER_KEY = import.meta.env.VITE_MAPTILER_KEY;
     const flyby = useOsStore((state)=>state.mapSetting.flyby);
     const marker = useOsStore((state)=>state.mapSetting.marker);
     const theme = useOsStore((state)=>state.mapSetting.theme);
     const navigation = useOsStore((state)=>state.mapSetting.Navigations)
-    const mapThemes = {
-    dark: `https://api.maptiler.com/maps/dataviz-dark/style.json?key=${MAPTILER_KEY}`,
-    light: `https://api.maptiler.com/maps/topo-v4/style.json?key=${MAPTILER_KEY}`,
-    satellite: `https://api.maptiler.com/maps/satellite/style.json?key=${MAPTILER_KEY}`
-};
     const mapStyleUrl = theme === "dark"?mapThemes.dark:theme === "light"?mapThemes.light:mapThemes.satellite
     const lat = useOsStore((state)=>state.telemetryData?.location?.lat);
     const lon = useOsStore((state)=>state.telemetryData?.location?.lon);

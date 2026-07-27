@@ -8,6 +8,7 @@ import gsap from "gsap";
 import Night from "../../shared/assets/night.jpg";
 import Day from "../../shared/assets/day.jpg";
 import { useTemperatureUnit } from "../../shared/hooks/useUnits";
+gsap.registerPlugin(ScrollTrigger);
 
 export const Clock = () => {
     const myZIndex = useOsStore((state)=>10 + state.windowOrder.indexOf('clock'));
@@ -22,9 +23,6 @@ export const Clock = () => {
 
     const {formatTemp,formatDistance} = useTemperatureUnit();
   
-
-    gsap.registerPlugin(ScrollTrigger);
-
     useGSAP(() => {
         if (cardRefs.current.length === 0) return;
 
