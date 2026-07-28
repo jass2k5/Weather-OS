@@ -1,7 +1,7 @@
 import weather from '../../shared/assets/ios-weather.svg'
 import map from '../../shared/assets/map.png'
 import clock from '../../shared/assets/apple-clock.svg'
-import widgets from '../../shared/assets/widgets.png'
+import contact from '../../shared/assets/contact.png'
 import notification from '../../shared/assets/notification.png'
 import settings from '../../shared/assets/apple-settings.svg'
 import { useOsStore } from '../../shared/store/useOsStore'
@@ -47,13 +47,13 @@ export const Dock = () => {
                 Class={"clock"}
             />
             <DockIcon
-                iconsource={widgets}
-                appName={"widgets"}
+                iconsource={contact}
+                appName={"contact"}
                 itsTerminal={"none"}
-                isOpen={false}
+                isOpen={apps?.contact?.isOpen}
                 openApp={openApp}
                 closeApp={closeApp}
-                Class={"widget"}
+                Class={"contact"}
             />
             <DockIcon
                 iconsource={notification}

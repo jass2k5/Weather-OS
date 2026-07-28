@@ -1,3 +1,4 @@
+@use "./utils/util" as *;
 @use '../../core/bootSequence';
 @use '../../views/Desktop';
 @use '../components/mouseFollower/MouseFollower';
@@ -12,7 +13,13 @@
 @use '../components/scss/ToggleBtn';
 @use '../components/scss/ThemeBtn';
 @use '../components/scss/ResetBtn';
-
+@use '../../features/contact/Main';
+@use '../../features/contact/information/Information';
+@use '../../features/contact/header/Header';
+@use '../../features/contact/form/Form';
+@use '../../features/contact/socials/Socials';
+@use '../../features/contact/footer/Footer';
+@use '../../features/contact/information/CenterImage';
 
 @layer base {
     *, *::before, *::after {

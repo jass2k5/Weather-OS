@@ -1,0 +1,92 @@
+@use '../../../shared/styles/utils/util' as *;
+
+.aboutHeader {
+    grid-area: header;
+    height: 55vh;
+    width: 100%;
+    border-radius: 0.8rem;
+    
+    
+    .containerHeader {
+        height: 100%;
+        width: 100%;
+        position: relative;
+
+
+         .featured {
+        z-index: 3;
+        text-transform: capitalize;
+        font-weight: 500;
+        position: absolute;
+        bottom: 0%;
+        right: 0%;
+       padding: clamp(0.2rem, 1.5cqi + 0.1rem, 0.7rem);
+        background-color: var(--body-clr);
+        border-top-left-radius: 1rem;
+
+        span {
+            font-size: clamp(0.7rem, 2vw + 0.4rem, 1.1rem);
+            color: var(--text-clr);
+        }
+
+        &::before {
+            content: '';
+            position: absolute;
+            height: 10px;
+            width: 5px;
+            background-color: transparent;
+            border-bottom-right-radius: 4rem;
+            bottom: 0%;
+            right: 100%;
+            box-shadow: 1px 1.4px 0 0 var(--body-clr);
+        }
+
+        &::after {
+            content: '';
+            position: absolute;
+            height: 6px;
+            width: 6px;
+            background-color: transparent;
+            border-bottom-right-radius: 1rem;
+            top: -14%;
+
+            right: -1%;
+            transform: rotate(-22deg);
+            box-shadow: 1px 2px 0 0 var(--body-clr);
+        }
+    }
+
+        .imgHeader {
+            height: 100%;
+            width: 100%;
+            
+            img {
+                height: 100%;
+                width: 100%;
+                object-fit: cover;
+                object-position: top;
+                border-radius: 0.8rem;
+            }
+        }
+    }
+}
+
+
+@container contactApp (min-width: 768px) and (max-width: 899px) {
+    .aboutHeader {
+        height: 65vh;
+    }
+}
+
+
+@container contactApp (min-width: 900px) {
+    .aboutHeader {
+       grid-area: header;
+        position: sticky !important;
+        top: var(--main-padding) !important; 
+        align-self: start !important; 
+        height: calc(100cqh - (var(--main-padding) * 2)) !important; 
+        width: 100%;
+        overflow: hidden;
+    }
+}

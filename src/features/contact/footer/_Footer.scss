@@ -1,0 +1,284 @@
+@use '../../../shared/styles/utils/util' as *;
+
+.footer {
+    grid-area: footer;
+    height: auto;
+    width: 100%;
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: repeat(3, auto);
+    grid-template-areas: "row1"
+        "row2"
+        "row3";
+    background-color: var(--body-clr);
+
+    .aboutandmore {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        grid-area: row1;
+        height: 100%;
+        width: 100%;
+        border-top-right-radius: 0.8rem;
+        border-top-left-radius: 0.8rem;
+        background-color: var(--text-clr);
+        padding: 4rem;
+        gap: 2rem;
+
+        .first-half {
+            height: 100%;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 2rem;
+
+            .ema-img {
+                @include ema-img(57px, 57px, var(--circle));
+            }
+
+            .sideview {
+                @include flex-gap(5px);
+                flex-direction: column;
+                color: var(--body-clr);
+
+                h2 {
+                    font-size: var(--space-smd);
+                }
+
+                h3 {
+                    font-size: var(--space-xss);
+                    opacity: 0.7;
+                }
+            }
+        }
+
+        .second-half {
+            @include back-white;
+            padding: 0.5rem 0.7rem;
+            border-radius: 0.5rem;
+            text-transform: capitalize;
+            transition: all 0.4s ease-in-out;
+
+            a {
+                display: inline-block;
+                text-decoration: none;
+                color: var(--text-clr);
+
+                span {
+                    display: inline-block;
+                    font-size: 1rem;
+                    font-weight: 400;
+                }
+            }
+
+            &:hover {
+                transform: translateY(-3px);
+            }
+        }
+    }
+
+    .all {
+        grid-area: row2;
+        height: auto;
+        width: 100%;
+        color: var(--body-clr);
+        background-color: var(--text-clr);
+        @include flex-gap(2rem);
+        flex-direction: column;
+        margin-top: -1px;
+
+        .pages {
+            @include all-childs;
+            color: var(--body-clr);
+
+            h3 {
+                font-size: 1rem;
+            }
+
+            .f-nav {
+                ul {
+                    @include flex-gap(1rem);
+                    flex-direction: column;
+
+                    li {
+                        list-style: none;
+
+                        a {
+                            font-size: 0.9rem;
+                            color: var(--body-clr);
+                            text-decoration: none;
+                        }
+                    }
+                }
+            }
+        }
+
+        .CMS {
+            @include all-childs;
+            color: var(--body-clr);
+
+            h3 {
+                font-size: 1.1rem;
+            }
+
+            .allcms {
+                ul {
+                    @include flex-gap(1rem);
+                    flex-direction: column;
+
+                    li {
+                        list-style: none;
+                    }
+                }
+            }
+        }
+
+        .utility {
+            @include all-childs;
+            color: var(--body-clr);
+
+            h3 {
+                font-size: 1rem;
+            }
+
+            .utilities {
+                ul {
+                    @include flex-gap(1rem);
+                    flex-direction: column;
+
+                    li {
+                        list-style: none;
+                    }
+                }
+            }
+        }
+    }
+
+    .end {
+        grid-area: row3;
+        height: 100%;
+        width: 100%;
+        background-color: var(--text-clr);
+        margin-top: -1px;
+        border-bottom-left-radius: 0.8rem;
+        border-bottom-right-radius: 0.8rem;
+        @include flex-gap(1rem);
+        flex-direction: column;
+        color: var(--body-clr);
+        padding: var(--main-padding);
+
+        h3 {
+            font-size: 1.2rem;
+            margin-top: 1rem;
+        }
+
+        .contacts {
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+            @include flex-gap(3rem);
+
+            a {
+                color: var(--body-clr);
+                font-size: 1.2rem;
+                text-decoration: none;
+            }
+        }
+    }
+}
+
+/* 🔥 Tablet / Mid-size Window 🔥 */
+@container contactApp (min-width: 768px) and (max-width: 899px) {
+    .footer {
+        grid-area: footer;
+
+        .aboutandmore {
+            flex-direction: row;
+            justify-content: space-evenly;
+
+            .first-half {
+                width: 50%;
+                flex-direction: row;
+                margin-right: 2rem;
+                justify-content: flex-start;
+
+                .ema-img {
+                    @include ema-img(65px, 65px, var(--circle));
+                }
+            }
+        }
+
+        .all {
+            flex-direction: row;
+            padding: var(--space-md);
+        }
+
+        .end {
+            padding: 3rem;
+
+            h3 {
+                font-size: 1.5rem;
+            }
+
+            .contacts {
+                margin-top: 1.4rem;
+
+                a {
+                    font-size: 1.5rem;
+                }
+            }
+        }
+    }
+}
+
+/* 🔥 Desktop Window (Synced with main grid shift) 🔥 */
+@container contactApp (min-width: 900px) {
+    .footer {
+        max-height: 40vh;
+        grid-area: footer;
+        height: auto;
+        width: 100%;
+
+        .aboutandmore {
+            flex-direction: row;
+            justify-content: space-evenly;
+            border-top-left-radius: 0.8rem;
+            border-top-right-radius: 0.8rem;
+
+            .first-half {
+                width: 50%;
+                flex-direction: row;
+                margin-right: 2rem;
+                justify-content: flex-start;
+
+                .ema-img {
+                    @include ema-img(65px, 65px, var(--circle));
+                }
+            }
+        }
+
+        .all {
+            flex-direction: row;
+        }
+
+        .end {
+            padding: 3rem;
+            border-bottom-left-radius: 0.8rem;
+            border-bottom-right-radius: 0.8rem;
+
+            h3 {
+                font-size: 1.5rem;
+            }
+
+            .contacts {
+                margin-top: 1.4rem;
+
+                a {
+                    font-size: 1.5rem;
+                }
+            }
+        }
+    }
+}

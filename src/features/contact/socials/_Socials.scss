@@ -1,0 +1,150 @@
+@use '../../../shared/styles/utils/util' as *;
+
+.infomobile {
+    grid-area: infobox;
+    @include flex-gap(0.8rem);
+    width: 100%;
+    flex-direction: column;
+
+    .info {
+        background-color: var(--third-clr);
+        padding: 1.4rem;
+        margin-right: 2px;
+        height: 60%;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-radius: 0.8rem;
+        color: var(--text-clr);
+
+        h3 {
+            font-size: clamp(0.2rem, 2vh + 0.2rem, 1.1rem);
+        }
+
+        i {
+            display: inline-block;
+            font-size: clamp(0.2rem, 2vh + 0.1rem, 1.1rem);
+            transition: transform 0.4s ease-in-out;
+            pointer-events: none;
+        }
+
+        &:nth-last-child(1) {
+            background-color: var(--contact-clr);
+            color: var(--body-clr);
+        }
+
+        .iconwrapper {
+            .arrow {
+                display: inline-block;
+            }
+        }
+    }
+}
+
+
+@container contactApp (max-width: 767px) {
+    .infomobile {
+        .info {
+            .iconwrapper {
+                .arrow {
+                    display: none;
+                }
+            }
+        }
+    }
+}
+
+
+@container contactApp (min-width: 768px) and (max-width: 899px) {
+    .infomobile {
+        display: none;
+    }
+}
+
+
+@container contactApp (min-width: 900px) {
+    .infomobile {
+        height: auto;
+        margin-top: -0.3rem;
+        grid-area: infobox;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        overflow: visible;
+
+        .info {
+            margin: 0;
+            height: auto;
+            padding: 1.6rem;
+            border-radius: 0.8rem;
+            width: calc(50% - 0.25rem);
+
+            .iconwrapper {
+                position: relative;
+                overflow: hidden;
+                height: 2rem;
+                width: 2rem;
+                padding: 0.2rem 0rem;
+            }
+
+            i {
+                display: inline-block;
+                position: absolute;
+                font-size: clamp(0.2rem, 1.5vw + 0.1rem, 1rem);
+                pointer-events: none;
+                transition: all 0.3s ease-in-out;
+            }
+
+            .logos {
+                transform: translateY(6px);
+            }
+
+            .arrow {
+                display: block;
+                transform: translateY(100%);
+                opacity: 0;
+            }
+
+            &:hover .logos {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+
+            &:hover .arrow {
+                transform: translateY(6px);
+                opacity: 1;
+            }
+
+            &:nth-last-child(1) {
+                background-color: var(--contact-clr);
+                color: var(--body-clr);
+                width: 100%;
+            }
+        }
+    }
+}
+
+.contactInfomobile {
+    grid-area: infobox;
+    min-height: 35vh;
+    max-height: 35vh;
+    flex-direction: column;
+    margin-top: 0rem;
+    flex-wrap: nowrap;
+    gap: 0.4rem;
+    padding: 0rem;
+    
+    .info {
+        height: 100%;
+        padding: 0.6rem;
+        width: 98%;
+        
+        &:nth-last-child(1) {
+            width: 98%;
+        }
+    }
+}

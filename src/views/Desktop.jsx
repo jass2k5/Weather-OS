@@ -9,6 +9,7 @@ import { Dock } from "../layout/dock/Dock"
 import { NotificationManager } from "../layout/NotificationFly";
 import { NotificationApp } from "../features/notification/Notification"
 import { Settings } from "../features/settings/Settings"
+import { ContactApp } from "../features/contact/Contact"
 
 export const Desktop = () => {
     const bgUrl = useOsStore((state) => state.systemBg)
@@ -35,6 +36,19 @@ export const Desktop = () => {
 
                 <NotificationManager />
                 <TopRightDate />
+                {apps?.contact?.isOpen && (<DraggableWindow title={"Contact Me"} Appid={"contact"}   defaultSize={{
+                        width: window.innerWidth ,
+                        height: window.innerHeight
+                    }}
+                     defaultpos={{
+                        x: 0,
+                        y: 0
+                    }}
+                     minHeight={380}
+                    minWidth={520}
+
+
+                    > <ContactApp/></DraggableWindow>)}
                 {apps?.notification?.isOpen && (<DraggableWindow
                     title={"Notification History"}
                     Appid={"notification"}

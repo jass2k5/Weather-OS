@@ -1,0 +1,73 @@
+@use "../../shared/styles/utils/util" as *;
+
+// .custom-scrollbar {
+//     &::-webkit-scrollbar {
+//         width: 8px;
+//         height: auto;
+//     }
+//     &::-webkit-scrollbar-track {
+//         background: var(--third-clr);
+//     }
+//     &::-webkit-scrollbar-thumb {
+//         background-color: var(--thumb-clr);
+//         border-radius: 100px;
+//         border: 3px solid var(--third-clr);
+//         &:hover {
+//             background: var(--thumb-hover); 
+//         }
+//     }
+// }
+.custom-scrollbar {
+    &::-webkit-scrollbar {
+        display: none;
+    }
+
+    /* Firefox, IE, aur Edge ke liye hide karo */
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+
+.contactMain {
+    min-height: 100%;
+    height: auto;
+    width: 100%;
+    padding: var(--main-padding);
+    position: relative;
+    background-color: var(--body-clr);
+    z-index: 0;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+
+    /* Firefox, IE, aur Edge ke liye hide karo */
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+
+
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(6, max-content);
+    grid-template-areas: "header"
+    "form"
+    "image"
+    "address"
+    "infobox"
+    "footer";
+    row-gap: 1rem;
+}
+
+
+@container contactApp (min-width: 900px) {
+    .contactMain {
+        height: auto;
+        min-height: 100%;
+        grid-template-columns: 3fr 1fr 1fr 1fr;
+        grid-template-rows: repeat(3, max-content);
+        grid-template-areas:
+            "header form form form"
+            "header address image infobox"
+            "header footer footer footer";
+    }
+}

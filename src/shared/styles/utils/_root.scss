@@ -1,0 +1,40 @@
+:root {
+    --main-padding: 0.8rem;
+    --body-clr: white;
+    --second-clr: black;
+    --third-clr: whitesmoke;
+    --text-clr: black;
+    --contact-clr: black;
+    --circle: 50%;
+    --main-font: "Ubuntu", sans-serif;
+    --font-size: 1rem;
+    --lh-body: 1.6;
+    --space-xn: 0.2rem;
+    --space-xs: 0.4rem;
+    --space-xss: 0.9rem;
+    --space-s: 1rem;
+    --space-smd: 1.2rem;
+    --space-md: 2rem;
+    --space-lg: 4rem;
+    --blur: 30px;
+    --br-clr1: rgba(255, 255, 255, 0.3);
+    --gap-logo: 0.4rem;
+    --margin-nav: clamp(0.2rem, 1vw + 0.2rem, 0.4rem);
+    --thumb-clr: rgba(99, 99, 99, 0.8);
+    --thumb-hover: #555555da;
+    --indicator-clr: rgba(225, 255, 255, 0.233);
+    --arrows-clr: rgba(225, 255, 255, 0.233);
+
+}
+
+.darkmode {
+    --body-clr: black;
+    --third-clr: rgb(40, 42, 43);
+    --text-clr: white;
+    --contact-clr: whitesmoke;
+    --thumb-clr: rgba(209, 209, 209);
+    --thumb-hover: rgba(255, 255, 255);
+    --indicator-clr: rgba(0, 0, 0, 0.363);
+    --arrows-clr: rgba(0, 0, 0, 0.2);
+    ;
+}
