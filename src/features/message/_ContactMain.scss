@@ -1,0 +1,60 @@
+@use '../../shared/styles/utils/util.scss' as *;
+
+.contactMain {
+
+    container-type: inline-size;
+    container-name: contact-app;
+
+    min-height: 100vh;
+    height: auto;
+    width: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    
+    &::-webkit-scrollbar {
+        height: auto;
+    }
+    &::-webkit-scrollbar-track {
+        background: var(--third-clr);
+    }
+    &::-webkit-scrollbar-thumb {
+        background-color: var(--thumb-clr);
+        border-radius: 100px;
+        border: 3px solid var(--third-clr);
+        
+        &:hover {
+            background: var(--thumb-hover); 
+        }
+    }
+    
+    padding: var(--main-padding);
+    position: relative;
+    background-color: var(--body-clr);
+    
+  
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(6, max-content);
+    grid-template-areas:
+        "header"
+        "form"
+        "image"
+        "address"
+        "infobox"
+        "footer";
+    z-index: 0;
+    row-gap: 1rem;
+}
+
+
+@container (min-width: 900px) {
+    .contactMain {
+        height: 100vh;
+        grid-template-columns: 3fr 1fr 1fr 1fr;
+        grid-template-rows: repeat(3, max-content);
+        grid-template-areas: 
+            "header form form form"
+            "header address image infobox"
+            "header footer footer footer";
+    }
+}
