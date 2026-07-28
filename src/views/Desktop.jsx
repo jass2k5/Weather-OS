@@ -9,6 +9,7 @@ import { Dock } from "../layout/dock/Dock"
 import { NotificationManager } from "../layout/NotificationFly";
 import { NotificationApp } from "../features/notification/Notification"
 import { Settings } from "../features/settings/Settings"
+import { ContactApp } from "../features/message/Message"
 
 export const Desktop = () => {
     const bgUrl = useOsStore((state) => state.systemBg)
@@ -35,6 +36,7 @@ export const Desktop = () => {
 
                 <NotificationManager />
                 <TopRightDate />
+                {apps?.message?.isOpen && <ContactApp/>}
                 {apps?.notification?.isOpen && (<DraggableWindow
                     title={"Notification History"}
                     Appid={"notification"}

@@ -1,0 +1,163 @@
+@use '../../shared/styles/utils/util' as *;
+
+.form {
+    grid-area: form;
+    background-color: var(--third-clr);
+    color: var(--text-clr);
+    min-height: 30vh;
+    height: auto;
+    width: 100%;
+    border-radius: 0.8rem;
+    padding: 2rem;
+
+    #form {
+        height: 100%;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        flex-direction: column;
+
+        h1 {
+            align-self: flex-start;
+            margin-bottom: 2rem;
+        }
+
+        .inputs {
+            height: 100%;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+
+            .inputholder {
+                flex-direction: column;
+            }
+
+            input,
+            textarea {
+                width: 100%;
+                height: auto;
+                margin-bottom: 0.6rem;
+                padding: 0.8rem 1rem;
+                background-color: var(--body-clr);
+                border: 1px solid rgba(150, 150, 150, 0.2);
+                border-radius: 0.6rem;
+                color: var(--text-clr);
+                font-family: inherit;
+                font-size: 1rem;
+                outline: none;
+                transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            }
+
+            input:-webkit-autofill,
+            input:-webkit-autofill:hover,
+            input:-webkit-autofill:focus,
+            textarea:-webkit-autofill,
+            textarea:-webkit-autofill:hover,
+            textarea:-webkit-autofill:focus {
+                -webkit-box-shadow: 0 0 0px 1000px var(--body-clr) inset !important;
+                -webkit-text-fill-color: var(--text-clr) !important;
+                transition: background-color 5000s ease-in-out 0s;
+            }
+
+            textarea {
+                resize: vertical;
+                min-height: 120px;
+            }
+
+            .btn {
+                width: 100%;
+                padding: 0.6rem;
+                background-color: var(--contact-clr);
+                color: var(--body-clr);
+                border: none;
+                border-radius: 0.6rem;
+                font-family: inherit;
+                font-weight: 300;
+                cursor: pointer;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+                transition: transform 0.2s ease, opacity 0.2s ease;
+
+                &:hover {
+                    opacity: 0.9;
+                    transform: translateY(-2px);
+                }
+
+                &:active {
+                    transform: translateY(0);
+                }
+
+                &:disabled {
+                    opacity: 0.5;
+                    cursor: not-allowed;
+                }
+            }
+        }
+    }
+}
+
+@container contact-app (min-width: 768px) and (max-width: 1190px) {
+    .form {
+        min-height: 50vh;
+        padding: 2rem;
+        overflow: hidden;
+
+        #form {
+            flex-direction: column;
+            
+            .inputs {
+                flex-direction: column;
+                
+                .inputholder {
+                    height: auto;
+                    width: 100%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    flex-direction: column;
+                    
+                    .input {
+                        height: auto;
+                        width: 50%;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@container contact-app (min-width: 1200px) {
+    .form {
+        min-height: 60vh;
+        padding: 3rem;
+        overflow: hidden;
+
+        #form {
+            gap: 20%;
+            
+            h1 {
+                font-size: 3rem;
+            }
+            
+            .inputs {
+                .inputholder {
+                    height: auto;
+                    width: 100%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    flex-direction: row;
+                    gap: 0.2rem;
+                    
+                    input {
+                        height: auto;
+                        width: 50%;
+                    }
+                }
+            }
+        }
+    }
+}

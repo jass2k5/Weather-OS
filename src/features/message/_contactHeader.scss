@@ -1,0 +1,44 @@
+@use '../../shared/styles/utils/util' as *;
+
+.header {
+    grid-area: header;
+    height: 55vh;
+    width: 100%;
+    border-radius: 0.8rem;
+    
+    .containerHeader {
+        height: 100%;
+        width: 100%;
+        position: relative;
+
+        .imgHeader {
+            height: 100%;
+            width: 100%;
+            
+            img {
+                height: 100%;
+                width: 100%;
+                object-fit: cover;
+                object-position: top;
+                border-radius: 0.8rem;
+            }
+        }
+    }
+}
+
+@container contact-app (min-width: 768px) and (max-width: 1199px) {
+    .aboutHeader {
+        height: 65vh;
+    }
+}
+
+@container contact-app (min-width: 1200px) {
+    .aboutHeader {
+        grid-area: header;
+        top: 0;
+        height: calc(100vh - var(--main-padding) * 2);
+        width: 100%;
+        position: sticky;
+        overflow: hidden;
+    }
+}

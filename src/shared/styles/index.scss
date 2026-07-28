@@ -1,3 +1,4 @@
+@use './utils/util';
 @use '../../core/bootSequence';
 @use '../../views/Desktop';
 @use '../components/mouseFollower/MouseFollower';
@@ -12,6 +13,11 @@
 @use '../components/scss/ToggleBtn';
 @use '../components/scss/ThemeBtn';
 @use '../components/scss/ResetBtn';
+@use '../../features/message/ContactMain';
+@use '../../features/message/contactLocation';
+@use '../../features/message/contactCenter';
+@use '../../features/message/form';
+@use "../../features/message/footer";
 
 
 @layer base {

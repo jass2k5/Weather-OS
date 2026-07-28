@@ -1,0 +1,31 @@
+@mixin flex-gap($gap-size:0){
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: $gap-size;
+}
+@mixin back-white{
+     padding: var(--space-xs);
+     background-color: var(--body-clr);
+}
+@mixin back-white-product{
+    text-transform: capitalize;
+     padding-left: 2rem;
+     padding-right: 2rem;
+     padding-bottom: 0.5rem;
+     background-color: var(--body-clr);
+}
+@mixin ema-img($height:0,$width:0,$radius:0){
+    height: $height;
+    width: $width;
+    border-radius:$radius;
+    object-fit: contain;
+    object-position: top;
+                
+}
+@mixin all-childs($gap:1.5rem,$direction:column){
+    @include flex-gap($gap);
+              flex-direction: $direction;
+              height: 100%;
+              width: 100%;
+}

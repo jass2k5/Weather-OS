@@ -1,0 +1,40 @@
+@use "../../shared/styles/utils/util" as *;
+.centerImage {
+    grid-area: image;
+    min-height: 30vh;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    
+    img {
+        height: 45vh;
+        border-radius: 0.8rem;
+        width: 100%;
+        object-fit: cover;
+        object-position: center;
+    }
+}
+
+@container contact-app (min-width: 768px) {
+    .centerImage {
+        grid-area: image;
+        min-height: 50vh;
+        
+        img {
+            height: 100%;
+        }
+    }
+}
+
+@container contact-app (min-width: 1200px) {
+    .centerImage {
+        grid-area: image;
+        min-height: 35vh;
+        height: 35vh;
+        max-height: 35vh;
+        
+        img {
+            height: 100%;
+        }
+    }
+}
