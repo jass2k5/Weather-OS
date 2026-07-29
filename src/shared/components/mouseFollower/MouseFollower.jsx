@@ -8,7 +8,11 @@ export const MouseFollower = () => {
 const cursorRef = useRef(null);
 const isDay = useOsStore((state)=> state.isDay);
 const isScrollHovered = useOsStore((state)=>state.isScrollHovered);
-const mouseFollower = useOsStore((state)=>state.mouseFollower)
+const mouseFollower = useOsStore((state)=>state.mouseFollower);
+const isGithubHovered = useOsStore((state)=>state.isGithubHovered);
+const githubText = useOsStore((state)=>state.githubText);
+const mainCursorRef = useRef(null);
+const githubCursorRef = useRef(null);
 
    useGSAP(()=>{
 
@@ -31,11 +35,23 @@ const mouseFollower = useOsStore((state)=>state.mouseFollower)
     
    },{dependencies:[mouseFollower]});
 
+   useGSAP(() => {
+        if (isGithubHovered) {
+           
+            gsap.to(mainCursorRef.current, { scale: 0, opacity: 0, duration: 0.2 });
+            gsap.to(githubCursorRef.current, { scale: 1, duration: 0.8, ease: "back.out(1.7)" });
+        } else {
+         
+            gsap.to(githubCursorRef.current, { scale: 0, duration: 0.3, ease: "power3.inOut" });
+            gsap.to(mainCursorRef.current, { scale: 1, opacity: 1, duration: 0.2, delay: 0.1 });
+        }
+    }, { dependencies: [isGithubHovered] });
+
    if(!mouseFollower?.enabled) return null;
 
    return(
- <div ref={cursorRef} className="cursorFollower pointer-events-none fixed top-0 left-0 z-[9999]">
-            
+ <div ref={cursorRef} className="cursorFollower select-none pointer-events-none fixed top-0 left-0 z-[9999]">
+            <div ref={mainCursorRef} className="relative flex items-center justify-center">
             {!isScrollHovered && (
                 <>
                     {isDay && <img src={sunGif} alt="mouseFollower" className="cursorImage" />}
@@ -48,6 +64,15 @@ const mouseFollower = useOsStore((state)=>state.mouseFollower)
                  {/* <span className="text-black text-[13px] capitalize font-semibold font-[Lora]">scroll down</span> */}
                 </div>
             )}
+
+        </div>
+            <div 
+                ref={githubCursorRef} 
+                className="absolute w-24 h-24 bg-black rounded-full flex items-center justify-center text-white text-sm tracking-widest font-bold scale-0"
+            >
+                <span className="italic font-serif  tracking-widest capitalize">{githubText}</span>
+                <i className="text-[14px] ri-arrow-right-up-line text-lg"></i>
+            </div>
             
         </div>
    )

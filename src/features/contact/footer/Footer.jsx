@@ -1,7 +1,10 @@
 import { useScrollFade } from "../../../shared/hooks/useScrollFade"
-export const Footer = ()=>{
+import { Reset } from "../../../shared/components/ResetBtn"
+export const Footer = () => {
     const FooterRef = useScrollFade()
-    return(
+    const body = document.body;
+    
+    return (
         <footer ref={FooterRef} className="footer">
             <section className="aboutandmore">
                 <div className="first-half">
@@ -15,48 +18,56 @@ export const Footer = ()=>{
                    <span>Weather Os</span>
                 </div>
             </section>
+            
             <section className="all">
+              
                 <div className="pages">
-                    <h3>Pages</h3>
+                    <h3>Core Stack</h3>
                     <div className="f-nav">
                         <ul>
-                            <li><a href="">Home</a></li>
-                            <li><a href="">About</a></li>
-                            <li><a href="">Contact</a></li>
+                            <li>React JS 19</li>
+                            <li>Tailwind CSS</li>
+                            <li>Zustand State</li>
+                            <li>Sass / SCSS</li>
                         </ul>
                     </div>
                 </div>
+                
+              
                 <div className="CMS">
-                    <h3>CMS</h3>
+                    <h3>Motion & UI</h3>
                     <div className="allcms">
                         <ul>
-                            <li>Work</li>
-                            <li>Work Single</li>
-                            <li>Blog</li>
-                            <li>Blog Single</li>
+                            <li>GSAP & ScrollTrigger</li>
+                            <li>Lenis Smooth Scroll</li>
+                            <li>React RND</li>
+                            <li>Remix Icons</li>
                         </ul>
                     </div>
                 </div>
+              
                 <div className="utility">
-                    <h3>Utility</h3>
+                    <h3>Data & Maps</h3>
                     <div className="utilities">
                         <ul>
-                            <li>404</li>
-                            <li>Password Page</li>
-                            <li>Styleguide</li>
-                            <li>Changelog</li>
-                            <li>Licensing</li>
+                            <li>React Query</li>
+                            <li>Axios/fetch</li>
+                            <li>MapLibre GL</li>
+                            <li>Styled Components</li>
+                            <li>Skeleton Loaders</li>
                         </ul>
                     </div>
                 </div>
             </section>
+            
             <section className="end">
                 <h3>@ Made by JASS</h3>
-                <div className="contacts">
-                    <a href="https://github.com/jass2k5"><i className="ri-github-line"></i></a>
-                    <a href="mailto:jsssndl@gmail.com"><i className="ri-mail-ai-line"></i></a>
-                    <a href="https://www.instagram.com/jaspinder____84/?next=%2F"><i className="ri-instagram-line"></i></a>
-                </div>
+                <div className="h-max w-wax bg-black!"> <Reset
+                 label="Theme"
+                 onClick={()=>{
+                    body.classList.toggle('darkmode')
+                 }}
+                 /></div>
             </section>
         </footer>
     )

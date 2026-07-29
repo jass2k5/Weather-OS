@@ -14,7 +14,7 @@
 
 
          .featured {
-        z-index: 3;
+       
         text-transform: capitalize;
         font-weight: 500;
         position: absolute;
@@ -59,6 +59,7 @@
         .imgHeader {
             height: 100%;
             width: 100%;
+            border-radius: 0.8rem;
             
             img {
                 height: 100%;
@@ -81,7 +82,7 @@
 @container contactApp (min-width: 900px) {
     .aboutHeader {
         grid-area: header;
-        grid-row: 1 / 22 !important; 
+        grid-row: 1 / 19 !important; 
         grid-column: 1 / 2 !important;
         position: sticky !important;
         top: var(--main-padding) !important;

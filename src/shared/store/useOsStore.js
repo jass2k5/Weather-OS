@@ -7,7 +7,11 @@ export const useOsStore = create(persist((set, get) => ({
     setNight: () => { set({ isDay: false }) },
     setDay: () => { set({ isDay: true }) },
     isScrollHovered: false,
+    isGithubHovered : false,
+    setIsGithubHovered:(val)=>set({isGithubHovered:val}),
     setIsScrollHovered: (val) => set({ isScrollHovered: val }),
+    githubText:null,
+    setgithubText:(val)=> set({githubText:val}),
     isBooted: false,
     systemBg: "/stage1bg.png",
     setBg: (bg) => set(() => ({

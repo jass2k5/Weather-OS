@@ -1,7 +1,7 @@
 import { useScrollFade } from "../../../shared/hooks/useScrollFade";
 
 export const Information = () => {
-    const InfoRef = useScrollFade({y:50,ease:"power4.inOut",duration:1});
+    const InfoRef = useScrollFade({x:50,y:0,ease:"power4.inOut",duration:1});
     const handleLocationClick = () => {
         const address = "Vinohradská 121, 130 00 Praha 3, Czech Republic"; 
         const safeAddress = encodeURIComponent(address);

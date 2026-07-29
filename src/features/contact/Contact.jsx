@@ -13,7 +13,7 @@ import { CenterImage } from './information/CenterImage';
 gsap.registerPlugin(ScrollTrigger);
 export const ContactApp = () => {
     const addNotification = useOsStore((state) => state.addNotification);
-    const Zindex = useOsStore((state) => 10 + state.windowOrder.indexOf("contact"));
+    // const Zindex = useOsStore((state) => 10 + state.windowOrder.indexOf("contact"));
     const scrollContainerRef = useRef(null);
     useEffect(() => {
         const lenis = new Lenis({
@@ -37,7 +37,7 @@ export const ContactApp = () => {
 
     return (
         <div style={{
-            zIndex: Zindex,
+            // zIndex: Zindex,
             containerType: 'size',
             containerName: 'contactApp'
         }}

@@ -8,7 +8,7 @@ const socialLinks = [
 ];
 
 export const Socials = () => {
-    const SocialRef = useScrollFade({y:50,ease:"power4.inOut",duration:1,delay:0.8});
+    const SocialRef = useScrollFade({x:50,y:0,ease:"power4.inOut",duration:1,delay:0.8});
     return (
         <section ref={SocialRef} className="infomobile contactInfomobile">
             {socialLinks.map((link, index) => (
