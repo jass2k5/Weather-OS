@@ -8,7 +8,7 @@ export const CenterImage =()=>{
          <section ref={ImgRef}
          onMouseEnter={()=>{
             setIsGithubHovered(true);
-            setgithubText("Repo")
+            setgithubText("Repo");
 
          }}
          onMouseLeave={()=>{

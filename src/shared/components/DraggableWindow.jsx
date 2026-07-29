@@ -20,7 +20,7 @@ export const DraggableWindow = ({ children, title, Appid, defaultpos = { x: 300,
     const windowRef = useRef(null);
     const focusApp = useOsStore((state) => state.focusApp);
     const windowOrder = useOsStore((state) => state.windowOrder);
-    const zIndex = 15 + windowOrder.indexOf(Appid);
+    const zIndex = 10 + windowOrder.indexOf(Appid);
     const [size, setSize] = useState(defaultSize);
     const [position, setPosition] = useState(defaultpos);
     const [isMaximized, setIsMaximized] = useState(false);
