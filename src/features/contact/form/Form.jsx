@@ -54,7 +54,7 @@ export const Form =()=>{
                         <button 
                             type="submit" 
                             disabled={isSubmitting}
-                           className="btn"
+                            className="btn"
                         >
                             {isSubmitting ? "Sending..." : "Send Message"}
                         </button>

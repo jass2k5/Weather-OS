@@ -27,11 +27,12 @@ export const useScrollFade = (option = {}) => {
                 scroller: customScroller || window, // Safe fallback!
                 start: option.start ?? 'top 95%',
                 toggleActions: 'play none none reverse',
+                // once: true,
             }
         });
     }, { 
         scope: elementRef,
-        dependencies: [elementRef.current] 
+        
     });
 
     return elementRef;
