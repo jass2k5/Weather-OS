@@ -10,7 +10,7 @@ export const Footer = ()=>{
                     </div>
                 </div>
                 <div className="second-half">
-                    <a href=""><span>Weather Os</span></a>
+                   <span>Weather Os</span>
                 </div>
             </section>
             <section className="all">

@@ -49,6 +49,7 @@ export const Desktop = () => {
 
 
                     > <ContactApp/></DraggableWindow>)}
+                
                 {apps?.notification?.isOpen && (<DraggableWindow
                     title={"Notification History"}
                     Appid={"notification"}

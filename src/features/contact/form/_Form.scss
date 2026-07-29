@@ -1,6 +1,6 @@
 @use '../../../shared/styles/utils/util' as *;
 
-.form {
+.formContact {
     grid-area: form;
     background-color: var(--third-clr);
     color: var(--text-clr);
@@ -106,7 +106,7 @@
 
 
 @container contactApp (min-width: 768px) and (max-width: 899px) {
-    .form {
+    .formContact {
         min-height: 50vh;
         padding: 2rem;
         overflow: hidden;
@@ -136,7 +136,7 @@
 }
 
 @container contactApp (min-width: 900px) {
-    .form {
+    .formContact {
         min-height: 60vh;
         padding: 3rem;
         overflow: hidden;

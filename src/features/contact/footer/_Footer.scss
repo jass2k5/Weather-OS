@@ -62,17 +62,15 @@
             text-transform: capitalize;
             transition: all 0.4s ease-in-out;
 
-            a {
-                display: inline-block;
-                text-decoration: none;
-                color: var(--text-clr);
+            
 
                 span {
                     display: inline-block;
                     font-size: 1rem;
                     font-weight: 400;
+                     color: var(--text-clr);
                 }
-            }
+            
 
             &:hover {
                 transform: translateY(-3px);

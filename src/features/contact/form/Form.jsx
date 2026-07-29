@@ -33,7 +33,7 @@ export const Form =()=>{
     };
 
     return(
-        <section className="form">
+        <section className="formContact">
                     <form onSubmit={handleSubmit} id="formcontact">
                         <h1>Let's Talk</h1>
                         <div className="inputs">

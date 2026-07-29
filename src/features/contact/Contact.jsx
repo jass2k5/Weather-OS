@@ -17,7 +17,7 @@ export const ContactApp = () => {
             containerType: 'size',
             containerName: 'contactApp'
         }}
-            className='w-full h-full'>
+            className='w-full h-full absolute inset-0'>
             <div className='w-full h-full overflow-y-auto overflow-x-hidden custom-scrollbar relative'>
                 <main className='contactMain'>
                     <Header />
