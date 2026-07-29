@@ -1,6 +1,8 @@
+import { useScrollFade } from "../../../shared/hooks/useScrollFade"
 export const Footer = ()=>{
+    const FooterRef = useScrollFade()
     return(
-        <footer className="footer">
+        <footer ref={FooterRef} className="footer">
             <section className="aboutandmore">
                 <div className="first-half">
                     <img className="ema-img" src="./gitprofile.png" alt="github profile pic" />

@@ -1,3 +1,4 @@
+import { useScrollFade } from "../../../shared/hooks/useScrollFade";
 const socialLinks = [
     { name: "Instagram", icon: "ri-instagram-line", url: "https://www.instagram.com/jaspinder____84/" },
     { name: "Pinterest", icon: "ri-pinterest-line", url: "https://in.pinterest.com/jsssndl/_profile/" },
@@ -7,8 +8,9 @@ const socialLinks = [
 ];
 
 export const Socials = () => {
+    const SocialRef = useScrollFade({y:50,ease:"power4.inOut",duration:1,delay:0.8});
     return (
-        <section className="infomobile contactInfomobile">
+        <section ref={SocialRef} className="infomobile contactInfomobile">
             {socialLinks.map((link, index) => (
                 <div
                     key={index}

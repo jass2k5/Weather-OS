@@ -1,8 +1,14 @@
 import { useState } from "react";
 import { useOsStore } from "../../../shared/store/useOsStore";
+import { useRef } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useGSAP } from '@gsap/react';
+import { useScrollFade } from "../../../shared/hooks/useScrollFade";
 export const Form =()=>{
     const [isSubmitting,setIsSubmitting] = useState(false);
     const addNotification = useOsStore((state)=>state.addNotification);
+    const FormRef = useScrollFade({y:-110,duration:2 ,ease:'power4.inOut'});
     const handleSubmit = async (e) => {
         e.preventDefault();
         setIsSubmitting(true);
@@ -32,8 +38,10 @@ export const Form =()=>{
         }
     };
 
+
+
     return(
-        <section className="formContact">
+        <section ref={FormRef} className="formContact">
                     <form onSubmit={handleSubmit} id="formcontact">
                         <h1>Let's Talk</h1>
                         <div className="inputs">
