@@ -12,25 +12,24 @@
 
     .searchedlocation {
         align-self: flex-start;
-        font-size: clamp(0.8rem, 1.5vh, 3rem); //i will change the centeral conditional while making mobile responsive till then random vh
+
+        font-size: clamp(0.4rem, 1.4cqh, 1rem); 
         font-weight: 500;
-        letter-spacing: 0.2vw;
+        letter-spacing: 0.2cqw; 
         text-transform: uppercase;
         color: rgba(255, 255, 255, 0.574);
     }
 
     .countryCity {
-        font-size: clamp(1.5rem, 20vh, 5rem);
+        font-size: clamp(0.3rem, 10cqh, 5rem);
         font-weight: 600;
-        letter-spacing: 0.1vw;
+        letter-spacing: 0.1cqw;
         text-transform: capitalize;
         margin-top: -10px;
         display: flex;
-        align-items:center;
+        align-items: center;
         justify-content: center;
         align-self: flex-start;
-        
-
     }
 
     .temperature {
@@ -38,12 +37,11 @@
         align-self: flex-start;
 
         >* {
-            font-size: clamp(2rem, 9vh, 6rem);
+            font-size: clamp(2rem, 9cqh, 6rem);
             font-weight: 500;
             font-family: "Lora", serif;
             font-optical-sizing: auto;
             opacity: 0;
-
         }
     }
 
@@ -55,18 +53,16 @@
         font-weight: 400;
         font-family: "Lora", serif;
         font-optical-sizing: auto;
-        font-size: clamp(2rem, 9vh, 4rem);
-        word-spacing: 0.3vw;
-        // user-select: none;
+        font-size: clamp(0.2rem, 9cqh, 4rem);
+        word-spacing: 0.3cqw;
 
         >* {
             font-style: italic;
             font-weight: 400;
             font-family: "Lora", serif;
             font-optical-sizing: auto;
-            font-size: clamp(2rem, 9vh, 4rem);
-
+            font-size: clamp(2rem, 9cqh, 4rem);
         }
-
     }
 }
+

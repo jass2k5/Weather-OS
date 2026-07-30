@@ -11,34 +11,40 @@ import { Text } from "./Text";
 import gsap from "gsap";
 
 
-const getCoord = (lat,lon) => {
-    if (lat != null && lon != null) return { lat,lon };
+const getCoord = (lat, lon) => {
+    if (lat != null && lon != null) return { lat, lon };
     return null;
 };
 const MAPTILER_KEY = import.meta.env.VITE_MAPTILER_KEY;
 const mapThemes = {
-dark: `https://api.maptiler.com/maps/dataviz-dark/style.json?key=${MAPTILER_KEY}`,
-light: `https://api.maptiler.com/maps/topo-v4/style.json?key=${MAPTILER_KEY}`,
-satellite: `https://api.maptiler.com/maps/satellite/style.json?key=${MAPTILER_KEY}`
+    dark: `https://api.maptiler.com/maps/dataviz-dark/style.json?key=${MAPTILER_KEY}`,
+    light: `https://api.maptiler.com/maps/topo-v4/style.json?key=${MAPTILER_KEY}`,
+    satellite: `https://api.maptiler.com/maps/satellite/style.json?key=${MAPTILER_KEY}`
 };
 export const WeatherMap = () => {
-    
-    const myZIndex =useOsStore((state)=> 10 + state.windowOrder.indexOf('map'));
+
+    const myZIndex = useOsStore((state) => 10 + state.windowOrder.indexOf('map'));
     const [isMapLoaded, setIsMapLoaded] = useState(false);
     const [mapError, setMapError] = useState("");
     const containerRef = useRef(null);
     const mapRef = useRef(null);
-    const flyby = useOsStore((state)=>state.mapSetting.flyby);
-    const marker = useOsStore((state)=>state.mapSetting.marker);
-    const theme = useOsStore((state)=>state.mapSetting.theme);
-    const navigation = useOsStore((state)=>state.mapSetting.Navigations)
-    const mapStyleUrl = theme === "dark"?mapThemes.dark:theme === "light"?mapThemes.light:mapThemes.satellite
-    const lat = useOsStore((state)=>state.telemetryData?.location?.lat);
-    const lon = useOsStore((state)=>state.telemetryData?.location?.lon);
-    const coord = getCoord(lat,lon);
-    const addNotification = useOsStore((state) => state.addNotification); 
+    const flyby = useOsStore((state) => state.mapSetting.flyby);
+    const marker = useOsStore((state) => state.mapSetting.marker);
+    const theme = useOsStore((state) => state.mapSetting.theme);
+    const navigation = useOsStore((state) => state.mapSetting.Navigations)
+    const mapStyleUrl = theme === "dark" ? mapThemes.dark : theme === "light" ? mapThemes.light : mapThemes.satellite
+    const lat = useOsStore((state) => state.telemetryData?.location?.lat);
+    const lon = useOsStore((state) => state.telemetryData?.location?.lon);
+    const coord = getCoord(lat, lon);
+    const addNotification = useOsStore((state) => state.addNotification);
+    useEffect(() => {
+        const resizeObserver = new ResizeObserver(() => mapRef.current?.getMap().resize());
+        if (containerRef.current) resizeObserver.observe(containerRef.current);
+        return () => resizeObserver.disconnect();
+    }, []);
 
-    useEffect(() => {  
+
+    useEffect(() => {
         if (isMapLoaded && coord) {
             if (flyby) {
                 mapRef.current.getMap().flyTo({
@@ -54,24 +60,27 @@ export const WeatherMap = () => {
                 });
             }
         }
-    }, [lat,lon, isMapLoaded,flyby]);
-    
-    useEffect(()=>{
-        if(!mapError) return;
-       let timer = setTimeout(() => {
-         addNotification(`${mapError}`,"warning")
-       },2000);
-       return ()=> clearTimeout(timer);
-    },[mapError])
+    }, [lat, lon, isMapLoaded, flyby]);
 
-    
+    useEffect(() => {
+        if (!mapError) return;
+        let timer = setTimeout(() => {
+            addNotification(`${mapError}`, "warning")
+        }, 2000);
+        return () => clearTimeout(timer);
+    }, [mapError])
+
+
 
     return (
-        <div ref={containerRef} style={{zIndex:myZIndex}} className="mapContainer relative h-full w-full overflow-hidden bg-slate-950">
+        <div ref={containerRef} style={{
+            zIndex: myZIndex, containerType: 'size',
+            containerName: 'mapWindow'
+        }} className="mapContainer relative h-full w-full overflow-hidden bg-slate-950">
             {!isMapLoaded && (
                 <div
                     className="absolute inset-0 z-50 flex flex-col items-center justify-center"
-                    style={{ background: "linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%)"}}
+                    style={{ background: "linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%)" }}
                 >
                     <SkeletonTheme baseColor="rgba(255,255,255,0.05)" highlightColor="rgba(255,255,255,0.15)">
                         <Skeleton count={1} className="w-full h-full absolute inset-0" />
@@ -93,7 +102,7 @@ export const WeatherMap = () => {
                     initialViewState={{ longitude: 0, latitude: 20, zoom: 1.5 }}
                     mapStyle={mapStyleUrl}
                     onLoad={(event) => {
-                       requestAnimationFrame(() => event.target.resize());
+                        requestAnimationFrame(() => event.target.resize());
                         setIsMapLoaded(true);
                     }}
                     onError={() => setMapError("MAP STYLE LOAD FAILED")}
@@ -109,13 +118,14 @@ export const WeatherMap = () => {
                     )}
                     {navigation && (
                         <NavigationControl
-                        position="bottom-right"
-                        showCompass={true}
-                        showZoom={true}
-                        visualizePitch={true}
-                    />
+                            position="bottom-right"
+                            showCompass={true}
+                            showZoom={true}
+                            visualizePitch={true}
+                        />
                     )}
                 </Map>
+              
             </div>
         </div>
     );

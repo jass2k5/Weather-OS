@@ -3,47 +3,49 @@
     z-index: 999;
     top: 5%;
     left: 50%;
-    transform: translate(-50%,0);
+    transform: translate(-50%, 0);
     height: auto;
     width: auto;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    gap: 0.3rem;
-    .PrevSearches{
+    gap: clamp(0.2rem, 1cqh, 0.5rem); 
+
+    .PrevSearches {
         height: 100%;
         width: 100%;
 
-    .holder{
-        padding-inline: 0.3rem;
-            span{
-            font-size:larger;
-            padding: 0.2rem 0.5rem;
-            cursor:pointer;
-            user-select: none;
-         
-        }
-           &:hover{
-              background-color: rgba(0, 0, 0, 0.372);
-              border-radius: 0.4rem;
-              color: rgba(245, 245, 245, 0.784);
-           }
-          
+        .holder {
+            padding-inline: 0.3rem;
+            
+            span {
+                font-size: clamp(0.7rem, 2cqh, 1.1rem);
+                padding: clamp(0.1rem, 0.5cqh, 0.2rem) clamp(0.3rem, 1cqw, 0.5rem);
+                cursor: pointer;
+                user-select: none;
+                transition: all 0.2s ease-in-out;
+               
 
-    }
+                &:hover {
+                    background-color: rgba(0, 0, 0, 0.372);
+                    border-radius: clamp(0.2rem, 1cqh, 0.4rem);
+                    color: rgba(245, 245, 245, 0.784);
+                }
+            }
+        }
     }
 
     .SearchContainer {
         background-color: whitesmoke;
         border: 1px solid rgba(225, 225, 225, 0.2);
-        border-radius: 1.5rem;
+        border-radius: clamp(1rem, 3cqh, 2rem);
         height: auto;
-        min-height: 5vh;
-        min-width: 14vw;
+        
+        min-height: clamp(35px, 7cqh, 35px); 
+        min-width: clamp(150px, 30cqw, 180px); 
         width: auto;
         align-self: flex-start;
-
         color: black;
         display: flex;
         align-items: center;
@@ -56,23 +58,26 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 0.8rem;
+            gap: clamp(0.3rem, 1cqw, 0.8rem);
             overflow: hidden;
             position: relative;
+            padding: clamp(0.1rem, 0.5cqh, 0.3rem);
 
             .form {
-
                 input {
-                    padding-inline: 1rem;
+                    padding-inline: clamp(0.5rem, 2cqw, 1rem);
                     outline: none;
                     font-weight: 600;
+                    background: transparent;
+                    font-size: clamp(0.8rem, 2.5cqh, 1.2rem); 
+                    width: 100%;
                 }
             }
 
             .holder {
                 position: relative;
-                width: 45px;
-                height: 45px;
+                width: clamp(28px, 6cqh, 45px);
+                height: clamp(28px, 6cqh, 45px);
                 background-color: black;
                 border-radius: 50%;
                 overflow: hidden;
@@ -86,7 +91,7 @@
                     position: absolute;
                     color: white;
                     display: inline-block;
-                    font-size: 1.2rem;
+                    font-size: clamp(0.8rem, 4cqh, 1.4rem); 
                 }
 
                 .arrow {

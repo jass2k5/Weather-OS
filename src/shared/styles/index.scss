@@ -2,7 +2,6 @@
 @use '../../core/bootSequence';
 @use '../../views/Desktop';
 @use '../components/mouseFollower/MouseFollower';
-@use '../../features/terminals/terminal';
 @use '../../features/map/Searchbar';
 @use '../../features/map/Text';
 @use '../../layout/date/TopRightDate';

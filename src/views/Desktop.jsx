@@ -1,7 +1,6 @@
 import { useEffect } from "react"
 import { useOsStore } from "../shared/store/useOsStore"
 import { DraggableWindow } from "../shared/components/DraggableWindow"
-import { TerminalMap } from "../features/terminals/TerminalMap"
 import { WeatherMap } from "../features/map/Map"
 import { TopRightDate } from "../layout/date/TopRightDate"
 import { Clock } from "../features/clock/Clock"
@@ -10,6 +9,8 @@ import { NotificationManager } from "../layout/NotificationFly";
 import { NotificationApp } from "../features/notification/Notification"
 import { Settings } from "../features/settings/Settings"
 import { ContactApp } from "../features/contact/Contact"
+import { ErrorBoundary } from 'react-error-boundary';
+import { MapCrashFallback } from "../features/map/ErrorBoundaryMap"
 
 export const Desktop = () => {
     const bgUrl = useOsStore((state) => state.systemBg)
@@ -36,20 +37,20 @@ export const Desktop = () => {
 
                 <NotificationManager />
                 <TopRightDate />
-                {apps?.contact?.isOpen && (<DraggableWindow title={"Contact Me"} Appid={"contact"}   defaultSize={{
-                        width: window.innerWidth ,
-                        height: window.innerHeight
-                    }}
-                     defaultpos={{
+                {apps?.contact?.isOpen && (<DraggableWindow title={"Contact Me"} Appid={"contact"} defaultSize={{
+                    width: window.innerWidth,
+                    height: window.innerHeight
+                }}
+                    defaultpos={{
                         x: 0,
                         y: 0
                     }}
-                     minHeight={380}
+                    minHeight={380}
                     minWidth={520}
 
 
-                    > <ContactApp/></DraggableWindow>)}
-                
+                > <ContactApp /></DraggableWindow>)}
+
                 {apps?.notification?.isOpen && (<DraggableWindow
                     title={"Notification History"}
                     Appid={"notification"}
@@ -60,7 +61,34 @@ export const Desktop = () => {
                 >
                     <NotificationApp />
                 </DraggableWindow>)}
-                {apps?.map?.isOpen && <WeatherMap />}
+
+
+                {apps?.map?.isOpen && <DraggableWindow
+                    title={"Map"}
+                    Appid={"map"}
+                    minHeight={340}
+                    minWidth={500}
+                    defaultSize={{
+                        width: window.innerWidth,
+                        height: window.innerHeight
+                    }}
+                    defaultpos={{
+                        x: 0,
+                        y: 0
+                    }}
+                > <ErrorBoundary
+                    FallbackComponent={MapCrashFallback}
+                    onReset={() => {
+
+                        console.log("REBOOTING MAP SYSTEM...");
+
+                    }}
+                >
+                        <WeatherMap />
+                    </ErrorBoundary></DraggableWindow>}
+
+
+
                 {apps?.settings?.isOpen && <DraggableWindow
                     defaultSize={{
                         width: window.innerWidth * 0.7,
@@ -78,8 +106,7 @@ export const Desktop = () => {
                     <Settings />
                 </DraggableWindow>}
 
-                {apps?.terminalMap?.isOpen &&
-                    (<DraggableWindow title={"TerminalMap"} Appid={"terminalMap"} ><TerminalMap /></DraggableWindow>)}
+
                 {apps?.clock?.isOpen && <Clock />}
 
                 {apps?.terminalClock?.isOpen && (<DraggableWindow title={"TerminalClock"} Appid={"terminalClock"} minHeight={406} minWidth={459}><Clock /></DraggableWindow>)}
