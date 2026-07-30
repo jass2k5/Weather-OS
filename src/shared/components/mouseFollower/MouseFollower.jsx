@@ -21,8 +21,8 @@ export const MouseFollower = () => {
         const yTo = gsap.quickTo(cursorRef.current, "y", { duration: 0.4, ease: "power3" });
 
         const handleMouseMove = (e)=>{
-            xTo(e.clientX);
-            yTo(e.clientY);
+            xTo(e.clientX+10);
+            yTo(e.clientY+20);
         }
 
         window.addEventListener("mousemove", handleMouseMove);
@@ -75,4 +75,5 @@ export const MouseFollower = () => {
             
         </div>
     )
+
 }

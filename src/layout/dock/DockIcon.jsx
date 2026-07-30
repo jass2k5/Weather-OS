@@ -20,7 +20,7 @@ export const DockIcon = ({ iconsource, appName, itsTerminal, isOpen, openApp, Cl
             {Menu && (
                 <div
                     onClick={(e) => e.stopPropagation()}
-                    className="rightclick absolute -top-42 bg-[#1a1a1a]/90 backdrop-blur-md border border-white/10 p-2 rounded-xl flex flex-col gap-1 z-50 min-w-[130px] shadow-2xl cursor-default"
+                    className="rightclick absolute -top-39 bg-[#1a1a1a]/90 backdrop-blur-md border border-white/10 p-2 rounded-xl flex flex-col gap-1 z-50 min-w-[130px] shadow-2xl cursor-default"
                 >
                     <span className="text-white/40 text-[16px] text-left ml-2.5 uppercase tracking-wider mb-1 pointer-events-none">
                         {appName}
@@ -28,7 +28,7 @@ export const DockIcon = ({ iconsource, appName, itsTerminal, isOpen, openApp, Cl
 
                     <div className="h-[1px] w-full bg-white/10 my-0.5"></div>
 
-                    {appName !== "notification" && appName !== "settings" && (
+                    {appName === "clock" && (
                         <button
                             onClick={(e) => {
                                 e.stopPropagation();
