@@ -13,8 +13,8 @@ export const DockIcon = ({ iconsource, appName, itsTerminal, isOpen, openApp, Cl
     }, [Menu]);
 
     return (
-        // 1. Parent Wrapper: Ispe koi hover effect nahi hoga, sirf positioning ke liye hai
-        <div className="relative flex flex-col items-center justify-center gap-1.5">
+        
+        <div className="dock-item relative flex flex-col items-center justify-center gap-1.5">
 
 
             {Menu && (
