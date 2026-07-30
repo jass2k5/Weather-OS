@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { useOsStore } from '../../shared/store/useOsStore';
-import Lenis from 'lenis'; 
+import Lenis from 'lenis';
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
 import { Header } from './header/Header';
@@ -15,15 +15,24 @@ export const ContactApp = () => {
     const addNotification = useOsStore((state) => state.addNotification);
     // const Zindex = useOsStore((state) => 10 + state.windowOrder.indexOf("contact"));
     const scrollContainerRef = useRef(null);
+    const isDay = useOsStore((state) => state.isDay);
+    useEffect(() => {
+        if (!isDay) {
+            document.body.classList.add('darkmode');
+        } else {
+            document.body.classList.remove('darkmode');
+        }
+    }, [isDay]);
+
     useEffect(() => {
         const lenis = new Lenis({
-            wrapper: scrollContainerRef.current, 
+            wrapper: scrollContainerRef.current,
             content: scrollContainerRef.current.querySelector('.contactMain'),
             duration: 1,
             easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
         });
 
-      
+
         lenis.on('scroll', ScrollTrigger.update);
         gsap.ticker.add((time) => {
             lenis.raf(time * 1000);
