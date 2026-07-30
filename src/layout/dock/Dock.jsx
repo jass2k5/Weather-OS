@@ -19,7 +19,6 @@ export const Dock = () => {
             <DockIcon
                 iconsource={map}
                 appName={"map"}
-                itsTerminal={"terminalMap"}
                 isOpen={apps?.map?.isOpen}
                 openApp={openApp}
                 closeApp={closeApp}
@@ -30,7 +29,6 @@ export const Dock = () => {
             <DockIcon
                 iconsource={weather}
                 appName={"weather"}
-                itsTerminal={"terminalWeather"}
                 isOpen={false}
                 openApp={openApp}
                 closeApp={closeApp}
@@ -40,7 +38,6 @@ export const Dock = () => {
             <DockIcon
                 iconsource={clock}
                 appName={"clock"}
-                itsTerminal={"terminalClock"}
                 isOpen={apps?.clock?.isOpen}
                 openApp={openApp}
                 closeApp={closeApp}
@@ -49,7 +46,6 @@ export const Dock = () => {
             <DockIcon
                 iconsource={contact}
                 appName={"contact"}
-                itsTerminal={"none"}
                 isOpen={apps?.contact?.isOpen}
                 openApp={openApp}
                 closeApp={closeApp}
@@ -58,7 +54,6 @@ export const Dock = () => {
             <DockIcon
                 iconsource={notification}
                 appName={"notification"}
-                itsTerminal={"none"}
                 isOpen={apps?.notification?.isOpen}
                 openApp={openApp}
                 closeApp={closeApp}
@@ -67,7 +62,6 @@ export const Dock = () => {
             <DockIcon
                 iconsource={settings}
                 appName={"settings"}
-                itsTerminal={"none"}
                 isOpen={apps?.settings?.isOpen}
                 openApp={openApp}
                 closeApp={closeApp}

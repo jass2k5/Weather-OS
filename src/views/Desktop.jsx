@@ -117,11 +117,21 @@ export const Desktop = () => {
                 </DraggableWindow>}
 
 
-                {apps?.clock?.isOpen && <Suspense fallback={null}>
-                    <Clock />
-                </Suspense>}
-
-                {apps?.terminalClock?.isOpen && (<DraggableWindow title={"TerminalClock"} Appid={"terminalClock"} minHeight={406} minWidth={459}><Clock /></DraggableWindow>)}
+                {apps?.clock?.isOpen && 
+                  <DraggableWindow title={"Clock"} Appid={'clock'} minHeight={406} minWidth={459}
+                 defaultSize={{
+                    width: window.innerWidth,
+                    height: window.innerHeight
+                }}
+                    defaultpos={{
+                        x: 0,
+                        y: 0
+                    }}  >  <Suspense fallback={null}>
+                        <Clock/>
+                    </Suspense></DraggableWindow>
+                }
+{/* 
+                {apps?.terminalClock?.isOpen && (<DraggableWindow title={"TerminalClock"} Appid={"terminalClock"} minHeight={406} minWidth={459}><Clock /></DraggableWindow>)} */}
 
                 <Dock />
             </div>
