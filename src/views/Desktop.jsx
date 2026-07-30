@@ -1,16 +1,18 @@
 import { useEffect } from "react"
+import { lazy, Suspense } from 'react';
 import { useOsStore } from "../shared/store/useOsStore"
 import { DraggableWindow } from "../shared/components/DraggableWindow"
-import { WeatherMap } from "../features/map/Map"
 import { TopRightDate } from "../layout/date/TopRightDate"
-import { Clock } from "../features/clock/Clock"
 import { Dock } from "../layout/dock/Dock"
 import { NotificationManager } from "../layout/NotificationFly";
-import { NotificationApp } from "../features/notification/Notification"
-import { Settings } from "../features/settings/Settings"
-import { ContactApp } from "../features/contact/Contact"
 import { ErrorBoundary } from 'react-error-boundary';
 import { MapCrashFallback } from "../features/map/ErrorBoundaryMap"
+//main components
+const WeatherMap = lazy(()=> import("../features/map/Map").then(mod=>({default:mod.WeatherMap})));
+const Clock = lazy(()=>import("../features/clock/Clock").then(mod=>({default:mod.Clock})));
+const Settings = lazy(()=>import("../features/settings/Settings").then(mod=>({default:mod.Settings})));
+const ContactApp = lazy(()=>import("../features/contact/Contact").then(mod=>({default:mod.ContactApp})));
+const NotificationApp = lazy(()=>import( "../features/notification/Notification").then(mod=>({default:mod.NotificationApp})));
 
 export const Desktop = () => {
     const bgUrl = useOsStore((state) => state.systemBg)
@@ -49,7 +51,9 @@ export const Desktop = () => {
                     minWidth={520}
 
 
-                > <ContactApp /></DraggableWindow>)}
+                > <Suspense fallback={null}>
+                        <ContactApp />
+                    </Suspense></DraggableWindow>)}
 
                 {apps?.notification?.isOpen && (<DraggableWindow
                     title={"Notification History"}
@@ -59,7 +63,9 @@ export const Desktop = () => {
                     minHeight={380}
                     minWidth={520}
                 >
-                    <NotificationApp />
+                    <Suspense fallback={null}>
+                        <NotificationApp />
+                    </Suspense>
                 </DraggableWindow>)}
 
 
@@ -84,7 +90,9 @@ export const Desktop = () => {
 
                     }}
                 >
-                        <WeatherMap />
+                        <Suspense fallback={null}>
+                            <WeatherMap />
+                        </Suspense>
                     </ErrorBoundary></DraggableWindow>}
 
 
@@ -103,11 +111,15 @@ export const Desktop = () => {
                     Appid={"settings"}
                     title={"Settings"}
                 >
-                    <Settings />
+                    <Suspense fallback={null}>
+                        <Settings />
+                    </Suspense>
                 </DraggableWindow>}
 
 
-                {apps?.clock?.isOpen && <Clock />}
+                {apps?.clock?.isOpen && <Suspense fallback={null}>
+                    <Clock />
+                </Suspense>}
 
                 {apps?.terminalClock?.isOpen && (<DraggableWindow title={"TerminalClock"} Appid={"terminalClock"} minHeight={406} minWidth={459}><Clock /></DraggableWindow>)}
 
