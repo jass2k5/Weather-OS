@@ -1,11 +1,17 @@
 import { useScrollFade } from "../../../shared/hooks/useScrollFade"
 import { useOsStore } from "../../../shared/store/useOsStore";
+import { useEffect } from "react";
 export const Header=()=>{
     const isGithubHovered = useOsStore((state)=>state.isGithubHovered);
     const setIsGithubHovered = useOsStore((state)=>state.setIsGithubHovered);
     const setgithubText = useOsStore((state)=>state.setgithubText);
     const HeadRef = useScrollFade({y:300,duration:1.7,ease:"power2.inOut",origin:"top center",});
-
+    useEffect(() => {
+        return () => {
+            setIsGithubHovered(false);
+            setgithubText(null);
+        };
+    }, []);
     return(
         <header ref={HeadRef} className='aboutHeader contactHeader cursor-none'>
                     <div
