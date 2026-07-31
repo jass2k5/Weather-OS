@@ -92,7 +92,7 @@ export const DraggableWindow = ({ children, title, Appid, defaultpos = { x: 300,
             bounds=".desktop"
             enableResizing={isResizable}
             resizeHandleStyles={resizeHandleStyles}
-            style={{ display: "flex", flexDirection: "column", zIndex: zIndex }}
+            style={{ display: "flex", flexDirection: "column", zIndex: zIndex,willChange: "transform" }}
             className="window-wrapper  pointer-events-auto"
         >
             <div
