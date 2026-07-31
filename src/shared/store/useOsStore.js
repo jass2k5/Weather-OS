@@ -231,12 +231,6 @@ export const useOsStore = create(persist((set, get) => ({
     //map settings
     mapSetting: {
         theme: "dark",
-        terminalMapTheme: {
-            theme: "light",
-            bol: false,
-            flyby: true,
-            marker: true
-        },
         Navigations: true,
         flyby: true,
         marker: true

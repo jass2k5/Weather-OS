@@ -80,55 +80,7 @@ export const MapSet = () => {
 
                 </SettingGroup>
 
-                <SettingGroup>
-                    <SettingRow
-                        title="Terminal Map Theme "
-                        subtitle="Resizeable map theme"
-                        control={
-                            <DayNightSwitch
-                                checked={mapSetting?.terminalMapTheme.bol}
-                                onChange={(e) => setMapSetting("terminalMapTheme", {
-                                    ...mapSetting.terminalMapTheme,
-                                    bol: e.target.checked,
-                                    theme: e.target.checked ? "dark" : "light"
-                                })
-
-                                }
-                            />
-                        }
-                    />
-                    <SettingRow
-                        title="Fly By"
-                        subtitle="Flyby animation on telemetryData change"
-                        control={
-                            <Switch
-                                checked={mapSetting?.terminalMapTheme.flyby}
-                                onChange={(e) =>
-                                    setMapSetting('terminalMapTheme', {
-                                        ...mapSetting.terminalMapTheme,
-                                        'flyby': e.target.checked
-                                    })
-                                }
-                            />
-                        }
-                    />
-                    <SettingRow
-                        title="Marker"
-                        subtitle="Marker on searched area or Capital State in Map inside terminal"
-                        control={
-                            <Switch
-                                checked={mapSetting?.terminalMapTheme?.marker}
-                                onChange={(e) =>
-                                    setMapSetting('terminalMapTheme', {
-                                        ...mapSetting.terminalMapTheme,
-                                        'marker': e.target.checked
-                                    })
-                                }
-                            />
-                        }
-                        showDivider={false}
-                    />
-                </SettingGroup>
+               
             </div>
           <Alerts variant="warning" paragraph=" Disabling the flyby animation and marker will decrease the load on the backend."/>
         </div>
