@@ -11,7 +11,7 @@ import { useTemperatureUnit } from "../../shared/hooks/useUnits";
 gsap.registerPlugin(ScrollTrigger);
 
 export const Clock = () => {
-    const myZIndex = useOsStore((state)=>10 + state.windowOrder.indexOf('clock'));
+    const myZIndex = useOsStore((state) => 10 + state.windowOrder.indexOf('clock'));
     const searchHistory = useOsStore((state) => state.searchHistory);
     const syncAllWeather = useOsStore((state) => state.syncAllWeather);
     const setIsScrollHovered = useOsStore((state) => state.setIsScrollHovered)
@@ -21,8 +21,8 @@ export const Clock = () => {
     const addNotification = useOsStore((state) => state.addNotification);
     const clockSetting = useOsStore((state) => state.clockSetting);
 
-    const {formatTemp,formatDistance} = useTemperatureUnit();
-  
+    const { formatTemp, formatDistance } = useTemperatureUnit();
+
     useGSAP(() => {
         if (cardRefs.current.length === 0) return;
 
@@ -42,6 +42,17 @@ export const Clock = () => {
                 }
             });
         });
+        const resizeObserver = new ResizeObserver(() => {
+            ScrollTrigger.refresh();
+        });
+
+        if (containerRef.current) {
+            resizeObserver.observe(containerRef.current);
+        }
+
+        return () => {
+            resizeObserver.disconnect();
+        };
     }, { dependencies: [searchHistory], scope: containerRef });
 
     useEffect(() => {
@@ -86,7 +97,7 @@ export const Clock = () => {
                     if (clockFollower) {
                         setIsScrollHovered(false);
                     }
-                }} ref={containerRef} className=" holder h-[75%] w-[98%] max-w-[900px] overflow-y-auto scrollbar-none relative rounded-3xl -translate-y-10 ">
+                }} ref={containerRef} className=" holder h-[75%] w-[98%] max-w-[900px] overflow-y-auto scrollbar-none relative rounded-3xl ">
                 {searchHistory.map((loc, index) => (
                     <div key={`${loc.city}-${index}`}
                         ref={(el) => (cardRefs.current[index] = el)}
@@ -111,7 +122,7 @@ export const Clock = () => {
                         {!loc.isDay && !clockSetting.liveNight && (
                             <img className="h-full w-full object-center object-cover rounded-3xl z-0" src={Night} alt="night" />
                         )}
-                        {loc.isDay && !clockSetting.liveDay && ( <img className="h-full w-full object-center object-cover rounded-3xl z-0" src={Day} alt="night" />)}
+                        {loc.isDay && !clockSetting.liveDay && (<img className="h-full w-full object-center object-cover rounded-3xl z-0" src={Day} alt="night" />)}
 
                         <div className="topLeft h-auto w-auto bg-transparent absolute top-[4%] left-[4%] z-10 flex flex-col justify-center items-start gap-0.5 ">
                             <span className={`countrySpan uppercase text-1xl font-medium ${loc.isDay ? "text-black/60 " : "text-white/60"}`}><i className="ri-map-pin-line"></i> {loc.country}</span>
