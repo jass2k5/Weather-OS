@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useOsStore } from "../../shared/store/useOsStore";
 export const SyncBtn = () => {
 
-  const syncAllWeather = useOsStore((state) => state.syncAllWeather);
   const [Buttonstate,setButtonstate] = useState("Sync");
   const addNotification = useOsStore((state) => state.addNotification);
 
@@ -11,7 +10,6 @@ export const SyncBtn = () => {
 
     try{
       setButtonstate("Syncing");
-      await syncAllWeather();
       addNotification("Synced Done through Button","info");
       setButtonstate("Synced");
       setTimeout(() => {

@@ -13,7 +13,6 @@ gsap.registerPlugin(ScrollTrigger);
 export const Clock = () => {
     const myZIndex = useOsStore((state) => 10 + state.windowOrder.indexOf('clock'));
     const searchHistory = useOsStore((state) => state.searchHistory);
-    const syncAllWeather = useOsStore((state) => state.syncAllWeather);
     const setIsScrollHovered = useOsStore((state) => state.setIsScrollHovered)
     const clockFollower = useOsStore((state) => state.mouseFollower.clockFollower);
     const cardRefs = useRef([]);
@@ -56,15 +55,7 @@ export const Clock = () => {
     }, { dependencies: [searchHistory], scope: containerRef });
 
     useEffect(() => {
-        syncAllWeather();
         let timer;
-
-        const weatherTimer = setInterval(() => {
-            console.log("Synced Clocks");
-            syncAllWeather();
-            addNotification("Auto Synced", "success")
-        }, 300000);
-
         let length = searchHistory.length;
         addNotification(`${length} locations have been initialised`, "info");
         if (length > 0) {
@@ -75,7 +66,6 @@ export const Clock = () => {
 
 
         return () => {
-            clearInterval(weatherTimer)
             clearTimeout(timer);
         };
 

@@ -1,141 +1,100 @@
-import { useEffect } from "react"
-import { lazy, Suspense } from 'react';
-import { useOsStore } from "../shared/store/useOsStore"
-import { DraggableWindow } from "../shared/components/DraggableWindow"
-import { TopRightDate } from "../layout/date/TopRightDate"
-import { Dock } from "../layout/dock/Dock"
+import { useEffect, lazy, Suspense } from 'react';
+import { useQueryClient } from "@tanstack/react-query";
+import { useOsStore } from "../shared/store/useOsStore";
+import { DraggableWindow } from "../shared/components/DraggableWindow";
+import { TopRightDate } from "../layout/date/TopRightDate";
+import { Dock } from "../layout/dock/Dock";
 import { NotificationManager } from "../layout/NotificationFly";
 import { ErrorBoundary } from 'react-error-boundary';
-import { MapCrashFallback } from "../features/map/ErrorBoundaryMap"
-//main components
-const WeatherMap = lazy(()=> import("../features/map/Map").then(mod=>({default:mod.WeatherMap})));
-const Clock = lazy(()=>import("../features/clock/Clock").then(mod=>({default:mod.Clock})));
-const Settings = lazy(()=>import("../features/settings/Settings").then(mod=>({default:mod.Settings})));
-const ContactApp = lazy(()=>import("../features/contact/Contact").then(mod=>({default:mod.ContactApp})));
-const NotificationApp = lazy(()=>import( "../features/notification/Notification").then(mod=>({default:mod.NotificationApp})));
+import { MapCrashFallback } from "../features/map/ErrorBoundaryMap";
+import { useSyncAllWeather } from "../shared/hooks/useSyncAllWeather";
+
+// Lazy Loaded Apps
+const WeatherMap = lazy(() => import("../features/map/Map").then(m => ({ default: m.WeatherMap })));
+const Clock = lazy(() => import("../features/clock/Clock").then(m => ({ default: m.Clock })));
+const Settings = lazy(() => import("../features/settings/Settings").then(m => ({ default: m.Settings })));
+const ContactApp = lazy(() => import("../features/contact/Contact").then(m => ({ default: m.ContactApp })));
+const NotificationApp = lazy(() => import("../features/notification/Notification").then(m => ({ default: m.NotificationApp })));
 
 export const Desktop = () => {
-    const bgUrl = useOsStore((state) => state.systemBg)
+    const queryClient = useQueryClient();
+    const bgUrl = useOsStore((state) => state.systemBg);
     const apps = useOsStore((state) => state.apps);
     const addNotification = useOsStore((state) => state.addNotification);
     const glassSettings = useOsStore((state) => state.glassSettings);
+    
+    useSyncAllWeather(); 
+
+
     useEffect(() => {
         addNotification("System booted successfully.", "success");
-    }, [])
+        queryClient.invalidateQueries({ queryKey: ["syncWeather"] });
+        
+        const timer = setTimeout(() => {
+            addNotification("Synced All Weather Data. Will Update after 15 minutes", "info");
+        }, 4000);
+        
+        return () => clearTimeout(timer); 
+    }, []);
 
+
+    const APP_CONFIG = [
+        { id: 'contact', title: "Contact Me", Component: ContactApp, minW: 520, minH: 380, defW: window.innerWidth, defH: window.innerHeight, posX: 0, posY: 0 },
+        { id: 'notification', title: "Notification History", Component: NotificationApp, minW: 520, minH: 380, defW: 520, defH: 380, isResizable: false },
+        { id: 'map', title: "Map", Component: WeatherMap, minW: 500, minH: 340, defW: window.innerWidth, defH: window.innerHeight, posX: 0, posY: 0 },
+        { id: 'settings', title: "Settings", Component: Settings, minW: 750, minH: 450, defW: window.innerWidth * 0.7, defH: window.innerHeight * 0.7, posX: window.innerWidth * 0.02, posY: window.innerHeight * 0.02 },
+        { id: 'clock', title: "Clock", Component: Clock, minW: 459, minH: 406, defW: window.innerWidth, defH: window.innerHeight, posX: 0, posY: 0 }
+    ];
 
     return (
-        <div
-            style={{ backgroundImage: `url('${bgUrl}')` }}
-            className={` desktop h-screen w-screen relative bg-cover bg-center bg-no-repeat overflow-hidden `}>
+        <div 
+            style={{ backgroundImage: `url('${bgUrl}')` }} 
+            className="desktop h-screen w-screen relative bg-cover bg-center bg-no-repeat overflow-hidden"
+        >
             {glassSettings?.enabled && (
                 <div style={{
                     backdropFilter: `blur(${glassSettings.blurValue || 0}px)`,
                     WebkitBackdropFilter: `blur(${glassSettings.blurValue || 0}px)`
-                }} className="glassmorph"></div>
+                }} className="glassmorph absolute inset-0 z-0"></div>
             )}
 
-            <div className="absolute inset-0 z-10 bg ">
-
+            <div className="absolute inset-0 z-10 bg">
                 <NotificationManager />
                 <TopRightDate />
-                {apps?.contact?.isOpen && (<DraggableWindow title={"Contact Me"} Appid={"contact"} defaultSize={{
-                    width: window.innerWidth,
-                    height: window.innerHeight
-                }}
-                    defaultpos={{
-                        x: 0,
-                        y: 0
-                    }}
-                    minHeight={380}
-                    minWidth={520}
 
+                {APP_CONFIG.map((app) => {
+                    if (!apps?.[app.id]?.isOpen) return null;
 
-                > <Suspense fallback={null}>
-                        <ContactApp />
-                    </Suspense></DraggableWindow>)}
-
-                {apps?.notification?.isOpen && (<DraggableWindow
-                    title={"Notification History"}
-                    Appid={"notification"}
-                    isResizable={false}
-                    defaultSize={{ width: 520, height: 380 }}
-                    minHeight={380}
-                    minWidth={520}
-                >
-                    <Suspense fallback={null}>
-                        <NotificationApp />
-                    </Suspense>
-                </DraggableWindow>)}
-
-
-                {apps?.map?.isOpen && <DraggableWindow
-                    title={"Map"}
-                    Appid={"map"}
-                    minHeight={340}
-                    minWidth={500}
-                    defaultSize={{
-                        width: window.innerWidth,
-                        height: window.innerHeight
-                    }}
-                    defaultpos={{
-                        x: 0,
-                        y: 0
-                    }}
-                > <ErrorBoundary
-                    FallbackComponent={MapCrashFallback}
-                    onReset={() => {
-
-                        console.log("REBOOTING MAP SYSTEM...");
-
-                    }}
-                >
+                    const AppContent = (
                         <Suspense fallback={null}>
-                            <WeatherMap />
+                            <app.Component />
                         </Suspense>
-                    </ErrorBoundary></DraggableWindow>}
+                    );
 
-
-
-                {apps?.settings?.isOpen && <DraggableWindow
-                    defaultSize={{
-                        width: window.innerWidth * 0.7,
-                        height: window.innerHeight * 0.7
-                    }}
-                    defaultpos={{
-                        x: Math.floor(window.innerWidth * 0.02),
-                        y: Math.floor(window.innerHeight * 0.02)
-                    }}
-                    minWidth={750}
-                    minHeight={450}
-                    Appid={"settings"}
-                    title={"Settings"}
-                >
-                    <Suspense fallback={null}>
-                        <Settings />
-                    </Suspense>
-                </DraggableWindow>}
-
-
-                {apps?.clock?.isOpen && 
-                  <DraggableWindow title={"Clock"} Appid={'clock'} minHeight={406} minWidth={459}
-                 defaultSize={{
-                    width: window.innerWidth,
-                    height: window.innerHeight
-                }}
-                    defaultpos={{
-                        x: 0,
-                        y: 0
-                    }}  >  <Suspense fallback={null}>
-                        <Clock/>
-                    </Suspense></DraggableWindow>
-                }
-{/* 
-                {apps?.terminalClock?.isOpen && (<DraggableWindow title={"TerminalClock"} Appid={"terminalClock"} minHeight={406} minWidth={459}><Clock /></DraggableWindow>)} */}
+                    return (
+                        <DraggableWindow
+                            key={app.id}
+                            Appid={app.id}
+                            title={app.title}
+                            minWidth={app.minW}
+                            minHeight={app.minH}
+                            defaultSize={{ width: app.defW, height: app.defH }}
+                            defaultpos={app.posX !== undefined ? { x: app.posX, y: app.posY } : undefined}
+                            isResizable={app.isResizable}
+                        >
+                            {app.id === 'map' ? (
+                                <ErrorBoundary FallbackComponent={MapCrashFallback} onReset={() => console.log("REBOOTING MAP SYSTEM...")}>
+                                    {AppContent}
+                                </ErrorBoundary>
+                            ) : (
+                                AppContent
+                            )}
+                        </DraggableWindow>
+                    );
+                })}
 
                 <Dock />
             </div>
-
         </div>
-    )
-}
+    );
+};
