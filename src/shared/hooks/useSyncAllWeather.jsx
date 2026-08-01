@@ -1,6 +1,7 @@
 import { useQueries } from "@tanstack/react-query";
 import { useEffect, useMemo, useRef } from "react";
 import { useOsStore } from "../store/useOsStore";
+import axios from "axios";
 
 export const useSyncAllWeather = () => {
     const searchHistory = useOsStore((state) => state.searchHistory);

@@ -116,9 +116,9 @@ export const Clock = () => {
                             tz_id={loc.tz_id}
                         />
 
-                       {/* <SyncBtn
+                       <SyncBtn
                        city={loc.city}
-                       /> */}
+                       />
 
 
                         <div className="bottomRight absolute bottom-[6%] right-[1%] flex justify-center items-center gap-3.5">
