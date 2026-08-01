@@ -2,32 +2,14 @@ import { useState } from "react";
 import { useOsStore } from "../../shared/store/useOsStore";
 export const SyncBtn = () => {
 
-  const [Buttonstate,setButtonstate] = useState("Sync");
-  const addNotification = useOsStore((state) => state.addNotification);
-
-  const handleclick = async ()=>{
-    if(Buttonstate === "syncing") return;
-
-    try{
-      setButtonstate("Syncing");
-      addNotification("Synced Done through Button","info");
-      setButtonstate("Synced");
-      setTimeout(() => {
-        setButtonstate("Sync");
-      }, 4000);
-    }catch (error){
-      setButtonstate("Sync");
-      console.warn(error)
-    }
-
-  }
+ 
   return (
     <div onClick={()=>{
       handleclick();
     }} className="generate-btn-wrapper absolute top-[20%] right-[2%]">
       <div className="button-wrap">
-        <button>
-          <span >{Buttonstate}</span>
+        <button disabled={isSyncing>0}>
+         <span>{isSyncing > 0 ? "Syncing..." : "Sync"}</span>
         </button>
         <div className="button-shadow" />
       </div>

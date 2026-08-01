@@ -28,7 +28,11 @@ export const Desktop = () => {
 
     useEffect(() => {
         addNotification("System booted successfully.", "success");
-        queryClient.invalidateQueries({ queryKey: ["syncWeather"] });
+        try{
+            queryClient.invalidateQueries({ queryKey: ["syncWeather"] });
+        }catch(error){
+            console.warn(error);
+        }
         
         const timer = setTimeout(() => {
             addNotification("Synced All Weather Data. Will Update after 15 minutes", "info");

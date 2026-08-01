@@ -25,7 +25,7 @@ export const Searchbar = () => {
 
     useEffect(() => {
         const handleKeyDown = (e) => {
-            if ((e.ctrlkey || e.metakey) && e.key.toLowerCase() === 'f') {
+            if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'f') {
                 e.preventDefault();
                 if (inputRef.current) {
                     inputRef.current.focus();

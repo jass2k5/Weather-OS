@@ -71,6 +71,10 @@
                     background: transparent;
                     font-size: clamp(0.8rem, 2.5cqh, 1.2rem); 
                     width: 100%;
+
+                   &::placeholder{
+                    font-size: clamp(0.75rem,2cqh,2rem);
+                   }
                 }
             }
 
