@@ -39,7 +39,6 @@ export const TopRightDate = () => {
         const updateClock = () => {
             const now = new Date();
 
-
             const timeOptions = {
                 timeZone: tz_id,
                 hour: "2-digit",

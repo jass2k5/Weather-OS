@@ -55,19 +55,8 @@ export const Clock = () => {
     }, { dependencies: [searchHistory], scope: containerRef });
 
     useEffect(() => {
-        let timer;
         let length = searchHistory.length;
         addNotification(`${length} locations have been initialised`, "info");
-        if (length > 0) {
-            timer = setTimeout(() => {
-                addNotification(`locations will be synced every 5 minutes`, "info");
-            }, 4000);
-        }
-
-
-        return () => {
-            clearTimeout(timer);
-        };
 
     }, [])
 
@@ -127,7 +116,9 @@ export const Clock = () => {
                             tz_id={loc.tz_id}
                         />
 
-                        <SyncBtn />
+                       {/* <SyncBtn
+                       city={loc.city}
+                       /> */}
 
 
                         <div className="bottomRight absolute bottom-[6%] right-[1%] flex justify-center items-center gap-3.5">

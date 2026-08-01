@@ -39,7 +39,7 @@ export const BootSequence = () => {
             </div>
             <div ref={jassRef} className="Jass">
                 <p>made by <span>jass</span></p>
-                <span>System_VR: 1.0.0</span>
+                <span>System_VR: 7.29.7</span>
             </div>
           <div ref={dragBoxRef}  className="bottomLeftInfo " style={{opacity:visible}}>
         
