@@ -16,9 +16,14 @@ export const useSyncAllWeather = () => {
         return searchHistory.map((loc) => ({
             queryKey: ["syncWeather", loc.city],
             queryFn: async () => {
-                const response = await fetch(`${BASE_URL}/current.json?key=${Api_Key}&q=${loc.city}`);
-                if (!response.ok) throw new Error(`Something went wrong while fetching ${loc.city}`);
-                return response.json();
+                const response = await axios.get(`${BASE_URL}/current.json`, {
+                    params: {
+                        key: Api_Key,
+                        q: loc.city,
+                        aqi: "yes"
+                    }
+                });
+                return response.data;
             },
 
             refetchInterval: 1000 * 60 * 15,//every city got it's own stale time if we add new city it's stale time took more time than previous ones 
@@ -77,7 +82,7 @@ export const useSyncAllWeather = () => {
             }
         });
 
-        return ()=> clearTimeout(timeRef.current);
+        return () => clearTimeout(timeRef.current);
     }, [queryResults, searchHistory, updateCityData]);
 
     return { queryResults };

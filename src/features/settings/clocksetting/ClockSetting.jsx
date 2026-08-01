@@ -81,6 +81,7 @@ export const ClockSetting = () => {
             </div>
             <Alerts variant="info" paragraph="Click on the videos to enable and disable them in ClockApp" />
             <Alerts variant="warning" paragraph="Video background may affect your CPU usage, depending upon your device"/>
+            <Alerts variant="warning" paragraph="Don't use Sync Button too many times, it cause state and backend load"/>
 
         </div>
     )

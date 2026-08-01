@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { useOsStore } from "../store/useOsStore";
 
-export const useLocationSearch = () => {
+export const useSearchLocation = () => {
     const setSystemTelemetry = useOsStore((state) => state.setSystemTelemetry);
     const addSearchToHistory = useOsStore((state) => state.addSearchToHistory);
     const addNotification = useOsStore((state) => state.addNotification);
@@ -13,7 +13,7 @@ export const useLocationSearch = () => {
     const Api_Key = import.meta.env.VITE_WEATHER_API_KEY;
     const BASE_URL = 'https://api.weatherapi.com/v1';
 
-   //addded fetchquery to check synallweather cache so it doesn't forcefully push data by api call and without it the api call goes the syncallweather checks the cache to compare if it's diff it pass it but inside the synallweather indivisual cache isn't synced causing update on every search
+//Added fetch query because on manual api call it updates searchhistory which enventually trigger useQueries of syncallweather and by querkey it checks the cache and the stale time for this location can be x<15 minutes. it returns cache data the useffect then compares cache data with zustand data as if the manual searchhistoy data is slightly changed even by .01 it fails === and push the cache data to newly search history and it will happen again and again as the syncweather cache isn't synced with manual search 
     const fetchLocationTelemetry = async (locationName) => {
        
         return queryClient.fetchQuery({
