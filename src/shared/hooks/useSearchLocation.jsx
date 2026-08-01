@@ -1,31 +1,38 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { useOsStore } from "../store/useOsStore";
 
-export const useSearchLocation = () => {
+export const useLocationSearch = () => {
     const setSystemTelemetry = useOsStore((state) => state.setSystemTelemetry);
     const addSearchToHistory = useOsStore((state) => state.addSearchToHistory);
     const addNotification = useOsStore((state) => state.addNotification);
+    
+    // 1. Bring in the Query Client
+    const queryClient = useQueryClient();
 
     const Api_Key = import.meta.env.VITE_WEATHER_API_KEY;
     const BASE_URL = 'https://api.weatherapi.com/v1';
 
+   //addded fetchquery to check synallweather cache so it doesn't forcefully push data by api call and without it the api call goes the syncallweather checks the cache to compare if it's diff it pass it but inside the synallweather indivisual cache isn't synced causing update on every search
     const fetchLocationTelemetry = async (locationName) => {
-        try {
-            const response = await axios.get(`${BASE_URL}/current.json`, {
-                params: {
-                    key: Api_Key,
-                    q: locationName,
-                    aqi: "yes"
-                }
-            });
-            return response.data;
-        } catch (error) {
-            if (error.response) {
-                console.error("API CALL FAILED:", error.response);
-            }
-            throw error;
-        }
+       
+        return queryClient.fetchQuery({
+      
+            queryKey: ["syncWeather", locationName], 
+            
+            queryFn: async () => {
+                const response = await axios.get(`${BASE_URL}/current.json`, {
+                    params: {
+                        key: Api_Key,
+                        q: locationName,
+                        aqi: "yes"
+                    }
+                });
+                return response.data;
+            },
+          
+            staleTime: 1000 * 60 * 15 
+        });
     };
 
     const mutation = useMutation({

@@ -12,7 +12,7 @@ export const useSyncAllWeather = () => {
 
     const timeRef = useRef(null);
 
-    const queryOptions = useMemo(() => {//use memo to not let searchhistoy change address on re render and cause queryoptions to run 
+    const queryOptions = useMemo(() => {//use memo to not let searchhistory change address on re render and cause queryoptions to run 
         return searchHistory.map((loc) => ({
             queryKey: ["syncWeather", loc.city],
             queryFn: async () => {
@@ -71,12 +71,13 @@ export const useSyncAllWeather = () => {
                 if (JSON.stringify(oldCityData) !== JSON.stringify(newCityData)) {
                     timeRef.current = setTimeout(() => {
                         addNotification(`Synced Weather Data For ${currentCity.city}`, "info");
-                    }, 8000);
+                    }, 1000);
                     updateCityData(currentCity.city, newCityData);
                 }
             }
-            return ()=> clearTimeout(timeRef.current);
         });
+
+        return ()=> clearTimeout(timeRef.current);
     }, [queryResults, searchHistory, updateCityData]);
 
     return { queryResults };
