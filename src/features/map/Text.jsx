@@ -3,10 +3,11 @@ import { useGSAP } from "@gsap/react";
 import { useOsStore } from "../../shared/store/useOsStore";
 import { useRef } from "react";
 import { SplitText } from "gsap/SplitText";
+import { memo } from "react";
 
 gsap.registerPlugin(SplitText, useGSAP);
 
-export const Text = () => {
+export const Text = memo(() => {
 
     const mapSetting = useOsStore((state) => state.mapSetting.theme);
     const myZIndex = useOsStore((state) => 20 + state.windowOrder.indexOf('map'));
@@ -74,4 +75,4 @@ export const Text = () => {
         </div>
     )
 
-}
+})

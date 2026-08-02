@@ -46,7 +46,8 @@ export const SyncBtn = ({city}) => {
         <button onClick={handleclick} disabled={isSyncing > 0}>
           <span>{isSyncing > 0 ? "Syncing..." : "Sync"}</span>
         </button>
-        <div className="button-shadow" />
+        <div className="butt
+        on-shadow" />
       </div>
 
       {/* Background Dotted Grid */}

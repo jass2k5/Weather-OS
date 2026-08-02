@@ -3,8 +3,8 @@ import { useGSAP } from "@gsap/react";
 import { useState, useEffect, useRef } from "react";
 import { useOsStore } from "../../shared/store/useOsStore";
 import { useSearchLocation } from "../../shared/hooks/useSearchLocation";
-
-export const Searchbar = () => {
+import { memo } from "react";
+export const Searchbar = memo( () => {
     const [inputvalue, setInputValue] = useState("");
     const [prev, setPrev] = useState(false);
     
@@ -135,4 +135,4 @@ export const Searchbar = () => {
             </div>
         </div>
     );
-};
+})
