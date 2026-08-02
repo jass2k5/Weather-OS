@@ -8,7 +8,7 @@ import { NotificationManager } from "../layout/NotificationFly";
 import { ErrorBoundary } from 'react-error-boundary';
 import { MapCrashFallback } from "../features/map/ErrorBoundaryMap";
 import { useSyncAllWeather } from "../shared/hooks/useSyncAllWeather";
-
+import { useKeys } from '../shared/hooks/useKeys';
 // Lazy Loaded Apps
 const WeatherMap = lazy(() => import("../features/map/Map").then(m => ({ default: m.WeatherMap })));
 const Clock = lazy(() => import("../features/clock/Clock").then(m => ({ default: m.Clock })));
@@ -33,6 +33,7 @@ export const Desktop = () => {
     const glassSettings = useOsStore((state) => state.glassSettings);
     
     useSyncAllWeather(); 
+    useKeys();
 
 
     useEffect(() => {
