@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useOsStore } from "../../shared/store/useOsStore";
 
-export const DockIcon = ({ iconsource, appName, itsTerminal, isOpen, openApp, Class, closeApp }) => {
+export const DockIcon = ({ iconsource, appName, isOpen, openApp, Class, closeApp,shortCut }) => {
     const [Menu, setMenu] = useState(false);
     const focusApp = useOsStore((state) => state.focusApp);
 
@@ -20,13 +20,15 @@ export const DockIcon = ({ iconsource, appName, itsTerminal, isOpen, openApp, Cl
             {Menu && (
                 <div
                     onClick={(e) => e.stopPropagation()}
-                    className="rightclick absolute -top-33 bg-[#1a1a1a]/90 backdrop-blur-md border border-white/10 p-2 rounded-xl flex flex-col gap-1 z-50 min-w-[130px] shadow-2xl cursor-default"
+                    className="rightclick absolute -top-37 bg-[#1a1a1a]/90 backdrop-blur-md border border-white/10 p-2 rounded-xl flex flex-col gap-1 z-50 min-w-[130px] shadow-2xl cursor-default w-max"
                 >
                     <span className="text-white/40 text-[16px] text-left ml-2.5 uppercase tracking-wider mb-1 pointer-events-none">
                         {appName}
                     </span>
 
                     <div className="h-[1px] w-full bg-white/10 my-0.5"></div>
+
+                    <span className="font-bold text-xs leading-none mb-0.5 px-3 text-white/60">Shortcut {shortCut}</span>
 
 
                     <div className="h-[1px] w-full bg-white/10 my-0.5"></div>

@@ -23,6 +23,7 @@ export const Dock = () => {
                 openApp={openApp}
                 closeApp={closeApp}
                 Class={"map"}
+                shortCut={"Alt + 1"}
 
             />
 
@@ -33,6 +34,7 @@ export const Dock = () => {
                 openApp={openApp}
                 closeApp={closeApp}
                 Class={"weather"}
+                shortCut={"Alt + 2"}
             />
 
             <DockIcon
@@ -42,6 +44,7 @@ export const Dock = () => {
                 openApp={openApp}
                 closeApp={closeApp}
                 Class={"clock"}
+                shortCut={"Alt + 3"}
             />
             <DockIcon
                 iconsource={contact}
@@ -50,6 +53,7 @@ export const Dock = () => {
                 openApp={openApp}
                 closeApp={closeApp}
                 Class={"contact"}
+                shortCut={"Alt + 4"}
             />
             <DockIcon
                 iconsource={notification}
@@ -58,6 +62,7 @@ export const Dock = () => {
                 openApp={openApp}
                 closeApp={closeApp}
                 Class={"notification"}
+                shortCut={"Alt + 5"}
             />
             <DockIcon
                 iconsource={settings}
@@ -66,6 +71,7 @@ export const Dock = () => {
                 openApp={openApp}
                 closeApp={closeApp}
                 Class={"setting"}
+                shortCut={"Alt + 6"}
             />
         </div>
     )
