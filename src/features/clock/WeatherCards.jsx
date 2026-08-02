@@ -37,21 +37,30 @@ export const WeatherCards = memo(() => {
                     start: "top 10px",
                     end: "+=150",
                     scrub: 1,
+                    onLeave: () => card.querySelector("video")?.pause(),
+                    onEnterBack: () => card.querySelector("video")?.play(),
                 }
             });
+
         });
+        let resizeTimeout;
         const resizeObserver = new ResizeObserver(() => {
-            ScrollTrigger.refresh();
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                ScrollTrigger.refresh();
+            }, 200);
         });
 
         if (containerRef.current) {
             resizeObserver.observe(containerRef.current);
         }
+        console.log(ScrollTrigger.getAll().length);
 
         return () => {
             resizeObserver.disconnect();
+            clearTimeout(resizeTimeout); 
         };
-    }, { dependencies: [searchHistory], scope: containerRef });
+    }, { scope: cardRefs });
 
 
     return (
@@ -70,9 +79,9 @@ export const WeatherCards = memo(() => {
             {searchHistory.map((loc, index) => (
                 <div key={`${loc.city}-${index}`}
                     ref={(el) => (cardRefs.current[index] = el)}
-                    className={`data will-change-transform h-full w-full border-2 rounded-3xl overflow-hidden sticky top-0 border-white/25 top-0 `}>
+                    className={`data  h-full w-full border-2 rounded-3xl overflow-hidden border-white/25 top-0 `}>
                     {loc.isDay && clockSetting.liveDay && (<video
-                        className="h-full w-full object-center object-cover scale-x-[1.07] rounded-3xl z-0 "
+                        className="video h-full w-full object-center object-cover scale-x-[1.07] rounded-3xl z-0 "
                         src={"./DayVideo.mp4"}
                         autoPlay
                         loop
@@ -80,7 +89,7 @@ export const WeatherCards = memo(() => {
                         playsInline
                     />)}
                     {!loc.isDay && clockSetting.liveNight && (<video
-                        className="h-full w-full object-center object-cover rounded-3xl z-0"
+                        className="video h-full w-full object-center object-cover rounded-3xl z-0"
                         src={"./NightVideo.mp4"}
                         autoPlay
                         loop
@@ -113,22 +122,22 @@ export const WeatherCards = memo(() => {
 
                     <div className="bottomRight absolute bottom-[6%] right-[1%] flex justify-center items-center gap-3.5">
 
-                        <div className={`feels flex flex-col justify-start items-start gap-1 border-2 rounded-xl pr-6 pl-4 pt-2 pb-2 ${loc.isDay ? "bg-white/40 border-white/40" : "bg-white/10 border-white/20"} backdrop-blur-2xl`}>
+                        <div className={`feels flex flex-col justify-start items-start gap-1 border-2 rounded-xl pr-6 pl-4 pt-2 pb-2 ${loc.isDay ? "bg-white/40 border-white/40" : "bg-white/10 border-white/20"} backdrop-blur-xl`}>
                             <i className={`ri-temp-hot-line capitalize text-[14px] ${loc.isDay ? "text-black/60" : "text-white/50"}`}> feels</i>
                             <span className={loc.isDay ? "text-black font-medium" : "text-white"}>{formatTemp(loc.feelsLike)}</span>
                         </div>
 
-                        <div className={`humidity flex flex-col justify-start items-start gap-1 border-2 rounded-xl pr-6 pl-4 pt-2 pb-2 ${loc.isDay ? "bg-white/40 border-white/40" : "bg-white/10 border-white/20"} backdrop-blur-2xl`}>
+                        <div className={`humidity flex flex-col justify-start items-start gap-1 border-2 rounded-xl pr-6 pl-4 pt-2 pb-2 ${loc.isDay ? "bg-white/40 border-white/40" : "bg-white/10 border-white/20"} backdrop-blur-xl`}>
                             <i className={`ri-water-percent-line capitalize text-[14px] ${loc.isDay ? "text-black/60" : "text-white/50"}`}> humidity</i>
                             <span className={loc.isDay ? "text-black font-medium" : "text-white"}>{loc.humidity}%</span>
                         </div>
 
-                        <div className={`wind flex flex-col justify-start items-start gap-1 border-2 rounded-xl pr-6 pl-4 pt-2 pb-2 ${loc.isDay ? "bg-white/40 border-white/40" : "bg-white/10 border-white/20"} backdrop-blur-2xl`}>
+                        <div className={`wind flex flex-col justify-start items-start gap-1 border-2 rounded-xl pr-6 pl-4 pt-2 pb-2 ${loc.isDay ? "bg-white/40 border-white/40" : "bg-white/10 border-white/20"} backdrop-blur-xl`}>
                             <i className={`ri-cloud-windy-line capitalize text-[14px] ${loc.isDay ? "text-black/60" : "text-white/50"}`}> wind</i>
                             <span className={loc.isDay ? "text-black font-medium" : "text-white"}>{formatDistance(loc.wind)}</span>
                         </div>
 
-                        <div className={`visibility flex flex-col justify-start items-start gap-1 border-2 rounded-xl pr-6 pl-4 pt-2 pb-2 ${loc.isDay ? "bg-white/40 border-white/40" : "bg-white/10 border-white/20"} backdrop-blur-2xl`}>
+                        <div className={`visibility flex flex-col justify-start items-start gap-1 border-2 rounded-xl pr-6 pl-4 pt-2 pb-2 ${loc.isDay ? "bg-white/40 border-white/40" : "bg-white/10 border-white/20"} backdrop-blur-xl`}>
                             <i className={`ri-eye-line capitalize text-[14px] ${loc.isDay ? "text-black/60" : "text-white/50"}`}> visibility</i>
                             <span className={loc.isDay ? "text-black font-medium" : "text-white"}>{formatDistance(loc.visibility)}</span>
                         </div>
