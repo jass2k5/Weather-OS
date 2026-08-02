@@ -12,7 +12,6 @@ const options = [
 ]
 
 export const Settings = () => {
-    const zIndex = useOsStore((state)=> 15 + state.windowOrder.indexOf('settings'));
     const [active, setActive] = useState('System');
 
     const renderContent = () => {
@@ -26,7 +25,7 @@ export const Settings = () => {
     }
 
     return (
-        <div style={{zIndex:zIndex}} className="settings absolute inset-0 bg-black ">
+        <div  className="settings absolute inset-0 bg-black ">
             <aside>
                 <span className="personal">Personalization</span>
                 <div className="navigators">

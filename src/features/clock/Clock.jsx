@@ -16,7 +16,7 @@ export const Clock = () => {
 
 
     return (
-        <div className="Clock h-full w-full absolute top-0 left-0 bg-black pt-10 pb-0 flex items-center justify-center">
+        <div className="Clock h-full w-full absolute top-0 left-0 bg-black pt-10 pb-0 flex items-center justify-center [contain:layout_paint]">
            <WeatherCards/>
         </div>
     )

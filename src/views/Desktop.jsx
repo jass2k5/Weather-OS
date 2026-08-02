@@ -16,6 +16,15 @@ const Settings = lazy(() => import("../features/settings/Settings").then(m => ({
 const ContactApp = lazy(() => import("../features/contact/Contact").then(m => ({ default: m.ContactApp })));
 const NotificationApp = lazy(() => import("../features/notification/Notification").then(m => ({ default: m.NotificationApp })));
 
+const APP_CONFIG = [
+        { id: 'contact', title: "Contact Me", Component: ContactApp, minW: 520, minH: 380, defW: window.innerWidth, defH: window.innerHeight, posX: 0, posY: 0 },
+        { id: 'notification', title: "Notification History", Component: NotificationApp, minW: 520, minH: 380, defW: 520, defH: 380, isResizable: false },
+        { id: 'map', title: "Map", Component: WeatherMap, minW: 500, minH: 340, defW: window.innerWidth, defH: window.innerHeight, posX: 0, posY: 0 },
+        { id: 'settings', title: "Settings", Component: Settings, minW: 750, minH: 450, defW: window.innerWidth * 0.7, defH: window.innerHeight * 0.7, posX: window.innerWidth * 0.02, posY: window.innerHeight * 0.02 },
+        { id: 'clock', title: "Clock", Component: Clock, minW: 459, minH: 406, defW: window.innerWidth, defH: window.innerHeight, posX: 0, posY: 0 }
+    ];
+
+
 export const Desktop = () => {
     const queryClient = useQueryClient();
     const bgUrl = useOsStore((state) => state.systemBg);
@@ -42,14 +51,7 @@ export const Desktop = () => {
     }, []);
 
 
-    const APP_CONFIG = [
-        { id: 'contact', title: "Contact Me", Component: ContactApp, minW: 520, minH: 380, defW: window.innerWidth, defH: window.innerHeight, posX: 0, posY: 0 },
-        { id: 'notification', title: "Notification History", Component: NotificationApp, minW: 520, minH: 380, defW: 520, defH: 380, isResizable: false },
-        { id: 'map', title: "Map", Component: WeatherMap, minW: 500, minH: 340, defW: window.innerWidth, defH: window.innerHeight, posX: 0, posY: 0 },
-        { id: 'settings', title: "Settings", Component: Settings, minW: 750, minH: 450, defW: window.innerWidth * 0.7, defH: window.innerHeight * 0.7, posX: window.innerWidth * 0.02, posY: window.innerHeight * 0.02 },
-        { id: 'clock', title: "Clock", Component: Clock, minW: 459, minH: 406, defW: window.innerWidth, defH: window.innerHeight, posX: 0, posY: 0 }
-    ];
-
+    
     return (
         <div 
             style={{ backgroundImage: `url('${bgUrl}')` }} 

@@ -54,7 +54,7 @@ export const WeatherCards = memo(() => {
         if (containerRef.current) {
             resizeObserver.observe(containerRef.current);
         }
-        console.log(ScrollTrigger.getAll().length);
+        
 
         return () => {
             resizeObserver.disconnect();
@@ -79,7 +79,7 @@ export const WeatherCards = memo(() => {
             {searchHistory.map((loc, index) => (
                 <div key={`${loc.city}-${index}`}
                     ref={(el) => (cardRefs.current[index] = el)}
-                    className={`data  h-full w-full border-2 rounded-3xl overflow-hidden border-white/25 top-0 `}>
+                    className={`data  h-full w-full border-2 rounded-3xl overflow-hidden sticky top-0 border-white/25 top-0 `}>
                     {loc.isDay && clockSetting.liveDay && (<video
                         className="video h-full w-full object-center object-cover scale-x-[1.07] rounded-3xl z-0 "
                         src={"./DayVideo.mp4"}

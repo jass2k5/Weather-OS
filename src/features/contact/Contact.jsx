@@ -13,7 +13,6 @@ import { CenterImage } from './information/CenterImage';
 gsap.registerPlugin(ScrollTrigger);
 export const ContactApp = () => {
     const addNotification = useOsStore((state) => state.addNotification);
-    // const Zindex = useOsStore((state) => 10 + state.windowOrder.indexOf("contact"));
     const scrollContainerRef = useRef(null);
     const isDay = useOsStore((state) => state.isDay);
     useEffect(() => {
@@ -46,7 +45,6 @@ export const ContactApp = () => {
 
     return (
         <div style={{
-            // zIndex: Zindex,
             containerType: 'size',
             containerName: 'contactApp'
         }}
