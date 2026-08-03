@@ -14,7 +14,7 @@ export const useKeys = () => {
     const closeApp = useOsStore((state) => state.closeApp);
     const openApp = useOsStore((state) => state.openApp);
     const focusApp = useOsStore((state) => state.focusApp);
-
+    const closeAll = useOsStore((state)=>state.closeAll);
     useEffect(() => {
         const handleOpen = (e) => {
             if (e.altKey && SHORTCUTS[e.key]) {
@@ -30,7 +30,7 @@ export const useKeys = () => {
 
             }else{
                 if(e.altKey && e.key === "Backspace"){
-                    
+                    closeAll();
                 }
             }
         }
