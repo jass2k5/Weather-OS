@@ -7,11 +7,11 @@ export const useOsStore = create(persist((set, get) => ({
     setNight: () => { set({ isDay: false }) },
     setDay: () => { set({ isDay: true }) },
     isScrollHovered: false,
-    isGithubHovered : false,
-    setIsGithubHovered:(val)=>set({isGithubHovered:val}),
+    isGithubHovered: false,
+    setIsGithubHovered: (val) => set({ isGithubHovered: val }),
     setIsScrollHovered: (val) => set({ isScrollHovered: val }),
-    githubText:null,
-    setgithubText:(val)=> set({githubText:val}),
+    githubText: null,
+    setgithubText: (val) => set({ githubText: val }),
     isBooted: false,
     systemBg: "/stage1bg.png",
     setBg: (bg) => set(() => ({
@@ -49,6 +49,16 @@ export const useOsStore = create(persist((set, get) => ({
                 ...state.apps[Appid],
                 isOpen: true
             }
+        }
+    })),
+    closeAll: () => set((state) => ({
+        apps: {
+            ...state.apps,
+            map: { isOpen: false },
+            clock: { isOpen: false },
+            notification: { isOpen: false },
+            settings: { isOpen: false },
+            contact: { isOpen: false }
         }
     })),
 
@@ -93,12 +103,12 @@ export const useOsStore = create(persist((set, get) => ({
 
         set({ searchHistory: updatedHistory });
     },
-    
+
     removeSearchItem: (cityName) => set((state) => ({
         searchHistory: state.searchHistory.filter((loc) => loc.city !== cityName)
     })),
 
-    windowOrder: ['map', 'clock', 'settings', "notification","contact"],
+    windowOrder: ['map', 'clock', 'settings', "notification", "contact"],
 
 
     focusApp: (appId) => set((state) => ({
@@ -109,7 +119,7 @@ export const useOsStore = create(persist((set, get) => ({
     updateCityData: (cityName, newData) => set((state) => ({
         searchHistory: state.searchHistory.map((loc) => (loc.city === cityName ? { ...loc, ...newData } : loc))
     })),
-  
+
     notificationHistory: [],
     activeNotifications: [],
 

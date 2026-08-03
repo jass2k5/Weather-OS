@@ -28,10 +28,15 @@ export const useKeys = () => {
                     focusApp(SHORTCUTS[e.key]);
                 }
 
+            }else{
+                if(e.altKey && e.key === "Backspace"){
+                    
+                }
             }
         }
 
         window.addEventListener("keydown", handleOpen);
+       
         return () => {
             window.removeEventListener("keydown", handleOpen);
         }

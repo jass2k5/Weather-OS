@@ -11,7 +11,7 @@ export const useSyncAllWeather = () => {
     const Api_Key = import.meta.env.VITE_WEATHER_API_KEY;
     const BASE_URL = 'https://api.weatherapi.com/v1';
 
-    const timeRef = useRef(null);
+    const timeRef = useRef([]);
 
     const queryOptions = useMemo(() => {//use memo to not let searchhistory change address on re render and cause queryoptions to run 
         return searchHistory.map((loc) => ({
@@ -75,15 +75,21 @@ export const useSyncAllWeather = () => {
 
 
                 if (JSON.stringify(oldCityData) !== JSON.stringify(newCityData)) {
-                    timeRef.current = setTimeout(() => {
+                    let id = setTimeout(() => {
                         addNotification(`Synced Weather Data For ${currentCity.city}`, "info");
                     }, 1000);
+                    timeRef.current.push(id);
                     updateCityData(currentCity.city, newCityData);
                 }
             }
         });
 
-        return () => clearTimeout(timeRef.current);
+        return () =>{
+            timeRef.current.forEach(e=>{
+                clearTimeout(e);
+            })
+            timeRef.current = [];
+        }
     }, [queryResults, searchHistory, updateCityData]);
 
     return { queryResults };

@@ -95,7 +95,7 @@ export const Desktop = () => {
 
             <div  className={`guide h-max w-max p-2 bg-white border border-white/60 rounded-2xl ${!isOpen?'opacity-0':'opacity-100'}`}>
              {shortCuts.map((short,index)=>(
-                <div key={short.id} className='h-max w-max p-1 flex gap-2'>
+                <div key={`${short.app}`} className='h-max w-max p-1 flex gap-2'>
                     <img className='h-8' src={alt} alt="alt"/>
                     <span className='text-xl text-black'>+</span>
                     <img className='h-8' src={short.src} alt="Number" />
