@@ -82,7 +82,7 @@ export const Desktop = () => {
             clearTimeout(timer);
             window.removeEventListener("mousedown",handleOutsideClick);
         } 
-    }, []);
+    }, [queryClient]);
 
 
     
@@ -93,13 +93,13 @@ export const Desktop = () => {
         >
            <div ref={shortCutRef} className='shortcut select-none  z-15 h-max w-max absolute right-[1%] bottom-[3%] p-2 flex flex-col justify-center items-center gap-5 pointer-events-none'>
 
-            <div ref={shortCutRef} className={`guide h-max w-max p-2 bg-white border border-white/60 rounded-2xl ${!isOpen?'opacity-0':'opacity-100'}`}>
+            <div  className={`guide h-max w-max p-2 bg-white border border-white/60 rounded-2xl ${!isOpen?'opacity-0':'opacity-100'}`}>
              {shortCuts.map((short,index)=>(
-                <div className='h-max w-max p-1 flex gap-2'>
+                <div key={short.id} className='h-max w-max p-1 flex gap-2'>
                     <img className='h-8' src={alt} alt="alt"/>
                     <span className='text-xl text-black'>+</span>
                     <img className='h-8' src={short.src} alt="Number" />
-                    <i class="ri-arrow-right-line text-black pt-1"></i>
+                    <i className="ri-arrow-right-line text-black pt-1"></i>
                     <span className='text-black text-[1rem]'>Toggle {short.app}</span>
                 </div>
              ))}
