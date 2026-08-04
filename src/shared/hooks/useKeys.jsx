@@ -55,6 +55,6 @@ export const useKeys = () => {
         return () => {
             window.removeEventListener("keydown", handleOpen);
         }
-    }, [apps,focusApp,openApp,closeApp]);
+    }, [apps,focusApp,openApp,closeApp,theme]);
 
 }
