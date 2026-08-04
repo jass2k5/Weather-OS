@@ -11,10 +11,10 @@ export const TopRightDate = () => {
     
     const getPositionClasses = (pos) => {
         switch(pos) {
-            case 'top-left': return 'top-[2%] left-[6%]';
+            case 'top-left': return 'top-[8%] left-[6%]';
             case 'bottom-left': return 'bottom-[2%] left-[6%]';
             case 'bottom-right': return 'bottom-[2%] right-[6%]';
-            case 'top-right': return 'top-[2%] right-[6%]';
+            case 'top-right': return 'top-[5%] right-[2%]';
             default: return 'top-[2%] right-[6%]';
         }
     };
