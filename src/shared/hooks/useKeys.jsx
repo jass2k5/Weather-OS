@@ -3,6 +3,7 @@ import { useEffect } from "react"
 
 const SHORTCUTS = {
     "1": "map",
+    "2":"weather",
     "3": "clock",
     "4": "contact",
     "5": "notification",
@@ -15,7 +16,17 @@ export const useKeys = () => {
     const openApp = useOsStore((state) => state.openApp);
     const focusApp = useOsStore((state) => state.focusApp);
     const closeAll = useOsStore((state)=>state.closeAll);
+    const theme = useOsStore((state)=>state.theme);
+    const setTheme = useOsStore((state)=>state.setTheme);
+    useEffect(()=>{
+        if (theme === 'theme-white') {
+            document.body.classList.add('theme-white');
+        } else {
+            document.body.classList.remove('theme-white');
+        }
+    },[theme])
     useEffect(() => {
+        
         const handleOpen = (e) => {
             if (e.altKey && SHORTCUTS[e.key]) {
                 e.preventDefault();
@@ -28,7 +39,11 @@ export const useKeys = () => {
                     focusApp(SHORTCUTS[e.key]);
                 }
 
-            }else{
+            }else if(e.altKey && e.key.toLowerCase() === 't'){
+                e.preventDefault();
+                setTheme(theme === 'theme-white' ? 'dark' : 'theme-white');
+            }
+            else{
                 if(e.altKey && e.key === "Backspace"){
                     closeAll();
                 }

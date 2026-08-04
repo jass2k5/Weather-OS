@@ -21,6 +21,7 @@ export const DraggableWindow = ({ children, title, Appid, defaultpos = { x: 300,
     const focusApp = useOsStore((state) => state.focusApp);
     const windowOrder = useOsStore((state) => state.windowOrder);
     const zIndex = 10 + windowOrder.indexOf(Appid);
+    
     const [size, setSize] = useState(defaultSize);
     const [position, setPosition] = useState(defaultpos);
     const [isMaximized, setIsMaximized] = useState(false);
@@ -60,8 +61,8 @@ export const DraggableWindow = ({ children, title, Appid, defaultpos = { x: 300,
 
     const handleMaximize = () => {
         if (isMaximized) {
-            setSize(defaultSize);
-            setPosition(defaultpos);
+            setSize(prevBounds.size);
+            setPosition(prevBounds.position);
             setIsMaximized(false);
         } else {
             setPrevBounds({ size, position });
@@ -75,14 +76,9 @@ export const DraggableWindow = ({ children, title, Appid, defaultpos = { x: 300,
         <Rnd
             size={size}
             position={position}
-            onDragStop={(e, d) => {
-                setPosition({ x: d.x, y: d.y });
-            }}
+            onDragStop={(e, d) => setPosition({ x: d.x, y: d.y })}
             onResizeStop={(e, direction, ref, delta, newPosition) => {
-                setSize({
-                    width: ref.style.width,
-                    height: ref.style.height,
-                });
+                setSize({ width: ref.style.width, height: ref.style.height });
                 setPosition(newPosition);
             }}
             onMouseDown={() => focusApp(Appid)}
@@ -92,40 +88,30 @@ export const DraggableWindow = ({ children, title, Appid, defaultpos = { x: 300,
             bounds=".desktop"
             enableResizing={isResizable}
             resizeHandleStyles={resizeHandleStyles}
-            style={{ display: "flex", flexDirection: "column", zIndex: zIndex,willChange: "transform" }}
-            className="window-wrapper  pointer-events-auto"
+            style={{ display: "flex", flexDirection: "column", zIndex: zIndex, willChange: "transform" }}
+            className="window-wrapper pointer-events-auto"
         >
             <div
                 ref={windowRef}
-                className="w-full h-full flex flex-col border border-cyan-500/20 bg-black backdrop-blur-md rounded-[0.6rem] overflow-hidden shadow-2xl"
+                // Removed the state logic. The CSS vars will automatically react to the body class!
+                className="w-full h-full flex flex-col border border-[var(--border-clr)] bg-[var(--window-bg)] text-[var(--text-clr)] backdrop-blur-md rounded-[0.6rem] overflow-hidden shadow-2xl transition-colors duration-300"
             >
-                <div className="window-header shrink-0 w-full h-7 cursor-grab active:cursor-grabbing bg-zinc-800 p-4 flex items-center justify-center relative border-b border-[rgba(255,255,255,0.1)]">
+                <div className="window-header shrink-0 w-full h-7 cursor-grab active:cursor-grabbing bg-[var(--header-bg)] p-4 flex items-center justify-center relative border-b border-[var(--border-clr)] transition-colors duration-300">
                     <div className="flex items-center gap-2 absolute left-[1%] top-[20%] cursor-pointer">
-                        <button
-                            onClick={() => handleclose()}
-                            className="terminal-btn w-4.5 h-4.5 rounded-full bg-red-500 flex items-center justify-center group transition-all duration-75"
-                        >
+                        <button onClick={handleclose} className="terminal-btn w-4.5 h-4.5 rounded-full bg-red-500 flex items-center justify-center group transition-all duration-75">
                             <span className="text-[10px] font-bold text-black opacity-0 group-hover:opacity-100">✕</span>
                         </button>
 
-                        <button
-                            onClick={() => {
-                                handleMinimize()
-                            }}
-                            className="terminal-btn w-4.5 h-4.5 rounded-full bg-yellow-500 flex items-center justify-center group transition-opacity duration-75">
+                        <button onClick={handleMinimize} className="terminal-btn w-4.5 h-4.5 rounded-full bg-yellow-500 flex items-center justify-center group transition-opacity duration-75">
                             <span className="text-[14px] font-bold text-black opacity-0 group-hover:opacity-100 leading-none pb-0.5">−</span>
                         </button>
 
-                        <button
-                            onClick={() => {
-                                handleMaximize()
-                            }}
-                            className="terminal-btn w-4.5 h-4.5 rounded-full bg-green-500 flex items-center justify-center group transition-opacity duration-75">
+                        <button onClick={handleMaximize} className="terminal-btn w-4.5 h-4.5 rounded-full bg-green-500 flex items-center justify-center group transition-opacity duration-75">
                             <span className="text-[14px] font-bold text-black opacity-0 group-hover:opacity-100 leading-none">＋</span>
                         </button>
                     </div>
 
-                    <span className="text-l text-cyan-100/50 font-mono tracking-widest">{title}</span>
+                    <span className="text-sm text-[var(--header-text)] font-mono tracking-widest transition-colors duration-300">{title}</span>
                 </div>
 
                 <div className="window-content flex-1 min-h-0 relative overflow-hidden">
@@ -133,5 +119,5 @@ export const DraggableWindow = ({ children, title, Appid, defaultpos = { x: 300,
                 </div>
             </div>
         </Rnd>
-    )
+    );
 }

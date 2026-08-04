@@ -2,7 +2,8 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
 export const useOsStore = create(persist((set, get) => ({
-
+    theme: 'dark',
+    setTheme: (theme) => set({ theme }),
     isDay: true,
     setNight: () => { set({ isDay: false }) },
     setDay: () => { set({ isDay: true }) },
@@ -31,6 +32,7 @@ export const useOsStore = create(persist((set, get) => ({
         notification: { isOpen: false },
         settings: { isOpen: false },
         contact: { isOpen: false },
+        weather: { isOpen: false }
     },
 
     closeApp: (Appid) => set((state) => ({
@@ -58,7 +60,8 @@ export const useOsStore = create(persist((set, get) => ({
             clock: { isOpen: false },
             notification: { isOpen: false },
             settings: { isOpen: false },
-            contact: { isOpen: false }
+            contact: { isOpen: false },
+            weather: { isOpen: false }
         }
     })),
 
@@ -108,7 +111,7 @@ export const useOsStore = create(persist((set, get) => ({
         searchHistory: state.searchHistory.filter((loc) => loc.city !== cityName)
     })),
 
-    windowOrder: ['map', 'clock', 'settings', "notification", "contact"],
+    windowOrder: ['map', 'clock', 'settings', "notification", "contact", "weather"],
 
 
     focusApp: (appId) => set((state) => ({

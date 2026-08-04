@@ -4,21 +4,18 @@
     grid-template-rows: 1fr;
     grid-template-areas: "aside Right";
 
-
     .Right {
-           display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: safe center;
-    padding: 4rem;
-
-
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: safe center;
+        padding: 4rem;
     }
 
     aside {
         grid-area: aside;
-        border-right: 1px solid rgba(255, 255, 255, 0.1);
-        background-color: rgb(39, 39, 42);
+        border-right: 1px solid var(--border-clr);
+        background-color: var(--header-bg);
         display: flex;
         gap: 0.9rem;
         justify-content: start;
@@ -27,7 +24,8 @@
         padding-top: 2rem;
        
         .personal {
-            color: rgba(255, 255, 255, 0.54);
+  
+            color: var(--header-text);
             text-transform: uppercase;
             font-family: sans-serif;
             font-size: clamp(0.2rem, 4vh, 0.9rem);
@@ -35,7 +33,7 @@
         }
 
         .navigators {
-             padding-left: 0.4rem;
+            padding-left: 0.4rem;
             user-select: none;
             cursor: pointer;
             display: flex;
@@ -47,13 +45,14 @@
                 display: flex;
                 flex-direction: row;
                 gap: 0.4rem;
-                color: rgba(255, 255, 255, 0.77);
+        
+                color: var(--text-clr);
                 padding: 0.3rem;
-                transition: transform 0.3s ease-in-out;
+                transition: transform 0.3s ease-in-out, background-color 0.3s ease;
 
                 &:hover {
-                    color: rgba(0, 0, 0, 0.719);
-                    background-color: #ffffffc3;
+                  
+                    background-color: var(--border-clr);
                     border-radius: 0.4rem;
                 }
 

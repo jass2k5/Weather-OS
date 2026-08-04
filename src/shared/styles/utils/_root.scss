@@ -1,10 +1,5 @@
 :root {
     --main-padding: 0.8rem;
-    --body-clr: white;
-    --second-clr: black;
-    --third-clr: whitesmoke;
-    --text-clr: black;
-    --contact-clr: black;
     --circle: 50%;
     --main-font: "Ubuntu", sans-serif;
     --font-size: 1rem;
@@ -19,22 +14,60 @@
     --blur: 30px;
     --br-clr1: rgba(255, 255, 255, 0.3);
     --gap-logo: 0.4rem;
-    --margin-nav: clamp(0.2rem, 1vw + 0.2rem, 0.4rem);
+
+    --body-clr: black;
+    --second-clr: black;
+    --third-clr: rgb(40, 42, 43);
+    --text-clr: #ffffff;
+    --contact-clr: whitesmoke;
+    --thumb-clr: rgba(209, 209, 209, 1);
+    --thumb-hover: rgba(255, 255, 255, 1);
+    --indicator-clr: rgba(0, 0, 0, 0.363);
+    --arrows-clr: rgba(0, 0, 0, 0.2);
+
+    --window-bg: black; 
+    --header-bg: #27272a;
+    --border-clr: rgba(255, 255, 255, 0.106);
+    --header-text: rgba(207, 250, 254, 0.6); 
+
+    --setting-bg: #27272a; 
+    --setting-border: rgba(255, 255, 255, 0.278);
+    --setting-title: #ffffff;
+    --setting-subtitle: rgba(255, 255, 255, 0.5); 
+    --title-setting: rgba(255, 255, 255, 0.476);
+    --setting-divider: rgba(255, 255, 255, 0.1); 
+
+    --reset-border: #ffffff;
+    --reset-text: #ffffff;
+    --reset-fill: #ffffff;
+    --reset-hover-text: #000000;
+}
+
+.theme-white {
+    --body-clr: #ffffff;
+    --second-clr: #ffffff;
+    --third-clr: whitesmoke;
+    --text-clr: #171717;
+    --contact-clr: #171717;
     --thumb-clr: rgba(99, 99, 99, 0.8);
     --thumb-hover: #555555da;
     --indicator-clr: rgba(225, 255, 255, 0.233);
     --arrows-clr: rgba(225, 255, 255, 0.233);
 
-}
+    --window-bg: #f3f4f6;
+    --header-bg: #e5e7eb;
+    --border-clr: rgba(0, 0, 0, 0.1);
+    --header-text: #4b5563;
+    
+    --setting-bg: #ffffff;
+    --setting-border: rgba(0, 0, 0, 0.333);
+    --setting-title: #171717;
+    --setting-subtitle: rgba(0, 0, 0, 0.5);
+    --title-setting: rgba(0, 0, 0, 0.56);
+    --setting-divider: rgba(0, 0, 0, 0.1);
 
-.darkmode {
-    --body-clr: black;
-    --third-clr: rgb(40, 42, 43);
-    --text-clr: white;
-    --contact-clr: whitesmoke;
-    --thumb-clr: rgba(209, 209, 209);
-    --thumb-hover: rgba(255, 255, 255);
-    --indicator-clr: rgba(0, 0, 0, 0.363);
-    --arrows-clr: rgba(0, 0, 0, 0.2);
-    ;
+    --reset-border: #171717;
+    --reset-text: #171717;
+    --reset-fill: #171717;
+    --reset-hover-text: #ffffff;
 }

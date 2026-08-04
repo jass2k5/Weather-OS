@@ -1,9 +1,8 @@
 import { useScrollFade } from "../../../shared/hooks/useScrollFade"
 import { Reset } from "../../../shared/components/ResetBtn"
 export const Footer = () => {
-    const FooterRef = useScrollFade()
-    const body = document.body;
-    
+    const FooterRef = useScrollFade();
+
     return (
         <footer ref={FooterRef} className="footer">
             <section className="aboutandmore">
@@ -62,12 +61,7 @@ export const Footer = () => {
             
             <section className="end">
                 <h3>@ Made by JASS</h3>
-                <div className="h-max w-wax bg-black!"> <Reset
-                 label="Theme"
-                 onClick={()=>{
-                    body.classList.toggle('darkmode')
-                 }}
-                 /></div>
+               
             </section>
         </footer>
     )

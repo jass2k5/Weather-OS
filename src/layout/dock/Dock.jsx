@@ -30,7 +30,7 @@ export const Dock = () => {
             <DockIcon
                 iconsource={weather}
                 appName={"weather"}
-                isOpen={false}
+                isOpen={apps?.weather?.isOpen}
                 openApp={openApp}
                 closeApp={closeApp}
                 Class={"weather"}

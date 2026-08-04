@@ -9,25 +9,25 @@ import { SettingGroup } from "../../../shared/components/SettingGroup";
 import { ThemeCard } from "../../../shared/components/ThemeCard";
 import { ThemeContainer } from "../../../shared/components/ThemeContainer";
 
-  const Wallpapers = [
-        {
-            id: "firstWalpaper",
-            src: "/stage1bg.png",
-            alt: "stage1"
-        },
-        {
-            id: "secondWalpaper",
-            src: "/stage2bg.png",
-            alt: "stage2"
-        },
-        {
-            id: "thirdWalpaper",
-            src: "/stage3bg.png",
-            alt: "stage3"
-        }
+const Wallpapers = [
+    {
+        id: "firstWalpaper",
+        src: "/stage1bg.png",
+        alt: "stage1"
+    },
+    {
+        id: "secondWalpaper",
+        src: "/stage2bg.png",
+        alt: "stage2"
+    },
+    {
+        id: "thirdWalpaper",
+        src: "/stage3bg.png",
+        alt: "stage3"
+    }
 
-    ]
-    
+]
+
 export const SystemSettings = () => {
     const setBg = useOsStore((state) => state.setBg)
     const addNotification = useOsStore((state) => state.addNotification)
@@ -40,7 +40,7 @@ export const SystemSettings = () => {
     const dateTimeSettings = useOsStore((state) => state.dateTimeSettings)
     const updateDateTimeSetting = useOsStore((state) => state.updateDateTimeSetting)
 
-  
+
     const processFile = (file) => {
         if (!file) return;
         if (!file.type.startsWith("image/")) {
@@ -89,48 +89,53 @@ export const SystemSettings = () => {
 
     return (
         <div className="h-full w-full flex flex-col p-6 gap-1">
-            <ThemeContainer 
-            title={"Background Preferences"}
+            <ThemeContainer
+                title={"Background Preferences"}
             >
 
-           
-
-                    {Wallpapers.map((wal) => (
-                        <ThemeCard
-                            key={wal.id}
-                            src={wal.src}
-                            onClick={() => {
-                                setBg(wal.src);
-                                addNotification("Wallpaper Changed", "success");
-                            }}
-
-                        />
-                    ))}
-
-                    <div
-                        onClick={() => fileInputRef.current?.click()}
-                        onDrop={handleDrop}
-                        onDragOver={handleDragOver}
-                        onDragLeave={handleDragLeave}
-                        className={`bgPicker cursor-pointer flex-1 min-w-[250px] h-[200px] flex flex-col items-center justify-center gap-2 border-2 border-dashed rounded-xl p-8 transition-colors ${isDragging ? "border-cyan-400 bg-cyan-400/10" : "border-white/20"
-                            }`}
-                    >
-                        <i className="ri-add-line text-3xl text-white/60"></i>
-                        <span className="text-white/50 text-sm">
-                            Drag & drop an image, or click to browse
-                        </span>
-
-                        <input
-                            ref={fileInputRef}
-                            type="file"
-                            accept="image/*"
-                            onChange={handleFileSelect}
-                            className="hidden"
-                        />
-                    </div>
 
 
-            
+                {Wallpapers.map((wal) => (
+                    <ThemeCard
+                        key={wal.id}
+                        src={wal.src}
+                        onClick={() => {
+                            setBg(wal.src);
+                            addNotification("Wallpaper Changed", "success");
+                        }}
+
+                    />
+                ))}
+
+                <div
+                    onClick={() => fileInputRef.current?.click()}
+                    onDrop={handleDrop}
+                    onDragOver={handleDragOver}
+                    onDragLeave={handleDragLeave}
+                    className={`bgPicker cursor-pointer flex-1 min-w-[250px] h-[200px] flex flex-col items-center justify-center gap-2 border-2 border-dashed rounded-xl p-8 transition-colors ${isDragging
+                            ? "border-cyan-400 bg-cyan-400/10"
+                            : "border-[var(--setting-border)]" 
+                        }`}
+                >
+                    
+                    <i className="ri-add-line text-3xl text-[var(--setting-subtitle)] transition-colors"></i>
+
+                    
+                    <span className="text-[var(--setting-subtitle)] text-sm text-center transition-colors">
+                        Drag & drop an image, or click to browse
+                    </span>
+
+                    <input
+                        ref={fileInputRef}
+                        type="file"
+                        accept="image/*"
+                        onChange={handleFileSelect}
+                        className="hidden"
+                    />
+                </div>
+
+
+
             </ThemeContainer>
 
 
@@ -160,7 +165,7 @@ export const SystemSettings = () => {
                                 onChange={(newValue) => updateGlassSetting('blurValue', newValue)}
                             />
                         }
-                        
+
                     />
                 </SettingGroup>
 
@@ -188,7 +193,7 @@ export const SystemSettings = () => {
                                 onChange={(e) => updateFollowerSetting('clockFollower', e.target.checked)}
                             />
                         }
-                       
+
                     />
                 </SettingGroup>
 

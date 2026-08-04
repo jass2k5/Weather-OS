@@ -1,6 +1,6 @@
 export const SettingGroup = ({ children }) => {
     return (
-        <div className="flex-1 min-w-[340px] rounded-[0.8rem] bg-zinc-800 border border-white/50 flex flex-col">
+        <div className="flex-1 min-w-[340px] rounded-[0.8rem] bg-[var(--setting-bg)] border border-[var(--setting-border)] flex flex-col transition-colors duration-300">
             {children}
         </div>
     );

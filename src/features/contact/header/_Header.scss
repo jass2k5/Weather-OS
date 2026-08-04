@@ -82,7 +82,7 @@
 @container contactApp (min-width: 900px) {
     .aboutHeader {
         grid-area: header;
-        grid-row: 1 / 19 !important; 
+        grid-row: 1 / 16 !important; 
         grid-column: 1 / 2 !important;
         position: sticky !important;
         top: var(--main-padding) !important;

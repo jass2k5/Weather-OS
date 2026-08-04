@@ -1,11 +1,10 @@
-// SettingRow Component
 export const SettingRow = ({ title, subtitle, control, showDivider = true }) => {
     return (
         <>
             <div className="flex justify-between items-center p-3">
                 <div className="flex flex-col justify-center items-start">
-                    <span className="text-white">{title}</span>
-                    <span className="text-white/50 text-xs">{subtitle}</span>
+                    <span className="text-[var(--setting-title)] transition-colors duration-300">{title}</span>
+                    <span className="text-[var(--setting-subtitle)] text-xs transition-colors duration-300">{subtitle}</span>
                 </div>
                 
                 <div>
@@ -14,7 +13,7 @@ export const SettingRow = ({ title, subtitle, control, showDivider = true }) => 
             </div>
 
             {showDivider && (
-                <div className="h-[1px] w-full bg-white/10 my-0.5"></div>
+                <div className="h-[1px] w-full bg-[var(--setting-divider)] my-0.5 transition-colors duration-300"></div>
             )}
         </>
     );

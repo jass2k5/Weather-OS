@@ -39,7 +39,7 @@ export const MiniCardClock = ({ tz_id }) => {
 
 
     return(
-             <div className="dataTime absolute top-[5%] right-[3%] flex flex-col justify-center items-center ">
+             <div className="dataTime absolute top-[5%] right-[3%] flex flex-col justify-center items-center text-white ">
                         <span className="date capitalize text-xl font-[Lora]">{monthName} {dateNum},  {year}</span>
                         <span className="self-end">{time}</span>
                     </div>
