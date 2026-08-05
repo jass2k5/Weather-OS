@@ -35,7 +35,7 @@ export const ConditionTitle = ({city,index,data})=>{
           <div className="right flex flex-col h-max w-max pb-4 ">
             <img  src={icon} alt="iconforcontainer" />
 
-            <div className="below h-max w-max flex text-black items-center gap-0.5">
+            <div className="below h-max w-max flex text-black items-center gap-1">
                 <span>feels:{formatTemp(data.feelsLike)}</span>
               <div className="h-4 w-[1px] bg-black/30"></div>
                 <span>hum:{data.humidity}%</span>
