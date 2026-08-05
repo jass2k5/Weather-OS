@@ -5,7 +5,7 @@
 Weather OS isn't just a weather app; it's a front-end engineering showcase. By treating the browser window like a native operating system, this project demonstrates advanced state management, complex DOM manipulation, and responsive window handling. 
 
 ![Weather OS Preview](./.github/images/hero.png) 
-*(Note: replace `hero.png` with your actual file name!)*
+
 
 ## 💻 Tech Stack
 This project utilizes a modern, performance-focused frontend stack:
