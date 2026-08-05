@@ -1,0 +1,7 @@
+.Bento{
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(1,auto);
+    grid-template-areas: 'TitleCon';
+    
+}

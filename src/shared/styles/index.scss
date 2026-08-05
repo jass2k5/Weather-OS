@@ -19,7 +19,9 @@
 @use '../../features/contact/socials/Socials';
 @use '../../features/contact/footer/Footer';
 @use '../../features/contact/information/CenterImage';
-@use '../../features/weather/Weather';
+@use '../../features/weather/scss/Nav';
+@use '../../features/weather/scss/Weather.scss';
+@use '../../features/weather/scss/ConditionTitle';
 
 @layer base {
     *, *::before, *::after {
