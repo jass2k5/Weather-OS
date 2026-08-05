@@ -1,0 +1,50 @@
+.weather-container {
+    container-type: inline-size;
+    container-name: weatherApp;
+
+   
+    .weather-nav {
+        transform: translate(-50%, -50%);
+        width: max-content;
+        gap: 1rem;
+        padding: 0.75rem;
+        border-radius: 4rem;
+
+        .weather-nav-btn {
+            font-size: 1.1rem;
+            padding: 0.5rem 1.25rem;
+            border-radius: 3rem;
+            
+            &.active, &:hover {
+                background-color: #d4e03e;
+            }
+        }
+    }
+
+    @container weatherApp (max-width: 600px) {
+        .weather-nav {
+            width: 90%;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            padding: 0.5rem;
+            border-radius: 1.5rem;
+
+            .weather-nav-btn {
+                font-size: 0.9rem; 
+                padding: 0.4rem 0.8rem; 
+            }
+        }
+    }
+
+    @container weatherApp (max-width: 400px) {
+        .weather-nav {
+            gap: 0.25rem;
+            padding: 0.4rem;
+            
+            .weather-nav-btn {
+                font-size: 0.8rem;
+                padding: 0.3rem 0.6rem;
+            }
+        }
+    }
+}

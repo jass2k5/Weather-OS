@@ -19,6 +19,7 @@
 @use '../../features/contact/socials/Socials';
 @use '../../features/contact/footer/Footer';
 @use '../../features/contact/information/CenterImage';
+@use '../../features/weather/Weather';
 
 @layer base {
     *, *::before, *::after {
