@@ -72,7 +72,7 @@ export const Desktop = () => {
         }
         
         const timer = setTimeout(() => {
-            addNotification("Synced All Weather Data.resync after 15min.", "info");
+            addNotification("Synced All Weather Data Resync after 15min.", "info");
         }, 4000);
         
         const handleOutsideClick = (e)=>{
