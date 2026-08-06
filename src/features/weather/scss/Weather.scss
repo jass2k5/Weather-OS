@@ -1,7 +1,9 @@
 .Bento{
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: repeat(1,auto);
-    grid-template-areas: 'TitleCon';
+    grid-template-rows: repeat(2,max-content);
+    grid-template-areas: 'TitleCon'
+    'Compass';
+    row-gap: 1rem;
     
 }

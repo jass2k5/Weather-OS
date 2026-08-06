@@ -1,6 +1,7 @@
 import { useOsStore } from "../../shared/store/useOsStore";
 import { useState } from "react";
 import { ConditionTitle } from "./ConditionTitle";
+import { WindCompass } from "./WindCompass";
 export const WeatherApp = () => {
     const searchHistory = useOsStore((state) => state.searchHistory);
     const [currentCity, setCurrentCity] = useState(searchHistory[0]?.city || "");
@@ -32,6 +33,10 @@ export const WeatherApp = () => {
                       index={index}
                       data={data}
                       />
+                      <WindCompass 
+                      index={index}
+                      windSpeed = {data.wind}
+                      windDegree = {data.windDegree}/>
             </section>
             
         </div>

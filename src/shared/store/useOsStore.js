@@ -85,6 +85,7 @@ export const useOsStore = create(persist((set, get) => ({
             liveCondition: apiData.current.condition.text,
             humidity: apiData.current.humidity,
             wind: apiData.current.wind_kph,
+            windDegree: apiData.current.wind_degree,
             visibility: apiData.current.vis_km,
             feelsLike: apiData.current.feelslike_c,
             isDay: apiData.current.is_day === 1,

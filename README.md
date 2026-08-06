@@ -72,3 +72,33 @@ The operating system environment is highly malleable, giving users complete cont
     * **Aesthetic Controls:** Adjust the text color to contrast perfectly with custom wallpapers.
     * **Spatial Positioning:** A custom grid-based positioning tool allows the user to snap the clock to different corners of the screen.
 
+![Weather OS Preview](./.github/images/map.png)
+## 🗺️ Map Engine
+
+The Map application acts as the central nervous system of this OS. Powered by **MapTiler**, it is a fully interactive, responsive, and highly customizable mapping experience that drives the location state for the rest of the ecosystem.
+
+![Weather OS Preview](./.github/images/map4.png)
+### ✨ Core Features
+
+*   **The Global Search Bar (The Heart):** Triggered via `Ctrl+F`, this search engine dictates the data flow of the entire OS. Search for any location globally to add it to your roster, switch between saved cities instantly, or clean up your list by deleting them directly from the dropdown menu.
+*   **Fluid Interactivity:** A fully draggable map canvas with seamless zoom in/out capabilities. The layout is strictly responsive, adapting perfectly to different window states.
+*   **Cinematic Animations:** Features smooth, automated "Fly-By" camera animations that physically pan across the globe when a new city is selected. The typography and weather data overlays also feature clean entrance animations on state changes.
+
+---
+![Weather OS Preview](./.github/images/map2.png)
+![Weather OS Preview](./.github/images/map3.png)
+### ⚙️ Theming & Customization
+
+The map is deeply integrated with the native **Settings App**, allowing users to customize their visual preferences and performance footprint on the fly:
+
+**🎨 3 Distinct Map Themes:**
+*   **Dark:** A sleek, high-contrast tactical view.
+*   **Light:** A standard, highly readable street view.
+*   **Satellite:** High-resolution global topography.
+
+**⚡ Performance Toggles:**
+*   **Show Navigation:** Toggle the on-screen zoom and axis controllers.
+*   **Fly-By:** Enable or disable the cinematic panning animations.
+*   **Markers:** Toggle the physical pin on searched areas.
+
+> **⚠️ Note:** Disabling the fly-by animation and markers can decrease the load on the backend for lower-end hardware.

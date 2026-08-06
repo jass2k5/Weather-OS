@@ -1,0 +1,39 @@
+.windCompass {
+    grid-area: Compass;
+
+    .compass {
+
+        .index {
+
+            .wind {
+                font-size: clamp(0.6rem, 1.5cqw, 0.8rem);
+                color: rgba(0, 0, 0, 0.559);
+            }
+        }
+
+        .Wind_Compass {
+            .wind {
+                span {
+                    font-size: clamp(3.5rem, 5cqw, 4.5rem);
+                    font-weight: 500;
+                    font-family: "Roboto Slab", serif;
+                }
+
+                .sw {
+                    font-size: clamp(2.5rem, 4cqw, 3rem);
+                    color: rgba(0, 0, 0, 0.609);
+                    align-self: flex-start;
+                }
+            }
+            .compass{
+                .north{
+                    font-size: clamp(2rem,3cqw,3rem);
+                    font-weight: 500;
+                }
+                .AnimatedCompass{
+                    
+                }
+            }
+        }
+    }
+}

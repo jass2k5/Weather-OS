@@ -22,6 +22,7 @@
 @use '../../features/weather/scss/Nav';
 @use '../../features/weather/scss/Weather.scss';
 @use '../../features/weather/scss/ConditionTitle';
+@use '../../features/weather/scss/WindCompass';
 
 @layer base {
     *, *::before, *::after {

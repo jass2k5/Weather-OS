@@ -17,22 +17,22 @@ export const ConditionTitle = ({city,index,data})=>{
             <span className="indexCount">0{index + 1}</span>
             <span className="condition">CURRENT CONDITIONS</span>
           </div>
-             <div className="leftright flex justify-between ">
+             <div className="leftright flex justify-between gap-4">
 
-             <div className=" left  h-max w-max ">
+             <div className=" left h-max w-max ">
 
           <div className="TemperatureCond flex flex-col gap-0.5">
             <span className="temp">
                 {formatTemp(data.liveTemp)}
             </span>
-            <span className="condition">
+            <span className="condition text-wrap">
                 {data.liveCondition}
+            
             </span>
-
           </div>
          
           </div>
-          <div className="right flex flex-col h-max w-max pb-4 ">
+          <div className="right flex flex-col h-max w-max pb-4 shrink-0">
             <img  src={icon} alt="iconforcontainer" />
 
             <div className="below h-max w-max flex text-black items-center gap-1">

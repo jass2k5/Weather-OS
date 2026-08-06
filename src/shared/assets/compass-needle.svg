@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" width="600" height="600" role="img" aria-label="Compass needle">
+  <g id="needle" transform="rotate(0 300.0 300.0)">
+    <line x1="300.0" y1="300.0" x2="300.0" y2="150.0" stroke="#E2591B" stroke-width="14" stroke-linecap="round"/>
+  </g>
+  <circle cx="300.0" cy="300.0" r="24" fill="#F59148"/>
+</svg>
