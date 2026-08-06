@@ -1,4 +1,7 @@
-.Bento{
+.weather-container{
+    background: #faf6ef;
+   
+    .Bento{
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: repeat(2,max-content);
@@ -6,4 +9,5 @@
     'Compass';
     row-gap: 1rem;
     
+}
 }

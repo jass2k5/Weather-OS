@@ -1,6 +1,8 @@
 .titleCon {
     grid-area: TitleCon;
     height: max-content;
+    background-color: #fdfaf5;
+   
 
     .city {
         height: auto;
@@ -27,6 +29,7 @@
     }
 
     .holder {
+        background: rgba(255, 255, 255, 0.79);
         .index {
             align-items: center;
 

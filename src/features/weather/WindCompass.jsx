@@ -1,29 +1,30 @@
 import { useOsStore } from "../../shared/store/useOsStore";
 import { useTemperatureUnit } from "../../shared/hooks/useUnits";
 import { Compass } from "./Compass";
-export const WindCompass = ({index,windSpeed,windDegree}) =>{
-  const { formatDistance} = useTemperatureUnit();
 
-  return(
-    <div className="windCompass max-h-[300px] min-w-[440px] p-4 border border-black/10 rounded-[0.8rem]">
-        <div className="compass flex flex-col  justify-start">
-            <div className="index flex gap-1 justify-center items-center h-max w-max">
-                <span className="text-[#f09650]">0{index +1}</span>
-                <span className="wind">Wind</span>
-            </div>
+export const WindCompass = ({ windSpeed, windDegree }) => {
+    const { formatDistance } = useTemperatureUnit();
 
-            <div className="Wind_Compass flex justify-start items-center gap-15 h-auto w-full ">
-
-                <div className="wind h-max w-max flex flex-col gap-0.5 ">
-                    <span className="text-black">{formatDistance(windSpeed)}</span>
-                    <div className="h-[2px] w-full bg-black/10"></div>
-                    <span className="sw">SW</span>
+    return (
+        <div className="windCompass max-h-[300px] min-w-[440px] p-4 border border-black/10 rounded-[0.8rem]">
+            <div className="compass flex flex-col justify-start">
+                <div className="index flex gap-1 justify-center items-center h-max w-max">
+                    <span className="text-[#f09650]">02</span>
+                    <span className="wind">Wind</span>
                 </div>
 
-                <Compass degree={windDegree}/>
+                <div className="Wind_Compass flex justify-start items-center gap-15 h-auto w-full">
 
+                    <div className="wind h-max w-[200px] flex flex-col gap-0.5">
+                        <span className="text-black ">{formatDistance(windSpeed)}</span>
+                        <div className="h-[2px] w-full bg-black/10"></div>
+                        <span className="sw">SW</span>
+                    </div>
+
+                    <Compass degree={windDegree} />
+
+                </div>
             </div>
         </div>
-    </div>
-  )
-}
+    );
+};

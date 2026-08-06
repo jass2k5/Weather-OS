@@ -102,3 +102,24 @@ The map is deeply integrated with the native **Settings App**, allowing users to
 *   **Markers:** Toggle the physical pin on searched areas.
 
 > **⚠️ Note:** Disabling the fly-by animation and markers can decrease the load on the backend for lower-end hardware.
+![Weather OS Preview](./.github/images/notify.png)
+![Weather OS Preview](./.github/images/notify2.png)
+## 🔔 Global Notification System
+
+A custom-built, OS-level notification service that keeps users informed of system states, API rate limits, and network status without disrupting the core user experience.
+
+### ✨ Core Features
+
+*   **Dynamic Alert States:** Fully typed and styled toast notifications handling three distinct alert levels: **Info**, **Warning**, and **Error**. 
+*   **Immersive UX:** Every notification features smooth, physics-based entrance and exit animations, accompanied by non-intrusive audio cues.
+*   **Dedicated Notification App:** Missed a pop-up? The OS includes a dedicated Notification Center application that logs your complete alert history along with precise timestamps.
+
+---
+![Weather OS Preview](./.github/images/notify3.png)
+### ⚙️ User Controls & Settings
+
+The notification architecture is deeply wired into the global Settings App, giving users complete control over their alert environment:
+
+*   **Do Not Disturb (DND):** Globally toggle all on-screen notification pop-ups on or off.
+*   **Audio Toggles:** Enable or mute system notification sounds.
+*   **History Management:** A one-click "Clear History" function within the app to flush the local notification log and free up state memory.

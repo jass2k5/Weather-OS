@@ -1,7 +1,7 @@
 import { useOsStore } from "../../shared/store/useOsStore";
 import { useTemperatureUnit } from "../../shared/hooks/useUnits";
 import icon from '../../shared/assets/weather.svg';
-export const ConditionTitle = ({city,index,data})=>{
+export const ConditionTitle = ({city,data})=>{
   const { formatTemp, formatDistance } = useTemperatureUnit();
     return(
         <div className={`titleCon p-2 flex flex-col gap-3  min-h-[300px] min-w-[450px]`}>
@@ -14,7 +14,7 @@ export const ConditionTitle = ({city,index,data})=>{
 
         <div className="holder flex-1 border border-black/10 flex flex-col gap-2.5 rounded-xl p-3 ">
             <div className=" index flex gap-1 ">
-            <span className="indexCount">0{index + 1}</span>
+            <span className="indexCount">01</span>
             <span className="condition">CURRENT CONDITIONS</span>
           </div>
              <div className="leftright flex justify-between gap-4">
