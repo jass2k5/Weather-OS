@@ -5,14 +5,14 @@ export const WindCompass = ({index,windSpeed,windDegree}) =>{
   const { formatDistance} = useTemperatureUnit();
 
   return(
-    <div className="windCompass max-h-[300px] min-w-[450px] p-4 border border-black/10 rounded-[0.8rem]">
+    <div className="windCompass max-h-[300px] min-w-[440px] p-4 border border-black/10 rounded-[0.8rem]">
         <div className="compass flex flex-col  justify-start">
             <div className="index flex gap-1 justify-center items-center h-max w-max">
                 <span className="text-[#f09650]">0{index +1}</span>
                 <span className="wind">Wind</span>
             </div>
 
-            <div className="Wind_Compass flex justify-start items-center gap-10  h-auto w-full ">
+            <div className="Wind_Compass flex justify-start items-center gap-15 h-auto w-full ">
 
                 <div className="wind h-max w-max flex flex-col gap-0.5 ">
                     <span className="text-black">{formatDistance(windSpeed)}</span>
