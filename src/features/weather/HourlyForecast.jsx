@@ -1,6 +1,5 @@
 import { useCityForecast } from "../../shared/hooks/useCityForecast";
 import { useTemperatureUnit } from "../../shared/hooks/useUnits";
-
 import cloudysun from '../../shared/assets/cloudysun.svg';
 import cloudymoon from '../../shared/assets/cloudymoon.svg';
 import clearsun from '../../shared/assets/clearsun.svg';
@@ -100,7 +99,7 @@ export const HourlyForecast = ({ city }) => {
                     const timelabel = index === 0 ? "Now" : formattedTime;
 
                     return (
-                        <div key={hourData.time_epoch} className="hour h-full flex flex-col gap-3.5 items-center justify-center">
+                        <div key={hourData.time_epoch} className="hour h-full flex flex-col gap-3.5 items-center justify-center text-black">
                             <span>{timelabel}</span>
                             <img
                                 className="h-[24px] drop-shadow-[0_2px_4px_rgba(0,0,0,0.4)]"

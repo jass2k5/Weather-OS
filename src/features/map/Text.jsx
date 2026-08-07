@@ -58,6 +58,7 @@ export const Text = memo(() => {
             y: 0,
             onComplete: () => {
                 weatherwords.revert();
+               
             }
         })
     }, { dependencies: [city,weatherText,temperature] });

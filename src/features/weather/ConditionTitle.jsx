@@ -1,8 +1,10 @@
 import { useOsStore } from "../../shared/store/useOsStore";
 import { useTemperatureUnit } from "../../shared/hooks/useUnits";
+import { useNumberCounter } from "../../shared/hooks/useNumberCounter";
 import icon from '../../shared/assets/weather.svg';
 export const ConditionTitle = ({city,data})=>{
   const { formatTemp, formatDistance } = useTemperatureUnit();
+  const temperature = useNumberCounter(data.liveTemp);
     return(
         <div className={`titleCon p-2 flex flex-col gap-3  min-h-[300px] min-w-[450px]`}>
          <div className=" h-max w-max">
@@ -23,7 +25,7 @@ export const ConditionTitle = ({city,data})=>{
 
           <div className="TemperatureCond flex flex-col gap-0.5">
             <span className="temp">
-                {formatTemp(data.liveTemp)}
+                {formatTemp(temperature)}
             </span>
             <span className="condition text-wrap">
                 {data.liveCondition}
