@@ -80,9 +80,10 @@ export const HourlyForecast = ({ city }) => {
     const combinedHours = [...todayHours, ...tommorowHours];
 
     const nextSixHours = combinedHours.slice(currentLocalHour, currentLocalHour + 7);
+    const aqi = Math.round(data.current?.air_quality?.pm2_5) || "--";
 
     return (
-        <div className="Hourly border border-black/10 max-h-[300px] w-full flex flex-col items-center justify-center p-3 rounded-[0.8rem] gap-2">
+        <div className="Hourly border border-black/10 max-h-[300px] w-full flex flex-col items-center justify-center p-3 rounded-[0.8rem] gap-6">
             <div className="index flex gap-1 self-start">
                 <span className="indexCount">03</span>
                 <span className="condition">HOURLY FORECAST</span>
@@ -110,6 +111,9 @@ export const HourlyForecast = ({ city }) => {
                         </div>
                     );
                 })}
+            </div>
+            <div className="aqi border-3 border-[#f09650] h-max w-max pl-2 pr-2 pt-1 pb-1 rounded-[0.7rem] self-start">
+                <span className="text-[#f09650] font-medium">AQI {aqi}</span>
             </div>
         </div>
     );
