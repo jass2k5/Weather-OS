@@ -7,10 +7,7 @@ import { memo } from "react";
 export const Searchbar = memo( () => {
     const [inputvalue, setInputValue] = useState("");
     const [prev, setPrev] = useState(false);
-    
-   
     const removeSearchItem = useOsStore((state) => state.removeSearchItem);
-    const telemetryDataloc = useOsStore((state) => state.telemetryData?.location?.name);
     const searchHistory = useOsStore((state) => state.searchHistory);
     const addNotification = useOsStore((state) => state.addNotification);
  
@@ -49,10 +46,7 @@ export const Searchbar = memo( () => {
         return () => document.removeEventListener("mousedown", handleClickOutside);
     }, []);
 
-    useEffect(() => {
-        if (telemetryDataloc) searchLocation(telemetryDataloc);
-    }, []);
-
+  
     useGSAP(() => {
         if (isFirstRender.current) {
             const tl = gsap.timeline();

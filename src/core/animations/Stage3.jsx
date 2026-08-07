@@ -1,5 +1,4 @@
-import { useState, useRef } from "react";
-import { useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { useMutation } from "@tanstack/react-query";
@@ -16,27 +15,21 @@ const fetchLocationTelemetry = async (locationName) => {
     try {
         const response = await axios.get(`${BASE_URL}/current.json`, {
             params: {
-
                 key: Api_Key,
                 q: locationName,
                 aqi: "yes"
             }
         });
-
         return response.data;
-
     } catch (error) {
         if (error.response) {
-
             console.error("API CALL FAILED:", error.response);
         }
         throw error;
     }
 };
 
-
 export const RunAct3 = ({ onComplete }) => {
-
     const [inputValue, setInputValue] = useState("");
     const inputRef = useRef(null);
     const containerRef = useRef(null);
@@ -45,11 +38,29 @@ export const RunAct3 = ({ onComplete }) => {
     const timeoutIdRef = useRef(null);
     const addNotification = useOsStore((state) => state.addNotification);
     const { contextSafe } = useGSAP();
+
     const { mutate, isPending, isSuccess, isError } = useMutation({
         mutationFn: fetchLocationTelemetry,
         onSuccess: (data, submittedLocation) => {
-            setSystemTelemetry(submittedLocation, data);
+      
+            const cleanBootData = {
+                city: data.location.name,
+                country: data.location.country,
+                tz_id: data.location.tz_id,
+                liveTemp: data.current.temp_c,
+                liveCondition: data.current.condition.text,
+                humidity: data.current.humidity,
+                wind: data.current.wind_kph,
+                windDegree: data.current.wind_degree,
+                visibility: data.current.vis_km,
+                feelsLike: data.current.feelslike_c,
+                isDay: data.current.is_day === 1,
+                aqi: data.current.air_quality ? data.current.air_quality['us-epa-index'] : null,
+            };
+
+            setSystemTelemetry(submittedLocation, cleanBootData);
             addNotification(`Current Telemetry ${submittedLocation}`, "success");
+            
             timeoutIdRef.current = setTimeout(() => {
                 contextSafe(() => {
                     const tl = gsap.timeline({
@@ -60,39 +71,29 @@ export const RunAct3 = ({ onComplete }) => {
                         }
                     });
 
-
                     tl.to(inputRef.current, {
                         autoAlpha: 0,
                         y: -20,
                         duration: 0.8,
                         ease: "power3.inOut"
                     })
-
-                        .to(info.current, {
-                            autoAlpha: 0,
-                            y: -20,
-                            delay: 0.3,
-                            duration: 0.8,
-                            ease: "power3.inOut"
-                        });
+                    .to(info.current, {
+                        autoAlpha: 0,
+                        y: -20,
+                        delay: 0.3,
+                        duration: 0.8,
+                        ease: "power3.inOut"
+                    });
                 })();
             }, 3000);
         },
-                
-            onError: (error, submittedLocation) => {
+        onError: (error, submittedLocation) => {
             addNotification(`Telemetry failed for node: ${submittedLocation}`, "error");
         }
-
-    
-        
     });
 
     useGSAP(() => {
-
-        const t1 = gsap.timeline({
-            delay: 0.3
-        })
-
+        const t1 = gsap.timeline({ delay: 0.3 });
         t1.fromTo(inputRef.current, {
             autoAlpha: 0,
             y: 60,
@@ -106,7 +107,6 @@ export const RunAct3 = ({ onComplete }) => {
                 inputRef.current.focus();
             }
         })
-
     }, { dependencies: [] })
 
     useEffect(() => {
@@ -123,11 +123,10 @@ export const RunAct3 = ({ onComplete }) => {
         if (!cleanValue) return;
         mutate(cleanValue);
     }
+
     return (
         <div ref={containerRef} className=" main-container absolute h-full top-0 left-[50%] transform  w-[50%] flex flex-col gap-5 justify-center items-center">
-
             <div className="flex flex-col justify-center items-center h-auto w-full gap-4">
-
                 <form onSubmit={handlesumbit} className="flex flex-col justify-center items-center">
                     <input
                         ref={inputRef}
@@ -136,32 +135,21 @@ export const RunAct3 = ({ onComplete }) => {
                         disabled={isPending}
                         placeholder="Enter The Area Name"
                         value={inputValue}
-                        onChange={
-                            (e) => {
-                                setInputValue(e.target.value);
-                            }
-                        }
+                        onChange={(e) => setInputValue(e.target.value)}
                     />
                 </form>
-
             </div>
-
             <div ref={info} className="h-10 mt-4 w-full relative">
-
-
                 {isPending && (
                     <span className="text-orange-400 animate-pulse absolute inset-0 flex items-center justify-center font-mono text-[1rem] tracking-wider uppercase">
                         [ FETCHING ATMOSPHERIC DATA... ]
                     </span>
                 )}
-
                 {isError && (
                     <span className="text-red-500 absolute inset-0 flex items-center justify-center font-mono text-[1rem] tracking-wider uppercase">
                         [ ERROR: UNKNOWN LOCATION NODE ]
                     </span>
-                
                 )}
-
                 {isSuccess && (
                     <span className="text-green-400 absolute inset-0 flex items-center justify-center font-mono text-[1rem] tracking-wider uppercase">
                         [ UPLINK SECURED. ]
@@ -170,4 +158,4 @@ export const RunAct3 = ({ onComplete }) => {
             </div>
         </div>
     )
-} 
+}

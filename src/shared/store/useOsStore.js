@@ -105,7 +105,11 @@ export const useOsStore = create(persist((set, get) => ({
         ].slice(0, 5);
 
 
-        set({ searchHistory: updatedHistory });
+        set({
+            searchHistory: updatedHistory,
+            telemetryData: newCityObject,
+            activeLocation: apiData.location.name
+        });
     },
 
     removeSearchItem: (cityName) => set((state) => ({
@@ -118,11 +122,26 @@ export const useOsStore = create(persist((set, get) => ({
     focusApp: (appId) => set((state) => ({
         windowOrder: [...state.windowOrder.filter((id) => id !== appId), appId]
     })),
-    //sync system for clock 
+  
+    
 
-    updateCityData: (cityName, newData) => set((state) => ({
-        searchHistory: state.searchHistory.map((loc) => (loc.city === cityName ? { ...loc, ...newData } : loc))
-    })),
+    updateCityData: (cityName, newData) => set((state) => {
+        
+        const updatedHistory = state.searchHistory.map((loc) =>
+            (loc.city === cityName ? { ...loc, ...newData } : loc)
+        );
+
+      
+        let updatedTelemetry = state.telemetryData;
+        if (state.telemetryData && state.telemetryData.city === cityName) {
+            updatedTelemetry = { ...state.telemetryData, ...newData };
+        }
+
+        return {
+            searchHistory: updatedHistory,
+            telemetryData: updatedTelemetry
+        };
+    }),
 
     notificationHistory: [],
     activeNotifications: [],

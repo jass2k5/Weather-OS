@@ -38,7 +38,6 @@ export const useSearchLocation = () => {
     const mutation = useMutation({
         mutationFn: fetchLocationTelemetry,
         onSuccess: (data, submittedLocation) => {
-            setSystemTelemetry(submittedLocation, data);
             addSearchToHistory(data);
 
             const currentAqi = data?.current?.air_quality?.['us-epa-index'];
