@@ -20,9 +20,10 @@
 @use '../../features/contact/footer/Footer';
 @use '../../features/contact/information/CenterImage';
 @use '../../features/weather/scss/Nav';
-@use '../../features/weather/scss/Weather.scss';
+@use '../../features/weather/scss/Weather';
 @use '../../features/weather/scss/ConditionTitle';
 @use '../../features/weather/scss/WindCompass';
+@use '../../features/weather/scss/HourlyForecast';
 
 @layer base {
     *, *::before, *::after {

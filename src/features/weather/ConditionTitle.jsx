@@ -12,7 +12,7 @@ export const ConditionTitle = ({city,data})=>{
           </div>
            </div>
 
-        <div className="holder flex-1 border border-black/10 flex flex-col gap-2.5 rounded-xl p-3 ">
+        <div className="holder flex-1 min-h-[220px] border border-black/10 flex flex-col gap-2.5 rounded-xl p-3 ">
             <div className=" index flex gap-1 ">
             <span className="indexCount">01</span>
             <span className="condition">CURRENT CONDITIONS</span>

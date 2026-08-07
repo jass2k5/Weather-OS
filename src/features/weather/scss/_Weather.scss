@@ -6,7 +6,8 @@
     grid-template-columns: 1fr;
     grid-template-rows: repeat(2,max-content);
     grid-template-areas: 'TitleCon'
-    'Compass';
+    'Compass'
+    'HourlyForecast';
     row-gap: 1rem;
     
 }

@@ -1,0 +1,16 @@
+.Hourly{
+    grid-area: HourlyForecast;
+
+      .index {
+            align-items: center;
+
+            .indexCount {
+                color: #f09650;
+            }
+
+            .condition {
+                font-size: clamp(0.6rem, 1.5cqw, 0.8rem);
+                color: rgba(0, 0, 0, 0.559);
+            }
+        }
+}

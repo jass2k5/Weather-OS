@@ -12,7 +12,7 @@ export const useCityForecast = (cityname) => {
                 params: {
                     key: Api_Key,
                     q: cityname,
-                    days: 7, 
+                    days: 7,
                     aqi: "yes",
                     alerts: "no"
                 }
@@ -20,6 +20,7 @@ export const useCityForecast = (cityname) => {
             return response.data;
         },
         staleTime: 1000 * 60 * 20,
-        refetchInterval: 1000 * 60 * 20
+        refetchInterval: 1000 * 60 * 20,
+        enabled: !!cityname,
     });
 }

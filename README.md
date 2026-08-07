@@ -102,8 +102,10 @@ The map is deeply integrated with the native **Settings App**, allowing users to
 *   **Markers:** Toggle the physical pin on searched areas.
 
 > **⚠️ Note:** Disabling the fly-by animation and markers can decrease the load on the backend for lower-end hardware.
-![Weather OS Preview](./.github/images/notify.png)
+
 ![Weather OS Preview](./.github/images/notify2.png)
+![Weather OS Preview](./.github/images/notify.png)
+7
 ## 🔔 Global Notification System
 
 A custom-built, OS-level notification service that keeps users informed of system states, API rate limits, and network status without disrupting the core user experience.
