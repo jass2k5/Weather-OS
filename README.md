@@ -125,3 +125,43 @@ The notification architecture is deeply wired into the global Settings App, givi
 *   **Do Not Disturb (DND):** Globally toggle all on-screen notification pop-ups on or off.
 *   **Audio Toggles:** Enable or mute system notification sounds.
 *   **History Management:** A one-click "Clear History" function within the app to flush the local notification log and free up state memory.
+
+### 🔄 Weather Data Flow & Cache Architecture
+
+The Weather OS relies on a dual-hook system to manage API calls, cache state, and UI synchronization. We use **Zustand** as the global state source of truth and **TanStack React Query** for fetching, caching, and background synchronization. 
+
+Here is how `useSearchLocation` and `useSyncAllWeather` work together to create a seamless, non-blocking data loop:
+
+#### 1️⃣ `useSearchLocation` (The Initiator & Cache Seeder)
+This hook handles manual user searches. When a user types in a city, this mutation fires off. 
+* **What it does:** It fetches the live weather and AQI data for the requested city.
+* **The Cache Trick:** Instead of a standard `axios.get` inside the mutation, it executes a `queryClient.fetchQuery` using the specific key `["syncWeather", locationName]`. This intentionally injects the fresh API response directly into React Query's cache *before* doing anything else.
+* **The Handshake:** On success, it takes that data and pushes it into Zustand's global `searchHistory` state via `addSearchToHistory`. It also reads the AQI and triggers the appropriate OS toast notifications.
+
+#### 2️⃣ `useSyncAllWeather` (The Background Engine)
+This hook acts as a background daemon that keeps the entire OS up to date without the user needing to refresh.
+* **What it does:** It listens to Zustand's `searchHistory` array. For every city stored in history, it dynamically generates a query inside a `useQueries` hook. 
+* **The Gatekeeper (Preventing Loops):** Since `useQueries` will return data every time it runs (even from cache), it triggers a `useEffect`. To prevent an infinite render loop (React Query updates Zustand ➡️ Zustand re-renders Hook ➡️ React Query updates Zustand again), we do a strict stringified comparison (`JSON.stringify(oldCityData) !== JSON.stringify(newCityData)`). Zustand is *only* updated if the actual weather values (temp, wind, etc.) have changed.
+
+#### 🤝 The Cache Connection (Why they share a `queryKey`)
+The real magic is how these two hooks share the exact same query key pattern: `["syncWeather", locationName]`.
+
+1. When a user searches a new city, `useSearchLocation` fetches the data and assigns it a 15-minute `staleTime`.
+2. It pushes the city to Zustand's `searchHistory`.
+3. `useSyncAllWeather` immediately detects the new city in `searchHistory` and creates a new background query for it.
+4. **The Optimization:** Because `useSyncAllWeather` looks for the exact same `["syncWeather", locationName]` key, it sees that `useSearchLocation` *just* put fresh data in the cache seconds ago. 
+5. Instead of making a duplicate API call, it instantly consumes the cached data. It will then quietly sit in the background and wait 15 minutes (`refetchInterval`) before actually hitting the Weather API again.
+
+> **💡 The Result:** This architecture ensures **zero duplicate API calls**, **instant UI updates**, and **silent background data syncing**.
+
+![Weather OS Preview](./.github/images/clock.png)
+### 🕒 The Clock App (World Time & Weather Dashboard)
+
+The Clock application acts as the visual frontend for the caching architecture, translating the raw API data from `searchHistory` into a cinematic, highly interactive UI.
+
+* **Dynamic State Rendering:** The app listens directly to Zustand's `searchHistory` array. Every time a new city is queried, the app automatically generates and mounts a new visual card for that location, consuming the real-time data from the React Query cache.
+* **GSAP Stack Physics:** To avoid a standard, static list, the UI employs **GSAP (GreenSock)** to manage complex stacking animations. Cards elegantly fan out, stack, and transition with smooth physics as you interact with multiple saved locations.
+* **Smart Sync Engine:** Every card features a dedicated **Sync** button that interacts directly with our cache layer:
+  * **Hover State:** Reads the React Query cache and displays exactly how much time is left before the background daemon automatically refreshes that city's data.
+  * **Active Click:** Bypasses the 15-minute `staleTime` cache lock, forcing an immediate, localized API fetch to update that specific card instantly.
+* **Cinematic Media Toggle:** To push the visual architecture further, card backgrounds are fully dynamic. They adapt to the current weather condition of the city, and through the global OS Settings, users can upgrade the static image backgrounds to immersive, auto-playing video loops.

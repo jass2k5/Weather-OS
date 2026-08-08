@@ -30,10 +30,10 @@ export const Text = memo(() => {
             y: 30,
         }, {
             opacity: 1,
-            duration: 0.1,
+            duration: 1,
             stagger: {
                 from: "start",
-                each: 0.05,
+                each: 0.5,
                 ease: "power3.inOut"
             },
             y: 0,
@@ -43,14 +43,14 @@ export const Text = memo(() => {
             opacity: 0,
             y: 30,
         }, {
-            duration: 0.3,
+            duration: 1,
             opacity: 1,
             stagger: {
                 from: "start",
-                each: 0.05
+                each: 0.5
             },
             y: 0,
-        }, "<0.1");
+        }, "0.4");
 
 
         return () => {
