@@ -1,16 +1,16 @@
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import { useRef } from "react";
 import { useCityForecast } from "../../shared/hooks/useCityForecast";
 import { timeToMinutes } from "../../shared/utils/HourstoMint";
 
 export const SolarArc = ({ city }) => {
     const { data, isLoading, isError } = useCityForecast(city);
-
-    if (isLoading) return <div>Loading Skeleton...</div>;
-    if (isError || !data) return <div>Error State...</div>;
+    const sunRef = useRef(null); 
 
     const sunriseTime = data?.forecast?.forecastday?.[0]?.astro?.sunrise;
     const sunsetTime = data?.forecast?.forecastday?.[0]?.astro?.sunset;
+    console.log(sunriseTime,sunsetTime)
     const sunriseMinutes = timeToMinutes(sunriseTime);
     const sunsetMinutes = timeToMinutes(sunsetTime);
 
@@ -25,19 +25,33 @@ export const SolarArc = ({ city }) => {
     if (elapsed > duration) elapsed = duration;
 
     const ratio = duration > 0 ? elapsed / duration : 0;
-    const angle = (ratio * 180) - 90; //the css 0 degree is straight upside so we need to subtract if not on 90 instead of straight it will show straight right
+    const angle = (ratio * 180) - 90;
 
+
+    useGSAP(() => {
+
+        if(!sunRef.current) return;
+        gsap.to(sunRef.current, {
+            rotation: angle,
+            duration: 2.5,
+            ease: "power3.out"
+        });
+    }, [angle]);
+    
+    if (isLoading) return <div>Loading Skeleton...</div>;
+    if (isError || !data) return <div>Error State...</div>;
 
     return (
-        <div className="SolarArc w-full flex flex-col gap-3 justify-center items-start p-4 bg-white rounded-[0.8rem] border border-black/10">
+        <div className="SolarArc w-full flex flex-col  justify-center items-start p-4 bg-white rounded-[0.8rem] border border-black/10">
             <div className="count flex justify-center items-center gap-2 ">
                 <span className="countnumber">04</span>
                 <span className="conditions">Sunrise/Sunset</span>
             </div>
 
-            <div className="ArcandSun flex flex-col items-center justify-center border border-black pl-8 relative">
-                <svg xmlns="http://www.w3.org/2000/svg" width="380" height="180" viewBox="0 0 320 180" fill="none" role="img" aria-labelledby="title">
-                    <title id="title">Orange dotted semicircle</title>
+            <div className="ArcandSun flex flex-col items-center justify-center relative w-[320px] h-[240px] mx-auto overflow-hidden">
+                
+
+                <svg className="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 180" fill="none" role="img">
                     <circle cx="16.00" cy="164.00" r="5.5" fill="#F09048" />
                     <circle cx="17.96" cy="140.30" r="5.5" fill="#F09048" />
                     <circle cx="23.80" cy="117.24" r="5.5" fill="#F09048" />
@@ -60,14 +74,23 @@ export const SolarArc = ({ city }) => {
                     <circle cx="304.00" cy="164.00" r="5.5" fill="#F09048" />
                 </svg>
 
-                <svg className="absolute bottom-0 left-1/2 -translate-y-1/2 -translate-x-1/2 border border-black" xmlns="http://www.w3.org/2000/svg" width="80" height="180" viewBox="0 0 80 180" fill="none" role="img" aria-labelledby="title">
-                    <title id="title">Orange upside-down pendulum</title>
-                    <rect x="36" y="40" width="8" height="100" rx="4" fill="transparent" fill-opacity="0" />
-                    <circle cx="40" cy="40" r="28" fill="#F09048" />
-                </svg>
+              
+                <div 
+                    ref={sunRef}
+                    className="absolute left-1/2 bottom-[50px] w-[2px] origin-bottom "
+                    style={{ height: '144px', transform: 'translateX(-50%)' }}
+                >
+                  
+                    <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[32px] h-[32px] bg-[#F09048] rounded-full" />
+                </div>
+
+                 <div className="sunriseandsunset absolute bottom-0 left-1/2 -translate-x-1/2 h-auto w-full flex  items-center justify-between text-black">
+                <span className="text-xl font-medium ">{sunriseTime}</span>
+                <span className="text-xl font-medium">{sunsetTime}</span>
+            </div>
             </div>
 
+           
         </div>
-    )
-
-}
+    );
+};
