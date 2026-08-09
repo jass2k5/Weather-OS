@@ -24,6 +24,7 @@
 @use '../../features/weather/scss/ConditionTitle';
 @use '../../features/weather/scss/WindCompass';
 @use '../../features/weather/scss/HourlyForecast';
+@use '../../features/weather/scss/SolarArc';
 
 @layer base {
     *, *::before, *::after {

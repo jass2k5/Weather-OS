@@ -4,10 +4,11 @@
     .Bento{
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: repeat(2,max-content);
+    grid-template-rows: repeat(4,max-content);
     grid-template-areas: 'TitleCon'
     'Compass'
-    'HourlyForecast';
+    'HourlyForecast'
+    'SolarArc';
     row-gap: 1rem;
     
 }
