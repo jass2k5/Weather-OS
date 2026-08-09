@@ -25,7 +25,7 @@
 @use '../../features/weather/scss/WindCompass';
 @use '../../features/weather/scss/HourlyForecast';
 @use '../../features/weather/scss/SolarArc';
-
+@use '../../features//weather/scss/precipitation';
 @layer base {
     *, *::before, *::after {
         box-sizing: border-box;

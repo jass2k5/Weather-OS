@@ -7,3 +7,34 @@
 
     }
 }
+/* Hide the desktop and boot container completely on smaller screens */
+.desktop,
+.bootContainer {
+    display: none !important;
+}
+
+/* Global desktop-only warning screen */
+.global-desktop-blocker {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+    padding: 2rem;
+    text-align: center;
+    background-color: #0f172a;
+    color: #f8fafc;
+    font-family: system-ui, -apple-system, sans-serif;
+}
+
+/* Media Query: Show the desktop and boot container ONLY on large displays (1280px and wider) */
+@media (min-width: 1280px) {
+    .desktop {
+        display: block !important; /* Or flex, depending on your layout */
+        
+    }
+    .bootContainer{
+        display: block !important;
+    }
+}

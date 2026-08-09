@@ -4,7 +4,7 @@ export const timeToMinutes = (timeString) => {
   const [time, modifier] = timeString.split(" ");
   let [hours, minutes] = time.split(":").map(Number);//why map we converted the string to number array
   
-  if (hours === 12) hours = 0;
+  if (hours === 12) hours = 0; 
   
   if (modifier === "PM") hours += 12;
   
