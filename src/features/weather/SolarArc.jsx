@@ -1,16 +1,18 @@
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { useRef } from "react";
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 import { useCityForecast } from "../../shared/hooks/useCityForecast";
 import { timeToMinutes } from "../../shared/utils/HourstoMint";
 
 export const SolarArc = ({ city }) => {
     const { data, isLoading, isError } = useCityForecast(city);
-    const sunRef = useRef(null); 
+    const sunRef = useRef(null);
 
     const sunriseTime = data?.forecast?.forecastday?.[0]?.astro?.sunrise;
     const sunsetTime = data?.forecast?.forecastday?.[0]?.astro?.sunset;
-    console.log(sunriseTime,sunsetTime)
+    
     const sunriseMinutes = timeToMinutes(sunriseTime);
     const sunsetMinutes = timeToMinutes(sunsetTime);
 
@@ -27,30 +29,47 @@ export const SolarArc = ({ city }) => {
     const ratio = duration > 0 ? elapsed / duration : 0;
     const angle = (ratio * 180) - 90;
 
-
     useGSAP(() => {
-
-        if(!sunRef.current) return;
+        if (!sunRef.current) return;
         gsap.to(sunRef.current, {
             rotation: angle,
             duration: 2.5,
             ease: "power3.out"
         });
     }, [angle]);
-    
-    if (isLoading) return <div>Loading Skeleton...</div>;
-    if (isError || !data) return <div>Error State...</div>;
+
+    if (isLoading) {
+        return (
+            <div className="SolarArc w-full flex flex-col justify-center items-start p-4 bg-white rounded-[0.8rem] border border-black/10">
+                <SkeletonTheme baseColor="#fde6d5" highlightColor="#f09650">
+                    <div className="count flex justify-center items-center gap-2">
+                        <Skeleton width={20} height={20} />
+                        <Skeleton width={120} height={20} />
+                    </div>
+                    <div className="flex flex-col items-center justify-center w-full mt-4">
+                        <Skeleton width={320} height={240} borderRadius="1rem" />
+                    </div>
+                </SkeletonTheme>
+            </div>
+        );
+    }
+
+    if (isError || !data) {
+        return (
+            <div className="SolarArc w-full min-h-[300px] flex flex-col justify-center items-center p-4 bg-white rounded-[0.8rem] border border-black/10">
+                <span className="text-black/50 font-medium">Unable to load solar data</span>
+            </div>
+        );
+    }
 
     return (
-        <div className="SolarArc w-full flex flex-col  justify-center items-start p-4 bg-white rounded-[0.8rem] border border-black/10">
+        <div className="SolarArc w-full flex flex-col justify-center items-start p-4 bg-white rounded-[0.8rem] border border-black/10">
             <div className="count flex justify-center items-center gap-2 ">
-                <span className="countnumber">04</span>
-                <span className="conditions">Sunrise/Sunset</span>
+                <span className="countnumber text-[#f09650]">04</span>
+                <span className="conditions">SUNRISE/SUNSET</span>
             </div>
 
             <div className="ArcandSun flex flex-col items-center justify-center relative w-[320px] h-[240px] mx-auto overflow-hidden">
-                
-
                 <svg className="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 180" fill="none" role="img">
                     <circle cx="16.00" cy="164.00" r="5.5" fill="#F09048" />
                     <circle cx="17.96" cy="140.30" r="5.5" fill="#F09048" />
@@ -74,23 +93,19 @@ export const SolarArc = ({ city }) => {
                     <circle cx="304.00" cy="164.00" r="5.5" fill="#F09048" />
                 </svg>
 
-              
                 <div 
                     ref={sunRef}
                     className="absolute left-1/2 bottom-[50px] w-[2px] origin-bottom "
                     style={{ height: '144px', transform: 'translateX(-50%)' }}
                 >
-                  
                     <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[32px] h-[32px] bg-[#F09048] rounded-full" />
                 </div>
 
-                 <div className="sunriseandsunset absolute bottom-0 left-1/2 -translate-x-1/2 h-auto w-full flex  items-center justify-between text-black">
-                <span className="text-xl font-medium ">{sunriseTime}</span>
-                <span className="text-xl font-medium">{sunsetTime}</span>
+                <div className="sunriseandsunset absolute bottom-0 left-1/2 -translate-x-1/2 h-auto w-full flex items-center justify-between text-black">
+                    <span className="text-xl font-medium">{sunriseTime}</span>
+                    <span className="text-xl font-medium">{sunsetTime}</span>
+                </div>
             </div>
-            </div>
-
-           
         </div>
     );
 };
