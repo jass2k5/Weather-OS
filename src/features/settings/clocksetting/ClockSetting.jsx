@@ -38,6 +38,7 @@ export const ClockSetting = () => {
                 control={
                     <Switch
                     checked={clockSetting?.format?.bol}
+                    showDivider={false}
                     onChange={(e)=>{
                         setClockSetting('format',{
                             enabled:e.target.checked,
@@ -47,41 +48,10 @@ export const ClockSetting = () => {
                     />
                 }
                 />
-
-                <SettingRow
-                title="Temperature Unit"
-                subtitle="fahrenheit or celsius"
-                control={
-                    <Switch
-                    checked={clockSetting?.celsius}
-                    onChange={(e)=>{
-                        setClockSetting("celsius",e.target.checked)
-                    }}
-                    />
-                }
-
-                />
-                <SettingRow
-                title="Distance Unit"
-                subtitle="Km or Miles"
-                showDivider = {false}
-                control={
-                    <Switch
-                    checked={clockSetting?.km}
-                    showDivider={false}
-                    onChange={(e)=>{
-                        setClockSetting("km",e.target.checked)
-                    }}
-                    />
-                }
-
-                />
-
             </SettingGroup>
             </div>
             <Alerts variant="info" paragraph="Click on the videos to enable and disable them in ClockApp" />
             <Alerts variant="warning" paragraph="Video background may affect your CPU usage, depending upon your device"/>
-            <Alerts variant="warning" paragraph="Don't use Sync Button too many times, it cause state and backend load"/>
 
         </div>
     )

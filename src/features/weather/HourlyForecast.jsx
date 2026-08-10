@@ -35,11 +35,7 @@ export const HourlyForecast = ({ city }) => {
     if (isLoading || !data) {
         return (
             <div className="Hourly border border-black/10 max-h-[300px] w-full flex flex-col items-center justify-start p-3 rounded-[0.8rem] gap-2">
-                <div className="index flex gap-1 self-start">
-                    <span className="indexCount">03</span>
-                    <span className="condition">HOURLY FORECAST</span>
-                </div>
-
+               
                 <div className="hourlyforecast h-full w-full flex gap-7 justify-start p-2 items-center select-none">
                     <SkeletonTheme baseColor="#f09650" highlightColor="#f5b888">
                         {[...Array(6)].map((_, i) => (
@@ -84,10 +80,10 @@ export const HourlyForecast = ({ city }) => {
 
     return (
         <div className="Hourly border border-black/10 max-h-[300px] w-full flex flex-col items-center justify-center p-3 rounded-[0.8rem] gap-6">
-            <div className="index flex gap-1 self-start">
-                <span className="indexCount">03</span>
-                <span className="condition">HOURLY FORECAST</span>
+                <div className="flex items-center gap-2 text-xs font-bold text-gray-400 tracking-wider mb-4 self-start">
+                <span className="text-[#f09650]">03</span> Hourly Forecast
             </div>
+
 
             <div className="hourlyforecast h-full w-full flex gap-7 justify-start p-2  items-center select-none">
                 {nextSixHours.map((hourData, index) => {

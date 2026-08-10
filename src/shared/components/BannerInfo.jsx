@@ -6,6 +6,7 @@ export const getWeatherAdvisory = (data) => {
     const temp = data.current.temp_c;
     const condition = (data.current.condition?.text ?? "").toLowerCase();
     const aqiIndex = data.current.air_quality?.['us-epa-index'] ?? 1;
+    const city = data.location.name;
 
     if (aqiIndex >= 4) {
         activeWarnings.push({

@@ -1,4 +1,5 @@
 import { useCityForecast } from "../../shared/hooks/useCityForecast";
+import { useTemperatureUnit } from "../../shared/hooks/useUnits";
 import cloudysun from '../../shared/assets/cloudysun.svg';
 import cloudymoon from '../../shared/assets/cloudymoon.svg';
 import clearsun from '../../shared/assets/clearsun.svg';
@@ -28,6 +29,7 @@ export const getWeatherIcon = (conditionText, isDay = 1) => {
 
 export const WeeklyForecast = ({ city }) => {
     const { data, isLoading, isError } = useCityForecast(city);
+    const { formatTemp } = useTemperatureUnit();
 
     if (isLoading) {
         return (
@@ -56,7 +58,7 @@ export const WeeklyForecast = ({ city }) => {
 
     if (forecastDays.length < 7) { //were using free plan of weather api so we will fake next 4 data 
         const lastDay = forecastDays[forecastDays.length - 1];
-        
+
         while (forecastDays.length < 7) {
             const lastDateObj = new Date(forecastDays[forecastDays.length - 1].date);
             lastDateObj.setDate(lastDateObj.getDate() + 1);
@@ -78,7 +80,7 @@ export const WeeklyForecast = ({ city }) => {
     const absoluteMin = Math.min(...allMins);
     const absoluteMax = Math.max(...allMaxs);
     const rangeSpan = absoluteMax - absoluteMin || 1;
- 
+
     const getDayLabel = (dateStr, index) => {
         if (index === 0) return "Today";
         const date = new Date(dateStr);
@@ -110,10 +112,10 @@ export const WeeklyForecast = ({ city }) => {
                                 <img src={weatherIcon} alt={conditionText} className="w-5 h-5 object-contain" />
                             </div>
 
-                            <span className="text-gray-500 font-medium text-right">{Math.round(dayMin)}°</span>
+                            <span className="text-gray-500 font-medium text-right">{formatTemp(Math.round(dayMin))}</span>
 
                             <div className="w-full bg-gray-100 h-[6px] rounded-full relative overflow-hidden">
-                                <div 
+                                <div
                                     className="absolute top-0 bottom-0 bg-[#f09650] rounded-full"
                                     style={{
                                         left: `${leftOffsetPct}%`,
@@ -122,7 +124,7 @@ export const WeeklyForecast = ({ city }) => {
                                 ></div>
                             </div>
 
-                            <span className="font-bold text-gray-900">{Math.round(dayMax)}°</span>
+                            <span className="font-bold text-gray-900">{formatTemp(Math.round(dayMax))}</span>
                         </div>
                     );
                 })}

@@ -122,16 +122,16 @@ export const useOsStore = create(persist((set, get) => ({
     focusApp: (appId) => set((state) => ({
         windowOrder: [...state.windowOrder.filter((id) => id !== appId), appId]
     })),
-  
-    
+
+
 
     updateCityData: (cityName, newData) => set((state) => {
-        
+
         const updatedHistory = state.searchHistory.map((loc) =>
             (loc.city === cityName ? { ...loc, ...newData } : loc)
         );
 
-      
+
         let updatedTelemetry = state.telemetryData;
         if (state.telemetryData && state.telemetryData.city === cityName) {
             updatedTelemetry = { ...state.telemetryData, ...newData };
@@ -193,6 +193,19 @@ export const useOsStore = create(persist((set, get) => ({
         color: { clr: "white", bol: true },
         position: 'top-right'
     },
+    tempdist: {
+        celsius: false,
+        km: false,
+    },
+    settempdist: (key,val)=> set((state)=>(
+        {
+            tempdist:{
+                ...state.tempdist,
+                [key]: val
+            }
+
+        }
+    )),
 
     updateDateTimeSetting: (key, value) => set((state) => ({
         dateTimeSettings: {
@@ -250,8 +263,7 @@ export const useOsStore = create(persist((set, get) => ({
             hour: '12h',
             enabled: false
         },
-        celsius: false,
-        km: false,
+
     },
 
     setClockSetting: (key, value) => set((state) => ({

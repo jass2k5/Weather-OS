@@ -1,15 +1,4 @@
 .SolarArc{
     grid-area: SolarArc;
-  .count{
-        align-items: center;
-
-        .countnumber{
-            color: #f09650;
-        }
-
-        .conditions{
-            font-size: clamp(0.6rem, 1.5cqw, 0.8rem);
-            color: rgba(0, 0, 0, 0.559);
-        }
-    }
+ 
 }

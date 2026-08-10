@@ -64,9 +64,8 @@ export const SolarArc = ({ city }) => {
 
     return (
         <div className="SolarArc w-full flex flex-col justify-center items-start p-4 bg-white rounded-[0.8rem] border border-black/10">
-            <div className="count flex justify-center items-center gap-2 ">
-                <span className="countnumber text-[#f09650]">04</span>
-                <span className="conditions">SUNRISE/SUNSET</span>
+             <div className="flex items-center gap-2 text-xs font-bold text-gray-400 tracking-wider mb-4">
+                <span className="text-[#f09650]">04</span> Sunrise/Sunset
             </div>
 
             <div className="ArcandSun flex flex-col items-center justify-center relative w-[320px] h-[240px] mx-auto overflow-hidden">

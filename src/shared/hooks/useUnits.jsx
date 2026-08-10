@@ -1,8 +1,8 @@
 import { useOsStore } from "../store/useOsStore";
 
 export const useTemperatureUnit = () => {
-    const isCelsius = useOsStore((state) => state.clockSetting.celsius);
-    const iskm = useOsStore((state) => state.clockSetting.km);
+    const isCelsius = useOsStore((state) => state.tempdist.celsius);
+    const iskm = useOsStore((state) => state.tempdist.km);
 
     const formatTemp = (celsius) => {
         if (!isCelsius) {

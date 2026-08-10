@@ -1,7 +1,4 @@
 .weather-container {
-    container-type: inline-size;
-    container-name: weatherApp;
-
    
     .weather-nav {
         width: max-content;
@@ -21,7 +18,7 @@
         }
     }
 
-    @container weatherApp (max-width: 600px) {
+    @container weatherPanel  (max-width: 600px) {
         .weather-nav {
             width: 90%;
             flex-wrap: nowrap;
@@ -36,7 +33,7 @@
         }
     }
 
-    @container weatherApp (max-width: 400px) {
+    @container weatherPanel  (max-width: 400px) {
         .weather-nav {
             gap: 0.25rem;
             padding: 0.4rem;

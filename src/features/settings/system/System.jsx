@@ -39,7 +39,9 @@ export const SystemSettings = () => {
     const updateFollowerSetting = useOsStore((state) => state.updateFollowerSetting)
     const dateTimeSettings = useOsStore((state) => state.dateTimeSettings)
     const updateDateTimeSetting = useOsStore((state) => state.updateDateTimeSetting)
-
+    const celsius = useOsStore((state)=>state.tempdist.celsius);
+    const km = useOsStore((state)=>state.tempdist.km);
+    const settempdist = useOsStore((state)=>state.settempdist);
 
     const processFile = (file) => {
         if (!file) return;
@@ -113,14 +115,14 @@ export const SystemSettings = () => {
                     onDragOver={handleDragOver}
                     onDragLeave={handleDragLeave}
                     className={`bgPicker cursor-pointer flex-1 min-w-[250px] h-[200px] flex flex-col items-center justify-center gap-2 border-2 border-dashed rounded-xl p-8 transition-colors ${isDragging
-                            ? "border-cyan-400 bg-cyan-400/10"
-                            : "border-[var(--setting-border)]" 
+                        ? "border-cyan-400 bg-cyan-400/10"
+                        : "border-[var(--setting-border)]"
                         }`}
                 >
-                    
+
                     <i className="ri-add-line text-3xl text-[var(--setting-subtitle)] transition-colors"></i>
 
-                    
+
                     <span className="text-[var(--setting-subtitle)] text-sm text-center transition-colors">
                         Drag & drop an image, or click to browse
                     </span>
@@ -245,6 +247,36 @@ export const SystemSettings = () => {
                             value={dateTimeSettings?.position}
                             onChange={(newPos) => updateDateTimeSetting('position', newPos)} />}
                         showDivider={false}
+                    />
+                </SettingGroup>
+
+                <SettingGroup>
+                    <SettingRow
+                        title="Temperature Unit"
+                        subtitle="fahrenheit or celsius"
+                        control={
+                            <Switch
+                                checked={celsius}
+                                onChange={(e) => {
+                                    settempdist("celsius", e.target.checked)
+                                }}
+                            />
+                        }
+
+                    />
+                    <SettingRow
+                        title="Distance Unit"
+                        subtitle="Km or Miles"
+                        showDivider={false}
+                        control={
+                            <Switch
+                                checked={km}
+                                onChange={(e) => {
+                                    settempdist("km", e.target.checked)
+                                }}
+                            />
+                        }
+
                     />
                 </SettingGroup>
 
