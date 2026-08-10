@@ -6,6 +6,7 @@ import { HourlyForecast } from "./HourlyForecast";
 import { SolarArc } from "./SolarArc";
 import { Precipitation } from "./Precipitation";
 import { WeeklyForecast } from "./SevenDay";
+import { Banner } from "./Banner";
 export const WeatherApp = () => {
     const searchHistory = useOsStore((state) => state.searchHistory);
     const [currentCity, setCurrentCity] = useState(searchHistory[0]?.city || "");
@@ -47,6 +48,7 @@ export const WeatherApp = () => {
                 <Precipitation city={currentCity}/>
 
                 <WeeklyForecast city={currentCity}/>
+                <Banner city={currentCity}/>
             </section>
 
         </div>

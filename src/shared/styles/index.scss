@@ -26,6 +26,7 @@
 @use '../../features/weather/scss/HourlyForecast';
 @use '../../features/weather/scss/SolarArc';
 @use '../../features//weather/scss/precipitation';
+@use '../../features/weather/scss/Banner';
 @layer base {
     *, *::before, *::after {
         box-sizing: border-box;

@@ -54,7 +54,7 @@ export const WeeklyForecast = ({ city }) => {
 
     let forecastDays = [...data.forecast.forecastday];
 
-    if (forecastDays.length < 7) {
+    if (forecastDays.length < 7) { //were using free plan of weather api so we will fake next 4 data 
         const lastDay = forecastDays[forecastDays.length - 1];
         
         while (forecastDays.length < 7) {
@@ -78,7 +78,7 @@ export const WeeklyForecast = ({ city }) => {
     const absoluteMin = Math.min(...allMins);
     const absoluteMax = Math.max(...allMaxs);
     const rangeSpan = absoluteMax - absoluteMin || 1;
-
+ 
     const getDayLabel = (dateStr, index) => {
         if (index === 0) return "Today";
         const date = new Date(dateStr);
