@@ -10,6 +10,7 @@ import snow from '../../shared/assets/snow.svg';
 import fog from '../../shared/assets/fog.svg';
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import { useMemo } from "react";
 
 export const getWeatherIcon = (conditionText, isDay = 1) => {
     if (!conditionText) return isDay ? clearsun : clearmoon;
@@ -31,6 +32,32 @@ export const WeeklyForecast = ({ city }) => {
     const { data, isLoading, isError } = useCityForecast(city);
     const { formatTemp } = useTemperatureUnit();
 
+    const forecastDays = useMemo(() => {
+        if (!data || !data.forecast || !data.forecast.forecastday) {
+            return [];
+        }
+        let days = [...data.forecast.forecastday];
+
+        if (days.length < 7) { 
+            const lastDay = days[days.length - 1];
+
+            while (days.length < 7) {
+                const lastDateObj = new Date(days[days.length - 1].date);
+                lastDateObj.setDate(lastDateObj.getDate() + 1);
+                const nextDateStr = lastDateObj.toISOString().split('T')[0];
+
+                days.push({
+                    date: nextDateStr,
+                    day: {
+                        mintemp_c: lastDay.day.mintemp_c + (Math.random() * 2 - 1),
+                        maxtemp_c: lastDay.day.maxtemp_c + (Math.random() * 2 - 1),
+                        condition: lastDay.day.condition
+                    }
+                });
+            }
+        }
+        return days;
+    }, [data]);
     if (isLoading) {
         return (
             <div className="WeeklyForecast w-full flex flex-col p-4 bg-white rounded-[0.8rem] border border-black/10">
@@ -54,26 +81,6 @@ export const WeeklyForecast = ({ city }) => {
         );
     }
 
-    let forecastDays = [...data.forecast.forecastday];
-
-    if (forecastDays.length < 7) { //were using free plan of weather api so we will fake next 4 data 
-        const lastDay = forecastDays[forecastDays.length - 1];
-
-        while (forecastDays.length < 7) {
-            const lastDateObj = new Date(forecastDays[forecastDays.length - 1].date);
-            lastDateObj.setDate(lastDateObj.getDate() + 1);
-            const nextDateStr = lastDateObj.toISOString().split('T')[0];
-
-            forecastDays.push({
-                date: nextDateStr,
-                day: {
-                    mintemp_c: lastDay.day.mintemp_c + (Math.random() * 2 - 1),
-                    maxtemp_c: lastDay.day.maxtemp_c + (Math.random() * 2 - 1),
-                    condition: lastDay.day.condition
-                }
-            });
-        }
-    }
 
     const allMins = forecastDays.map(d => d.day.mintemp_c);
     const allMaxs = forecastDays.map(d => d.day.maxtemp_c);
