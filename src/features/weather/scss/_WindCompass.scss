@@ -34,6 +34,7 @@
 @container weatherPanel (min-width: 720px) {
         .compass .Wind_Compass {
             display: flex;
+            height: max-content;
             justify-content: center;
             gap: 4rem;
             align-items: center;

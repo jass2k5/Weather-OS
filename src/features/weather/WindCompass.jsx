@@ -8,7 +8,7 @@ export const WindCompass = ({ windSpeed, windDegree }) => {
     const speed = useNumberCounter(windSpeed);
 
     return (
-        <div className="windCompass max-h-[300px] min-w-[440px] p-4 border border-black/10 rounded-[0.8rem]">
+        <div className="windCompass  p-4 border border-black/10 rounded-[0.8rem]">
             <div className="compass flex flex-col justify-start">
                 <div className="flex items-center gap-2 text-xs font-bold text-gray-400 tracking-wider mb-4">
                 <span className="text-[#f09650]">02</span> Wind & WindDegree

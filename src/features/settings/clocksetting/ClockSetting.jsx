@@ -29,16 +29,16 @@ export const ClockSetting = () => {
                 />
                ))}
             </ThemeContainer>
-             <div className="Set  min-h-[25%] h-auto w-[80%] flex flex-wrap  gap-4 mx-auto mt-6">
+             <div className="Set  h-auto w-[80%] flex flex-wrap  gap-4 mx-auto mt-6">
 
             <SettingGroup>
                 <SettingRow
                 title="Date&Time Format"
                 subtitle="change time format to 24h"
+                showDivider={false}
                 control={
                     <Switch
                     checked={clockSetting?.format?.bol}
-                    showDivider={false}
                     onChange={(e)=>{
                         setClockSetting('format',{
                             enabled:e.target.checked,
