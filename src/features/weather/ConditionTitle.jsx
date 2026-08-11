@@ -1,6 +1,33 @@
 import { useTemperatureUnit } from "../../shared/hooks/useUnits";
 import { useNumberCounter } from "../../shared/hooks/useNumberCounter";
 import icon from '../../shared/assets/weather.svg';
+import cloudysun from '../../shared/assets/cloudysun.svg';
+import cloudymoon from '../../shared/assets/cloudymoon.svg';
+import clearsun from '../../shared/assets/clearsun.svg';
+import clearmoon from '../../shared/assets/clearmoon.svg';
+import thunderstorm from '../../shared/assets/thunderstorm.svg';
+import lightrain from '../../shared/assets/lightrain.svg';
+import snow from '../../shared/assets/snow.svg';
+import fog from '../../shared/assets/fog.svg';
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
+import { useMemo } from "react";
+
+export const getWeatherIcon = (conditionText, isDay = 1) => {
+    if (!conditionText) return isDay ? clearsun : clearmoon;
+    const text = conditionText.toLowerCase();
+
+    if (text.includes("thunder") || text.includes("lightning")) return thunderstorm;
+    if (text.includes("snow") || text.includes("blizzard") || text.includes("ice") || text.includes("sleet")) return snow;
+    if (text.includes("fog") || text.includes("mist") || text.includes("haze")) return fog;
+    if (text.includes("rain") || text.includes("drizzle") || text.includes("shower")) return lightrain;
+
+    if (text.includes("cloud") || text.includes("overcast")) {
+        return isDay ? cloudysun : cloudymoon;
+    }
+
+    return isDay ? clearsun : clearmoon;
+};
 
 export const ConditionTitle = ({ city, data }) => {
     const { formatTemp, formatDistance } = useTemperatureUnit();
@@ -31,7 +58,7 @@ export const ConditionTitle = ({ city, data }) => {
                     </div>
                     
                     <div className="right flex flex-col items-end shrink-0">
-                        <img src={icon} alt="iconforcontainer" />
+                        <img src={getWeatherIcon(data.liveCondition, data.isDay)} alt="iconforcontainer" />
                         
                         <div className="below h-max w-max flex text-black items-center gap-1 mt-auto">
                             <span>feels:{formatTemp(data.feelsLike)}</span>
