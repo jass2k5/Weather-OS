@@ -68,7 +68,7 @@ export const SolarArc = ({ city }) => {
                 <span className="text-[#f09650]">04</span> Sunrise/Sunset
             </div>
 
-            <div className="ArcandSun flex flex-col items-center justify-center relative w-[320px] h-[240px] mx-auto overflow-hidden">
+            <div className="ArcandSun flex flex-col items-center justify-center relative w-[320px] h-[240px] mx-auto -mt-3 overflow-hidden">
                 <svg className="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 180" fill="none" role="img">
                     <circle cx="16.00" cy="164.00" r="5.5" fill="#F09048" />
                     <circle cx="17.96" cy="140.30" r="5.5" fill="#F09048" />

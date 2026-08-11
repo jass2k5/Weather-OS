@@ -1,5 +1,5 @@
+import { useEffect, useState } from "react";
 import { useOsStore } from "../../shared/store/useOsStore";
-import { useState } from "react";
 import { ConditionTitle } from "./ConditionTitle";
 import { WindCompass } from "./WindCompass";
 import { HourlyForecast } from "./HourlyForecast";
@@ -10,8 +10,33 @@ import { Banner } from "./Banner";
 export const WeatherApp = () => {
     const searchHistory = useOsStore((state) => state.searchHistory);
     const [currentCity, setCurrentCity] = useState(searchHistory[0]?.city || "");
+    const [data, setData] = useState(searchHistory[0] ?? null);
 
-    const [data, setData] = useState(searchHistory[0]);
+    useEffect(() => {
+        if (!searchHistory?.length) {
+            return;
+        }
+
+        const selectedCity = currentCity || searchHistory[0].city;
+        const found = searchHistory.find((item) => item.city === selectedCity) || searchHistory[0];
+
+        if (!data || found.city !== data.city) {
+            setData(found);
+        }
+
+        if (!currentCity && found.city) {
+            setCurrentCity(found.city);
+        }
+    }, [searchHistory, currentCity, data]);
+
+    if (!data) {
+        return (
+            <div className="weather-container absolute inset-0 h-full w-full flex flex-col gap-2 p-2 justify-center items-center">
+                <div className="text-black text-lg">Loading weather...</div>
+            </div>
+        );
+    }
+
     return (
 
         <div className="weather-container absolute inset-0 h-full w-full  flex flex-col gap-2 p-2 justify-center items-center">
@@ -38,8 +63,8 @@ export const WeatherApp = () => {
                     data={data}
                 />
                 <WindCompass
-                    windSpeed={data.wind}
-                    windDegree={data.windDegree} />
+                    windSpeed={data?.wind}
+                    windDegree={data?.windDegree} />
 
                 <HourlyForecast city={currentCity}/>
 
