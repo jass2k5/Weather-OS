@@ -94,5 +94,5 @@ export const useSyncAllWeather = () => {
         }
     }, [queryResults, searchHistory, updateCityData]);
 
-    return { queryResults };
+    return { queryResults};
 };
