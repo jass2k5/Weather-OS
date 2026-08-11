@@ -94,7 +94,7 @@ export const SolarArc = ({ city }) => {
 
                 <div 
                     ref={sunRef}
-                    className="absolute left-1/2 bottom-[50px] w-[2px] origin-bottom "
+                    className="sun absolute left-1/2 bottom-[50px] w-[2px] origin-bottom "
                     style={{ height: '144px', transform: 'translateX(-50%)' }}
                 >
                     <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[32px] h-[32px] bg-[#F09048] rounded-full" />

@@ -2,3 +2,12 @@
     grid-area: SolarArc;
  
 }
+@container weatherPanel (min-width: 1380px){
+    .SolarArc{
+        .ArcandSun{
+            .sun{
+                bottom: 40px;
+            }
+        }
+    }
+}
