@@ -81,7 +81,7 @@ export const Banner = ({ city }) => {
                             onClick={() => setIsModalOpen(true)}
                             className="flex items-center gap-1 text-black text-sm font-medium hover:opacity-70 transition-opacity w-max cursor-pointer"
                         >
-                            Tap for full guidance <span className="text-lg leading-none">→</span>
+                            Tap for all Warnings <span className="text-lg leading-none">→</span>
                         </button>
                     </div>
                 </div>

@@ -40,14 +40,19 @@ export const SolarArc = ({ city }) => {
 
     if (isLoading) {
         return (
-            <div className="SolarArc w-full flex flex-col justify-center items-start p-4 bg-white rounded-[0.8rem] border border-black/10">
+        
+            <div className="SolarArc w-full h-full min-w-0 flex flex-col justify-start items-start p-4 bg-white rounded-[0.8rem] border border-black/10 overflow-hidden">
                 <SkeletonTheme baseColor="#fde6d5" highlightColor="#f09650">
-                    <div className="count flex justify-center items-center gap-2">
-                        <Skeleton width={20} height={20} />
-                        <Skeleton width={120} height={20} />
+                    <div className="count flex justify-start items-center gap-2 w-full mb-4">
+                        <Skeleton width={20} height={14} />
+                        <Skeleton width={120} height={14} />
                     </div>
-                    <div className="flex flex-col items-center justify-center w-full mt-4">
-                        <Skeleton width={320} height={240} borderRadius="1rem" />
+        
+                    <div className="flex flex-col items-center justify-center w-full min-w-0 mt-4">
+                 
+                        <div className="w-full max-w-[320px]">
+                            <Skeleton width="100%" height={200} borderRadius="1rem" />
+                        </div>
                     </div>
                 </SkeletonTheme>
             </div>
@@ -56,19 +61,22 @@ export const SolarArc = ({ city }) => {
 
     if (isError || !data) {
         return (
-            <div className="SolarArc w-full min-h-[300px] flex flex-col justify-center items-center p-4 bg-white rounded-[0.8rem] border border-black/10">
+         
+            <div className="SolarArc w-full h-full min-w-0 min-h-[250px] flex flex-col justify-center items-center p-4 bg-white rounded-[0.8rem] border border-black/10 overflow-hidden">
                 <span className="text-black/50 font-medium">Unable to load solar data</span>
             </div>
         );
     }
 
     return (
-        <div className="SolarArc w-full flex flex-col justify-center items-start p-4 bg-white rounded-[0.8rem] border border-black/10">
+  
+        <div className="SolarArc w-full h-full min-w-0 flex flex-col justify-start items-start p-4 bg-white rounded-[0.8rem] border border-black/10 overflow-hidden">
              <div className="flex items-center gap-2 text-xs font-bold text-gray-400 tracking-wider mb-4">
                 <span className="text-[#f09650]">04</span> Sunrise/Sunset
             </div>
 
-            <div className="ArcandSun flex flex-col items-center justify-center relative w-[320px] h-[240px] mx-auto -mt-3 overflow-hidden">
+           
+            <div className="ArcandSun flex flex-col items-center justify-center relative w-full max-w-[320px] h-[240px] mx-auto -mt-3 overflow-hidden min-w-0">
                 <svg className="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 180" fill="none" role="img">
                     <circle cx="16.00" cy="164.00" r="5.5" fill="#F09048" />
                     <circle cx="17.96" cy="140.30" r="5.5" fill="#F09048" />
@@ -100,7 +108,7 @@ export const SolarArc = ({ city }) => {
                     <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[32px] h-[32px] bg-[#F09048] rounded-full" />
                 </div>
 
-                <div className="sunriseandsunset absolute bottom-0 left-1/2 -translate-x-1/2 h-auto w-full flex items-center justify-between text-black">
+                <div className="sunriseandsunset absolute bottom-0 left-1/2 -translate-x-1/2 h-auto w-full flex items-center justify-between text-black px-2">
                     <span className="text-xl font-medium">{sunriseTime}</span>
                     <span className="text-xl font-medium">{sunsetTime}</span>
                 </div>

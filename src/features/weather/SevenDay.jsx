@@ -38,7 +38,7 @@ export const WeeklyForecast = ({ city }) => {
         }
         let days = [...data.forecast.forecastday];
 
-        if (days.length < 7) { 
+        if (days.length < 7) {
             const lastDay = days[days.length - 1];
 
             while (days.length < 7) {
@@ -58,22 +58,36 @@ export const WeeklyForecast = ({ city }) => {
         }
         return days;
     }, [data]);
-
     if (isLoading) {
         return (
-            <div className="WeeklyForecast w-full h-full flex flex-col p-4 bg-white/79 rounded-[0.8rem] border border-black/10">
+            // 1. Added overflow-hidden and min-w-0 to the main wrapper to lock it down
+            <div className="WeeklyForecast w-full h-full min-w-0 flex flex-col p-4 bg-white/80 rounded-[0.8rem] border border-black/10 overflow-hidden">
                 <SkeletonTheme baseColor="#fde6d5" highlightColor="#f09650">
                     <div className="flex items-center gap-2 text-xs font-bold text-gray-400 tracking-wider mb-4">
-                        <Skeleton width={80} height={14} />
+                        <Skeleton width={120} height={14} />
                     </div>
-                    <div className="flex flex-col gap-3.5">
-                        {[...Array(7)].map((_, i) => (
-                            <div key={i} className="grid grid-cols-[70px_30px_35px_1fr_35px] items-center gap-2">
-                                <Skeleton width={50} height={16} />
-                                <div className="flex justify-center"><Skeleton circle width={20} height={20} /></div>
-                                <Skeleton width={25} height={16} />
-                                <Skeleton width="100%" height={6} borderRadius={9999} />
-                                <Skeleton width={25} height={16} />
+
+                    {/* 2. Added min-w-0 to the column wrapper */}
+                    <div className="flex flex-col gap-3 w-full min-w-0">
+                        {Array.from({ length: 7 }).map((_, i) => (
+                            // 3. Made sure the row itself can't exceed parent width
+                            <div key={i} className="grid grid-cols-[50px_30px_35px_1fr_35px] sm:grid-cols-[70px_30px_35px_1fr_35px] items-center gap-2 w-full min-w-0">
+
+                                {/* 4. Switched hardcoded pixel widths to 100% so they fluidly fill the grid cells */}
+                                <Skeleton width="100%" height={16} />
+
+                                <div className="flex justify-center">
+                                    <Skeleton circle width={20} height={20} />
+                                </div>
+
+                                <Skeleton width="100%" height={16} />
+
+                                {/* 5. The 1fr track needs a min-w-0 wrapper so it doesn't blow out! */}
+                                <div className="w-full min-w-0">
+                                    <Skeleton width="100%" height={6} borderRadius={9999} />
+                                </div>
+
+                                <Skeleton width="100%" height={16} />
                             </div>
                         ))}
                     </div>
@@ -81,7 +95,6 @@ export const WeeklyForecast = ({ city }) => {
             </div>
         );
     }
-
     if (isError || !data) {
         return (
             <div className="WeeklyForecast w-full flex justify-center items-center p-4 bg-white rounded-[0.8rem] border border-black/10">
