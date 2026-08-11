@@ -26,7 +26,7 @@ export const Header=()=>{
                         window.open('https://github.com/jass2k5','_blank')
                     }} className='containerHeader '>
                         <div className="imgHeader relative">
-                            <img className="border "  src="./Contactheader.png" alt="headerimg" />
+                            <img className="border "  src="/Contactheader.png" alt="headerimg" />
                             <div className="absolute inset-0 z-30 backdrop-blur-[3px]  rounded-2xl"></div>
                         </div>
 
