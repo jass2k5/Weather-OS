@@ -84,7 +84,7 @@ export const WeeklyForecast = ({ city }) => {
 
     if (isError || !data) {
         return (
-            <div className="WeeklyForecast w-full min-h-[250px] flex justify-center items-center p-4 bg-white rounded-[0.8rem] border border-black/10">
+            <div className="WeeklyForecast w-full flex justify-center items-center p-4 bg-white rounded-[0.8rem] border border-black/10">
                 <span className="text-black/50 font-medium">Unable to load 7-day forecast</span>
             </div>
         );

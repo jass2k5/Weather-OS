@@ -1,15 +1,15 @@
 .weather-container {
     background: #faf6ef;
-    container-type: inline-size;
+    container-type: size;
     container-name: weatherPanel;
     height: 100%;
-    overflow: hidden; /* Prevents container scrollbars */
+    overflow-y: auto !important; 
 
     .Bento {
         display: grid;
         grid-template-columns: 1fr;
         grid-template-rows: repeat(8, max-content);
-        grid-template-areas: 
+        grid-template-areas:
             'Header'
             'CurrentCond'
             'Compass'
@@ -22,17 +22,55 @@
     }
 }
 
-@container weatherPanel (min-width: 1380px) {
-    .weather-container .Bento {
-       grid-template-columns: 1fr 1fr 1fr !important;
-    grid-template-rows: auto minmax(0,0.9fr) minmax(0,1fr) auto !important;
-        grid-template-areas: 
-            'Header       Header         Header'        
-            'CurrentCond  HourlyForecast Compass'        
-            'sevdays      rain           SolarArc'       
-            'banner       banner         banner' !important; 
 
-        row-gap: 1rem;
-        column-gap: 1rem;
+@container weatherPanel (min-width: 1380px) {
+    .weather-container {
+        overflow: hidden !important;
+
+        .Bento {
+            height: 100% !important;
+            max-height: 100% !important;
+            overflow: hidden !important;
+            
+            grid-template-columns: 1fr 1fr 1fr !important;
+            grid-template-rows: auto minmax(0, 1fr) minmax(0, 1fr) auto !important; 
+            
+            grid-template-areas:
+                'Header       Header         Header'
+                'CurrentCond  HourlyForecast Compass'
+                'sevdays      rain           SolarArc'
+                'banner       banner         banner' !important;
+
+            row-gap: 0.8rem;
+            column-gap: 1rem;
+        }
+    }
+}
+
+
+@container weatherPanel (min-width: 1380px) and (max-height: 800px) {
+.weather-container {
+        overflow: hidden !important;
+
+        .Bento {
+          
+            height: 100% !important;
+            overflow-y: auto !important; 
+            overflow-x: hidden !important;
+            
+            grid-template-columns: 1fr 1fr 1fr !important;
+            grid-template-rows: repeat(4, max-content) !important; 
+            
+            grid-template-areas:
+                'Header       Header         Header'
+                'CurrentCond  HourlyForecast Compass'
+                'sevdays      rain           SolarArc'
+                'banner       banner         banner' !important;
+
+            row-gap: 1rem;
+            column-gap: 1rem;
+            padding-right: 0.5rem;
+            padding-bottom: 2rem; 
+        }
     }
 }
