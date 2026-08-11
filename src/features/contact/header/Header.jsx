@@ -1,6 +1,7 @@
 import { useScrollFade } from "../../../shared/hooks/useScrollFade"
 import { useOsStore } from "../../../shared/store/useOsStore";
 import { useEffect } from "react";
+import contactHeaderImg from "../../../shared/assets/Contactheader.png";
 export const Header=()=>{
     const isGithubHovered = useOsStore((state)=>state.isGithubHovered);
     const setIsGithubHovered = useOsStore((state)=>state.setIsGithubHovered);
@@ -26,7 +27,7 @@ export const Header=()=>{
                         window.open('https://github.com/jass2k5','_blank')
                     }} className='containerHeader '>
                         <div className="imgHeader relative">
-                            <img className="border "  src="/Contactheader.png" alt="headerimg" />
+                            <img className="border "  src={contactHeaderImg} alt="headerimg" />
                             <div className="absolute inset-0 z-30 backdrop-blur-[3px]  rounded-2xl"></div>
                         </div>
 

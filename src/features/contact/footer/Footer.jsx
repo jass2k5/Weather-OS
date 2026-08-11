@@ -1,5 +1,6 @@
 import { useScrollFade } from "../../../shared/hooks/useScrollFade"
 import { Reset } from "../../../shared/components/ResetBtn"
+import contactHeaderImg from "../../../shared/assets/Contactheader.png"
 export const Footer = () => {
     const FooterRef = useScrollFade();
 
@@ -7,7 +8,7 @@ export const Footer = () => {
         <footer ref={FooterRef} className="footer">
             <section className="aboutandmore">
                 <div className="first-half">
-                    <img className="ema-img" src="/Contactheader.png" alt="github profile pic" />
+                    <img className="ema-img" src={contactHeaderImg} alt="github profile pic" />
                     <div className="sideview">
                         <h2>Jaspinder Singh</h2>
                         <h3>Front End Developer</h3>
