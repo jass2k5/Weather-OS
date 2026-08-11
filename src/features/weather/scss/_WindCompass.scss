@@ -1,44 +1,23 @@
 .windCompass {
     grid-area: Compass;
+    background: rgba(255, 255, 255, 0.79);
+    height: 100%;
 
-         background: rgba(255, 255, 255, 0.79);
-
-    .compass {
-
-       
-
-        .Wind_Compass {
-            .wind {
-                span {
-                    font-size: clamp(3.5rem, 5cqw, 4.5rem);
-                    font-weight: 500;
-                    font-family: "Roboto Slab", serif;
-                }
-
-                .sw {
-                    font-size: clamp(2.5rem, 4cqw, 3rem);
-                    color: rgba(0, 0, 0, 0.609);
-                    align-self: flex-start;
-                }
+    .Wind_Compass {
+        .wind {
+            span {
+                font-size: clamp(2.7rem, 3cqw, 2.8rem); 
+                font-weight: 600;
+                font-family: "Roboto Slab", serif;
+                line-height: 1;
             }
-            .compass{
-                .north{
-                    font-size: clamp(2rem,3cqw,3rem);
-                    font-weight: 500;
-                }
-               
+
+            .sw {
+                font-size: clamp(1rem, 1.5cqw, 1.3rem); 
+                color: rgba(0, 0, 0, 0.6);
+                align-self: flex-start;
             }
         }
+        
     }
 }
-@container weatherPanel (min-width: 720px) {
-        .compass .Wind_Compass {
-            display: flex;
-            height: max-content;
-            justify-content: center;
-            gap: 4rem;
-            align-items: center;
-            width: 100%;
-            padding: 1rem 0;
-        }
-    }

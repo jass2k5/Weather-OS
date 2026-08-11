@@ -96,7 +96,7 @@ export const Desktop = () => {
             style={{ backgroundImage: `url('${bgUrl}')` }} 
             className="desktop h-screen w-screen relative bg-cover bg-center bg-no-repeat overflow-hidden"
         >
-           <div ref={shortCutRef} className='shortcut select-none  z-15 h-max w-max absolute right-[1%] bottom-[3%] p-2 flex flex-col justify-center items-center gap-5 pointer-events-none'>
+           <div ref={shortCutRef} className='shortcut select-none  z-15 h-max w-max absolute right-[1%] bottom-[1%] p-2 flex flex-col justify-center items-center gap-5 pointer-events-none'>
 
             <div  className={`guide h-max w-max p-5 bg-white border border-white/60 rounded-2xl ${!isOpen?'opacity-0':'opacity-100'}`}>
              {shortCuts.map((short,index)=>(

@@ -12,7 +12,7 @@ export const Compass = ({ degree }) => {
             gsap.set(needleRef.current, {
                 xPercent: -50,
                 yPercent: -50,
-                transformOrigin: '50% 50%', // pivot = image's own center, matches the translate
+                transformOrigin: '50% 50%',
             });
 
             gsap.to(needleRef.current, {
@@ -24,11 +24,13 @@ export const Compass = ({ degree }) => {
     }, [degree]);
 
     return (
-        <div className='compass max-w-[250px] flex flex-col items-center justify-center pl-4 shrink-0'>
-            <span className='north text-black/20'>N</span>
+     
+        <div className='compass-widget flex flex-col items-center justify-center shrink-0 w-[190px] min-h-[190px] @container/compass (min-width: 1380px):w-[120px] max-h-[120px]'>
+            <span className='north text-black/40 font-medium mb-1 text-sm'>N</span>
 
-            <div className='AnimatedCompass relative w-full max-w-[500px] max-h-[200px] flex items-center justify-center aspect-square overflow-hidden'>
-                <img className='h-full w-full scale-[1.35]' src={dialer} alt="dialer" />
+            <div className='AnimatedCompass relative w-full aspect-square flex items-center justify-center'>
+                
+                <img className='h-full w-full object-contain' src={dialer} alt="dialer" />
 
                 <img
                     ref={needleRef}

@@ -1,108 +1,71 @@
-.titleCon {
-    grid-area: TitleCon;
-    height: max-content;
-   
-   
 
-    .city {
-        height: auto;
-        width: 100%;
-        padding: 0.4rem;
-        display: flex;
-        gap: 0.3rem;
+.city-header {
+    grid-area: Header;
+    display: flex;
+    gap: 0.3rem;
+    align-items: baseline;
+    padding: 0 0.4rem 0.5rem 0.4rem;
 
-        h1 {
-            font-size: clamp(2.3rem, 5cqw, 3.5rem);
-            color: black;
-            letter-spacing: 1.5;
-            font-weight: 500;
-            font-family: "Roboto Slab", serif;
-        }
-
-        span {
-            font-size: clamp(2rem, 5cqw, 3.5rem);
-            color: #f09650;
-            padding-top: 1.1rem;
-            font-style: italic;
-            font-family: "Lora", serif;
-        }
+    h1 {
+        font-size: clamp(1.6rem, 2.8cqw, 2.2rem); 
+        color: black;
+        font-weight: 500;
+        font-family: "Roboto Slab", serif;
     }
 
-    .holder {
-        background: rgba(255, 255, 255, 0.79);
-        .index {
-            align-items: center;
-
-            .indexCount {
-                color: #f09650;
-            }
-
-            .condition {
-                font-size: clamp(0.6rem, 1.5cqw, 0.8rem);
-                color: rgba(0, 0, 0, 0.559);
-            }
-        }
-
-        .leftright {
-            .right{
-                img{
-                    margin-top: -0.5rem;
-                   height: 20cqw;
-                }
-                .below{
-                    span{
-                        font-style: italic;
-                        font-family: "Lora", serif;
-                    }
-                }
-            }
-            .left {
-
-                border-radius: 0.8rem;
-
-
-
-                .TemperatureCond {
-                    .temp {
-                        color: black;
-                        font-size: clamp(3.5rem, 6cqw, 3.5rem);
-                        font-family: "Lora", serif;
-                        letter-spacing: 1.5;
-                        font-weight: 500;
-                    }
-
-                    .condition {
-                        color: black;
-                        font-size: clamp(1.5rem, 3.5cqw, 2rem);
-                        font-family: "Lora", serif;
-                        font-style: italic;
-                    }
-                }
-
-            }
-
-           
-        }
+    span {
+        font-size: clamp(1.2rem, 2.2cqw, 1.8rem); 
+        color: #f09650;
+        font-style: italic;
+        font-family: "Lora", serif;
     }
-
 }
-@container weatherPanel (min-width: 720px) {
-        .holder .leftright {
-            display: flex;
-            justify-content: space-between; /* Perfect distance between left and right */
-            align-items: center;
-            width: 100%;
-            padding: 0 1rem;
 
-            .right {
-                display: flex;
-                flex-direction: column;
-                align-items: flex-end; /* Align SVG and text perfectly to the right edge */
-                
-                img {
-                    height: 130px; /* Lock the SVG size so it doesn't get massive */
-                    margin-top: 0;
-                }
+
+.titleCon {
+    grid-area: CurrentCond;
+    background: rgba(255, 255, 255, 0.79);
+    height: 100%;
+
+
+
+    .leftright {
+        justify-content: space-between;
+        align-items: center;
+
+        .left .TemperatureCond {
+            .temp {
+                color: black;
+                font-size: clamp(2.2rem, 4cqw, 3rem); 
+                font-family: "Lora", serif;
+                font-weight: 500;
+                line-height: 1;
+            }
+            .condition {
+                color: black;
+                font-size: clamp(1rem, 1.8cqw, 1.2rem); 
+                font-family: "Lora", serif;
+                font-style: italic;
+            }
+        }
+
+        .right {
+            img {
+                height: clamp(60px, 10cqw, 85px); 
+                width: auto;
+                margin-top: 0;
+            }
+            .below span {
+                font-size: 0.8rem;
+                font-style: italic;
+                font-family: "Lora", serif;
             }
         }
     }
+}
+
+@container weatherPanel (min-width: 720px) {
+    .titleCon .leftright .right img {
+        height: clamp(65px, 9cqw, 85px);
+    }
+}

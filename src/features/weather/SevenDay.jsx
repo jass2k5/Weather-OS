@@ -58,14 +58,23 @@ export const WeeklyForecast = ({ city }) => {
         }
         return days;
     }, [data]);
+
     if (isLoading) {
         return (
-            <div className="WeeklyForecast w-full flex flex-col p-4 bg-white rounded-[0.8rem] border border-black/10">
+            <div className="WeeklyForecast w-full h-full flex flex-col p-4 bg-white/79 rounded-[0.8rem] border border-black/10">
                 <SkeletonTheme baseColor="#fde6d5" highlightColor="#f09650">
-                    <Skeleton width={150} height={20} />
-                    <div className="flex flex-col gap-3 mt-4">
+                    <div className="flex items-center gap-2 text-xs font-bold text-gray-400 tracking-wider mb-4">
+                        <Skeleton width={80} height={14} />
+                    </div>
+                    <div className="flex flex-col gap-3.5">
                         {[...Array(7)].map((_, i) => (
-                            <Skeleton key={i} width="100%" height={24} />
+                            <div key={i} className="grid grid-cols-[70px_30px_35px_1fr_35px] items-center gap-2">
+                                <Skeleton width={50} height={16} />
+                                <div className="flex justify-center"><Skeleton circle width={20} height={20} /></div>
+                                <Skeleton width={25} height={16} />
+                                <Skeleton width="100%" height={6} borderRadius={9999} />
+                                <Skeleton width={25} height={16} />
+                            </div>
                         ))}
                     </div>
                 </SkeletonTheme>
@@ -81,7 +90,6 @@ export const WeeklyForecast = ({ city }) => {
         );
     }
 
-
     const allMins = forecastDays.map(d => d.day.mintemp_c);
     const allMaxs = forecastDays.map(d => d.day.maxtemp_c);
     const absoluteMin = Math.min(...allMins);
@@ -95,7 +103,7 @@ export const WeeklyForecast = ({ city }) => {
     };
 
     return (
-        <div className="WeeklyForecast w-full flex flex-col p-4 bg-white rounded-[0.8rem] border border-black/10">
+        <div className="WeeklyForecast w-full flex flex-col p-4 bg-white/79 rounded-[0.8rem] border border-black/10">
             <div className="flex items-center gap-2 text-xs font-bold text-gray-400 tracking-wider mb-4">
                 <span className="text-[#f09650]">06</span> 7-DAY FORECAST
             </div>
