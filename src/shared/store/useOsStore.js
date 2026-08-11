@@ -79,8 +79,10 @@ export const useOsStore = create(persist((set, get) => ({
 
         const newCityObject = {
             city: apiData.location.name,
+            location: apiData.location,
             country: apiData.location.country,
             tz_id: apiData.location.tz_id,
+            loc: { lat: apiData.location.lat, lon: apiData.location.lon },
             liveTemp: apiData.current.temp_c,
             liveCondition: apiData.current.condition.text,
             humidity: apiData.current.humidity,

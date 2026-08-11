@@ -47,6 +47,8 @@ export const RunAct3 = ({ onComplete }) => {
                 city: data.location.name,
                 country: data.location.country,
                 tz_id: data.location.tz_id,
+                location: data.location,
+                loc: { lat: data.location.lat, lon: data.location.lon },
                 liveTemp: data.current.temp_c,
                 liveCondition: data.current.condition.text,
                 humidity: data.current.humidity,

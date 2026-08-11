@@ -33,8 +33,9 @@ export const WeatherMap = () => {
     const theme = useOsStore((state) => state.mapSetting.theme);
     const navigation = useOsStore((state) => state.mapSetting.Navigations)
     const mapStyleUrl = theme === "dark" ? mapThemes.dark : theme === "light" ? mapThemes.light : mapThemes.satellite
-    const lat = useOsStore((state) => state.telemetryData?.location?.lat);
-    const lon = useOsStore((state) => state.telemetryData?.location?.lon);
+    const selectedLoc = useOsStore((state) => state.searchHistory?.[0]?.loc ?? state.telemetryData?.loc);
+    const lat = selectedLoc?.lat;
+    const lon = selectedLoc?.lon;
     const coord = getCoord(lat, lon);
     const addNotification = useOsStore((state) => state.addNotification);
     useEffect(() => {

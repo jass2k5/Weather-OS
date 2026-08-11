@@ -11,9 +11,9 @@ export const useSyncAllWeather = () => {
     const Api_Key = import.meta.env.VITE_WEATHER_API_KEY;
     const BASE_URL = 'https://api.weatherapi.com/v1';
 
-    const timeRef = useRef([]);
+    const timeoutsRef = useRef([]);
 
-    const queryOptions = useMemo(() => {//use memo to not let searchhistory change address on re render and cause queryoptions to run 
+    const queryOptions = useMemo(() => {
         return searchHistory.map((loc) => ({
             queryKey: ["syncWeather", loc.city],
             queryFn: async () => {
@@ -27,72 +27,70 @@ export const useSyncAllWeather = () => {
                 return response.data;
             },
 
-            refetchInterval: 1000 * 60 * 15,//every city got it's own stale time if we add new city it's stale time took more time than previous ones 
-            staleTime: 1000 * 60 * 15
-        }));
-    }, [searchHistory, Api_Key]);
+            refetchInterval: 1000 * 60 * 15,
+            staleTime: 1000 * 60 * 15,
 
+            onSuccess: (apiData) => {
+                try {
+                    const currentCity = loc;
 
-    const queryResults = useQueries({// it re runs even if the query just flaging isfetching true even before getting data back we need to make a gatekeeping comparison with code so it doesn't cause multiple re renders and state changes 
-        queries: queryOptions
-    });
+                    const newCityData = {
+                        city: apiData.location.name,
+                        location: apiData.location,
+                        country: apiData.location.country,
+                        tz_id: apiData.location.tz_id,
+                        loc: { lat: apiData.location.lat, lon: apiData.location.lon },
+                        liveTemp: apiData.current.temp_c,
+                        liveCondition: apiData.current.condition.text,
+                        humidity: apiData.current.humidity,
+                        wind: apiData.current.wind_kph,
+                        windDegree: apiData.current.wind_degree,
+                        visibility: apiData.current.vis_km,
+                        feelsLike: apiData.current.feelslike_c,
+                        isDay: apiData.current.is_day === 1,
+                        aqi: apiData.current.air_quality ? apiData.current.air_quality['us-epa-index'] : null,
+                    };
 
-    useEffect(() => {
-        queryResults.forEach((result, index) => {
-            if (result.isSuccess && result.data) {
-                const apiData = result.data;
-                const currentCity = searchHistory[index];
+                    const oldCityData = {
+                        city: currentCity.city,
+                        country: currentCity.country,
+                        tz_id: currentCity.tz_id,
+                        location: currentCity.location ?? null,
+                        loc: currentCity.loc ?? null,
+                        liveTemp: currentCity.liveTemp,
+                        liveCondition: currentCity.liveCondition,
+                        humidity: currentCity.humidity,
+                        wind: currentCity.wind,
+                        windDegree: currentCity.windDegree,
+                        visibility: currentCity.visibility,
+                        feelsLike: currentCity.feelsLike,
+                        isDay: currentCity.isDay,
+                        aqi: currentCity.aqi,
+                    };
 
-
-                const newCityData = {
-                    city: apiData.location.name,
-                    country: apiData.location.country,
-                    tz_id: apiData.location.tz_id,
-                    liveTemp: apiData.current.temp_c,
-                    liveCondition: apiData.current.condition.text,
-                    humidity: apiData.current.humidity,
-                    wind: apiData.current.wind_kph,
-                    windDegree: apiData.current.wind_degree,
-                    visibility: apiData.current.vis_km,
-                    feelsLike: apiData.current.feelslike_c,
-                    isDay: apiData.current.is_day === 1,
-                    aqi: apiData.current.air_quality ? apiData.current.air_quality['us-epa-index'] : null,
-                };
-
-                //old zustand data for comparison
-                const oldCityData = {
-                    city: currentCity.city,
-                    country: currentCity.country,
-                    tz_id: currentCity.tz_id,
-                    liveTemp: currentCity.liveTemp,
-                    liveCondition: currentCity.liveCondition,
-                    humidity: currentCity.humidity,
-                    wind: currentCity.wind,
-                    windDegree: currentCity.windDegree,
-                    visibility: currentCity.visibility,
-                    feelsLike: currentCity.feelsLike,
-                    isDay: currentCity.isDay,
-                    aqi: currentCity.aqi,
-                };
-
-
-                if (JSON.stringify(oldCityData) !== JSON.stringify(newCityData)) {
-                    let id = setTimeout(() => {
-                        addNotification(`Synced Weather Data For ${currentCity.city}`, "info");
-                    }, 1000);
-                    timeRef.current.push(id);
-                    updateCityData(currentCity.city, newCityData);
+                    if (JSON.stringify(oldCityData) !== JSON.stringify(newCityData)) {
+                        const id = setTimeout(() => {
+                            addNotification(`Synced Weather Data For ${currentCity.city}`, "info");
+                        }, 1000);
+                        timeoutsRef.current.push(id);
+                        updateCityData(currentCity.city, newCityData);
+                    }
+                } catch (err) {
+                    console.error("sync onSuccess error", err);
                 }
             }
-        });
+        }));
+    }, [searchHistory.map((s) => s.city).join(','), Api_Key, addNotification, updateCityData]);
 
-        return () =>{
-            timeRef.current.forEach(e=>{
-                clearTimeout(e);
-            })
-            timeRef.current = [];
-        }
-    }, [queryResults, searchHistory, updateCityData]);
+    const queryResults = useQueries({ queries: queryOptions });
 
-    return { queryResults};
-};
+    useEffect(() => {
+        return () => {
+            timeoutsRef.current.forEach((t) => clearTimeout(t));
+            timeoutsRef.current = [];
+        };
+    }, []);
+
+    return { queryResults };
+}
+ 

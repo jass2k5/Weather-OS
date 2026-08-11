@@ -18,6 +18,7 @@ export const SyncBtn = ({city}) => {
     const lastUpdated = activeQuery?.state?.dataUpdatedAt ?? 0;
     
     const timePassed = Date.now() - lastUpdated;
+    // const fifteenMinutes = 1000 * 60 * 15;
     const fifteenMinutes = 1000 * 60 * 15;
 
     // 3. The Math Check

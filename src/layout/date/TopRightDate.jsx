@@ -2,10 +2,15 @@ import { useEffect, useState } from "react";
 import { useOsStore } from "../../shared/store/useOsStore";
 
 export const TopRightDate = () => {
-    const telemetryData = useOsStore((state) => state.telemetryData);
+    const isDay = useOsStore((state) => state.telemetryData?.isDay);
+    const tzid = useOsStore((state) => state.telemetryData?.tz_id);
     const setNight = useOsStore((state) => state.setNight);
     const setDay = useOsStore((state) => state.setDay);
-    const dateTimeSettings = useOsStore((state) => state.dateTimeSettings);
+    const showDateTime = useOsStore((state) => state.dateTimeSettings?.showDateTime);
+    const showSeconds = useOsStore((state) => state.dateTimeSettings?.showSeconds);
+    const formatHour = useOsStore((state) => state.dateTimeSettings?.format?.hour);
+    const colorClr = useOsStore((state) => state.dateTimeSettings?.color?.clr);
+    const position = useOsStore((state) => state.dateTimeSettings?.position);
     const [timeString, setTimeString] = useState("");
     const [dateString, setDateString] = useState("");
     
@@ -16,23 +21,22 @@ export const TopRightDate = () => {
             case 'bottom-right': return 'bottom-[2%] right-[6%]';
             case 'top-right': return 'top-[5%] right-[2%]';
             default: return 'top-[2%] right-[6%]';
-        }
+        }   
     };
 
    
     useEffect(() => {
-        if (!telemetryData) return; 
-        
-        if (!telemetryData.isDay) {
+         
+        if (!isDay) {
             setNight();
         } else {
             setDay();
         }
-    }, [telemetryData, setDay, setNight]);
+    }, [isDay, setDay, setNight]);
 
     
     useEffect(() => {
-        const tz_id = telemetryData?.tz_id; 
+        const tz_id = tzid; 
         
         if (!tz_id) return;
 
@@ -43,10 +47,10 @@ export const TopRightDate = () => {
                 timeZone: tz_id,
                 hour: "2-digit",
                 minute: "2-digit",
-                hour12: dateTimeSettings?.format?.hour === "12h"
+                hour12: formatHour === "12h"
             };
 
-            if (dateTimeSettings?.showSeconds) {
+            if (showSeconds) {
                 timeOptions.second = "2-digit";
             }
 
@@ -64,17 +68,17 @@ export const TopRightDate = () => {
         const timer = setInterval(updateClock, 1000); 
         
         return () => clearInterval(timer);
-    }, [telemetryData, dateTimeSettings]); 
+    }, [tzid, showSeconds, formatHour]); 
 
     if (!timeString) return null;
-    if (!dateTimeSettings?.showDateTime) return null;
+    if (!showDateTime) return null;
 
     return (
-        <div className={`date-container absolute ${getPositionClasses(dateTimeSettings.position)} h-auto w-auto z-50 flex flex-col justify-center items-center`}>
-            <span style={{color: dateTimeSettings.color?.clr}} className={`consttime drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)] font-medium`}>
+        <div className={`date-container absolute ${getPositionClasses(position)} h-auto w-auto z-50 flex flex-col justify-center items-center`}>
+            <span style={{color: colorClr}} className={`consttime drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)] font-medium`}>
                 {timeString}
             </span>
-            <span style={{color: dateTimeSettings.color?.clr}} className="constdate drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)] font-medium">
+            <span style={{color: colorClr}} className="constdate drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)] font-medium">
                 {dateString}
             </span>
         </div>
