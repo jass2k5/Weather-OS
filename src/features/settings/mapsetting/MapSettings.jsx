@@ -8,11 +8,11 @@ import { SettingGroup } from "../../../shared/components/SettingGroup";
 import { ThemeContainer } from "../../../shared/components/ThemeContainer";
 import { ThemeCard } from "../../../shared/components/ThemeCard";
 import { Alerts } from "../../../shared/components/Alerts";
-  const Themes = [
-        { id: "theme1", src: "/dark.png", theme: "dark" },
-        { id: "theme2", src: "/light.webp", theme: "light" },
-        { id: "theme3", src: "/satellite.png", theme: "satellite" }
-    ]
+    const Themes = [
+                { id: "theme1", src: "/dark.webp", theme: "dark" },
+                { id: "theme2", src: "/light.webp", theme: "light" },
+                { id: "theme3", src: "/satellite.webp", theme: "satellite" }
+        ]
 
 export const MapSet = () => {
     const mapSetting = useOsStore((state) => state.mapSetting);

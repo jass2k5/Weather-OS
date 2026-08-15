@@ -1,6 +1,6 @@
 import { useScrollFade } from "../../../shared/hooks/useScrollFade"
 import { Reset } from "../../../shared/components/ResetBtn"
-import contactHeaderImg from "../../../shared/assets/Contactheader.png"
+import contactHeaderImg from "../../../shared/assets/Contactheader.webp"
 export const Footer = () => {
     const FooterRef = useScrollFade();
 

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { getWeatherAdvisory } from "../../shared/components/BannerInfo";
 import { useCityForecast } from "../../shared/hooks/useCityForecast";
-import warning from '../../shared/assets/warning.png';
+import warning from '../../shared/assets/warning.webp';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 

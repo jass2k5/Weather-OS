@@ -17,7 +17,7 @@ export const CenterImage =()=>{
           onClick={()=>{
             window.open('https://github.com/jass2k5/Weather-OS','_blank');
          }} className="centerImage reveal">
-            <img src="/gitprofile.png" alt="centerimage" />
+            <img src="/gitprofile.webp" alt="centerimage" />
         </section>
     )
 }
