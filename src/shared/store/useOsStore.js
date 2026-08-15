@@ -291,7 +291,7 @@ export const useOsStore = create(persist((set, get) => ({
 ),
 
     {
-        name: 'weatherOsStorage',
+        name: 'weatherOs',
         partialize: (state) => Object.fromEntries(
             Object.entries(state).filter(([key]) => key !== 'notificationHistory' && key !== 'activeNotifications')
         ),
