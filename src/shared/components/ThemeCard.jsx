@@ -18,6 +18,8 @@ export const ThemeCard = ({ src, alt, onClick,videoSrc }) => {
                     className="h-full w-full object-cover object-center" 
                     src={src} 
                     alt={alt || "theme-image"} 
+                    loading="eager"
+                    fetchpriority="high"
                 />
             )}
 

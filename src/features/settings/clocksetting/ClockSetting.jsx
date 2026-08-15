@@ -6,8 +6,8 @@ import { ThemeContainer } from "../../../shared/components/ThemeContainer";
 import { ThemeCard } from "../../../shared/components/ThemeCard";
 import { Alerts } from "../../../shared/components/Alerts";
 
-const Clockthemes = [{ id: "night", src:"./NightVideo.mp4"  ,key:"liveNight"},
-{id:"day",src:"./DayVideo.mp4",key:"liveDay"}
+const Clockthemes = [{ id: "night", src:"/NightVideo.mp4"  ,key:"liveNight"},
+{id:"day",src:"/DayVideo.mp4",key:"liveDay"}
 ]
 export const ClockSetting = () => {
     const clockSetting = useOsStore((state) => state.clockSetting);
