@@ -10,7 +10,7 @@ export const Searchbar = memo( () => {
     const removeSearchItem = useOsStore((state) => state.removeSearchItem);
     const searchHistory = useOsStore((state) => state.searchHistory);
     const addNotification = useOsStore((state) => state.addNotification);
- 
+    const city = useOsStore((state) => state.telemetryData?.city ?? "Unknown Location");
     const { searchLocation, isSearching } = useSearchLocation();
     
    
@@ -45,6 +45,10 @@ export const Searchbar = memo( () => {
         document.addEventListener("mousedown", handleClickOutside);
         return () => document.removeEventListener("mousedown", handleClickOutside);
     }, []);
+
+  useEffect(()=>{
+    searchLocation(city);
+  },[searchLocation]);
 
   
     useGSAP(() => {
