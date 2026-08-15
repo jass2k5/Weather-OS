@@ -88,7 +88,7 @@ export const WeatherCards = memo(() => {
                     className={`data  h-full w-full border-2 rounded-3xl overflow-hidden sticky top-0 border-white/25 top-0 `}>
                     {loc.isDay && clockSetting.liveDay && (<video
                         className="video h-full w-full object-center object-cover scale-x-[1.07] rounded-3xl z-0 "
-                        src={"./DayVideo.mp4"}
+                        src={`/DayVideo.mp4`}
                         autoPlay
                         loop
                         muted
@@ -96,7 +96,7 @@ export const WeatherCards = memo(() => {
                     />)}
                     {!loc.isDay && clockSetting.liveNight && (<video
                         className="video h-full w-full object-center object-cover rounded-3xl z-0"
-                        src={"./NightVideo.mp4"}
+                        src={`/NightVideo.mp4`}
                         autoPlay
                         loop
                         muted
