@@ -10,16 +10,16 @@ import { MapCrashFallback } from "../features/map/ErrorBoundaryMap";
 import { useSyncAllWeather } from "../shared/hooks/useSyncAllWeather";
 import { useKeys } from '../shared/hooks/useKeys';
 //assets
-import keyword from '../shared/assets/keyword.png';
-import alt from '../shared/assets/Alt.png'
-import back from '../shared/assets/backbtn.png'
-import one from '../shared/assets/1.png'
-import two from '../shared/assets/2.png'
-import three from '../shared/assets/3.png'
-import four from '../shared/assets/4.png'
-import five from '../shared/assets/5.png'
-import six from '../shared/assets/6.png'
-import T from '../shared/assets/T.png'
+import keyword from '../shared/assets/keyword.webp';
+import alt from '../shared/assets/Alt.webp'
+import back from '../shared/assets/backbtn.webp'
+import one from '../shared/assets/1.webp'
+import two from '../shared/assets/2.webp'
+import three from '../shared/assets/3.webp'
+import four from '../shared/assets/4.webp'
+import five from '../shared/assets/5.webp'
+import six from '../shared/assets/6.webp'
+import T from '../shared/assets/T.webp'
 
 // Lazy Loaded Apps
 const WeatherMap = lazy(() => import("../features/map/Map").then(m => ({ default: m.WeatherMap })));

@@ -1,7 +1,7 @@
 import { useScrollFade } from "../../../shared/hooks/useScrollFade"
 import { useOsStore } from "../../../shared/store/useOsStore";
 import { useEffect } from "react";
-import contactHeaderImg from "../../../shared/assets/Contactheader.png";
+import contactHeaderImg from "../../../shared/assets/Contactheader.webp";
 export const Header=()=>{
     const isGithubHovered = useOsStore((state)=>state.isGithubHovered);
     const setIsGithubHovered = useOsStore((state)=>state.setIsGithubHovered);
