@@ -12,17 +12,17 @@ import { ThemeContainer } from "../../../shared/components/ThemeContainer";
 const Wallpapers = [
     {
         id: "firstWalpaper",
-        src: "/stage1bg.png",
+        src: "/stage1bg.webp",
         alt: "stage1"
     },
     {
         id: "secondWalpaper",
-        src: "/stage2bg.png",
+        src: "/stage2bg.webp",
         alt: "stage2"
     },
     {
         id: "thirdWalpaper",
-        src: "/stage3bg.png",
+        src: "/stage3bg.webp",
         alt: "stage3"
     }
 

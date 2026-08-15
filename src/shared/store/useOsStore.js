@@ -14,7 +14,7 @@ export const useOsStore = create(persist((set, get) => ({
     githubText: null,
     setgithubText: (val) => set({ githubText: val }),
     isBooted: false,
-    systemBg: "/stage1bg.png",
+    systemBg: "/stage1bg.webp",
     setBg: (bg) => set(() => ({
         systemBg: bg,
     })),
