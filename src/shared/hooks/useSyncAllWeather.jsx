@@ -3,22 +3,6 @@ import { useEffect, useMemo, useRef } from "react";
 import { useOsStore } from "../store/useOsStore";
 import axios from "axios";
 
-// const createCityData = (apiData) => ({
-//     city: apiData.location.name,
-//     location: apiData.location,
-//     country: apiData.location.country,
-//     tz_id: apiData.location.tz_id,
-//     loc: { lat: apiData.location.lat, lon: apiData.location.lon },
-//     liveTemp: apiData.current.temp_c,
-//     liveCondition: apiData.current.condition.text,
-//     humidity: apiData.current.humidity,
-//     wind: apiData.current.wind_kph,
-//     windDegree: apiData.current.wind_degree,
-//     visibility: apiData.current.vis_km,
-//     feelsLike: apiData.current.feelslike_c,
-//     isDay: apiData.current.is_day === 1,
-//     aqi: apiData.current.air_quality ? apiData.current.air_quality['us-epa-index'] : null,
-// });
 
 export const useSyncAllWeather = () => {
     const searchHistory = useOsStore((state) => state.searchHistory);
@@ -78,12 +62,12 @@ export const useSyncAllWeather = () => {
                     };
 
                     if (JSON.stringify(oldCityData) !== JSON.stringify(newCityCompare)) {
-                        const newCityData = createCityData(apiData);
+
                         const id = setTimeout(() => {
                             addNotification(`Synced Weather Data For ${historyItem.city}`, "info");
                         }, 1000);
                         timeoutsRef.current.push(id);
-                        updateCityData(historyItem.city, newCityData);
+                        updateCityData(historyItem.city, newCityCompare);
                     }
                 } catch (error) {
                     console.error("sync onSuccess error", error);
