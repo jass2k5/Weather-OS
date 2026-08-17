@@ -29,7 +29,7 @@ export const useSyncAllWeather = () => {
     const timeoutsRef = useRef<number[]>([]);
 
     const queryOptions = useMemo(() => {
-        return searchHistory.map((historyItem) => ({
+        return searchHistory.map((historyItem: WeatherHistoryItem) => ({
             queryKey: ["syncWeather", historyItem.city],
             queryFn: async () => {
                 const response = await axios.get(`${BASE_URL}/current.json`, {
@@ -77,7 +77,6 @@ export const useSyncAllWeather = () => {
                     };
 
                     if (JSON.stringify(oldCityData) !== JSON.stringify(newCityCompare)) {
-
                         const id = setTimeout(() => {
                             addNotification(`Synced Weather Data For ${historyItem.city}`, "info");
                         }, 1000);
@@ -89,7 +88,7 @@ export const useSyncAllWeather = () => {
                 }
             },
         }));
-    }, [searchHistory.map((item) => item.city).join(','), Api_Key, addNotification, updateCityData]);
+    }, [searchHistory.map((item: WeatherHistoryItem) => item.city).join(','), Api_Key, addNotification, updateCityData]);
 
     useQueries({ queries: queryOptions as any});
 
