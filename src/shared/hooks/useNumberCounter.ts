@@ -23,7 +23,7 @@ export const useNumberCounter = ({targetValue,duration =0.6}:NumberCounter ={}):
                 setDisplayValue(Math.round(counterRef.current.val));
             }
         });
-        return ()=> tween.kill(); 
+        return ()=> {tween.kill(); }
     }, [targetValue, duration]);
 
     return displayValue;
