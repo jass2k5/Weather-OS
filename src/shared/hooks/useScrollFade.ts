@@ -22,7 +22,7 @@ export const useScrollFade = (option: ScrollFadeOptions = {}): React.RefObject<H
         if (!elementRef.current) return;
 
         
-        const customScroller = document.querySelector('.custom-scrollbar');
+        const customScroller = document.querySelector<HTMLElement>('.custom-scrollbar');
 
         gsap.from(elementRef.current, {
             x: option.x ?? 0,
