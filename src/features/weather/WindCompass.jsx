@@ -1,11 +1,10 @@
-import { useOsStore } from "../../shared/store/useOsStore";
 import { useTemperatureUnit } from "../../shared/hooks/useUnits";
 import { useNumberCounter } from "../../shared/hooks/useNumberCounter";
 import { Compass } from "./Compass";
 
 export const WindCompass = ({ windSpeed, windDegree }) => {
     const { formatDistance } = useTemperatureUnit();
-    const speed = useNumberCounter(windSpeed);
+    const speed = useNumberCounter({ targetValue: windSpeed });
 
     return (
        

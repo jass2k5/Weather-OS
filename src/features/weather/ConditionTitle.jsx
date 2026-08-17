@@ -1,6 +1,5 @@
 import { useTemperatureUnit } from "../../shared/hooks/useUnits";
 import { useNumberCounter } from "../../shared/hooks/useNumberCounter";
-import icon from '../../shared/assets/weather.svg';
 import cloudysun from '../../shared/assets/cloudysun.svg';
 import cloudymoon from '../../shared/assets/cloudymoon.svg';
 import clearsun from '../../shared/assets/clearsun.svg';
@@ -9,9 +8,8 @@ import thunderstorm from '../../shared/assets/thunderstorm.svg';
 import lightrain from '../../shared/assets/lightrain.svg';
 import snow from '../../shared/assets/snow.svg';
 import fog from '../../shared/assets/fog.svg';
-import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+
 import "react-loading-skeleton/dist/skeleton.css";
-import { useMemo } from "react";
 
 export const getWeatherIcon = (conditionText, isDay = 1) => {
     if (!conditionText) return isDay ? clearsun : clearmoon;
@@ -31,7 +29,7 @@ export const getWeatherIcon = (conditionText, isDay = 1) => {
 
 export const ConditionTitle = ({ city, data }) => {
     const { formatTemp, formatDistance } = useTemperatureUnit();
-    const temperature = useNumberCounter(data.liveTemp);
+   const temperature = useNumberCounter({ targetValue: data.liveTemp });
     
     return (
         <>
