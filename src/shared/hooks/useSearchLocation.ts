@@ -3,7 +3,6 @@ import axios from "axios";
 import { useOsStore } from "../store/useOsStore";
 
 export const useSearchLocation = () => {
-    const setSystemTelemetry = useOsStore((state) => state.setSystemTelemetry);
     const addSearchToHistory = useOsStore((state) => state.addSearchToHistory);
     const addNotification = useOsStore((state) => state.addNotification);
     
@@ -14,7 +13,7 @@ export const useSearchLocation = () => {
     const BASE_URL = 'https://api.weatherapi.com/v1';
 
 //Added fetch query because on manual api call it updates searchhistory which enventually trigger useQueries of syncallweather and by querkey it checks the cache and the stale time for this location can be x<15 minutes. it returns cache data the useffect then compares cache data with zustand data as if the manual searchhistoy data is slightly changed even by .01 it fails === and push the cache data to newly search history and it will happen again and again as the syncweather cache isn't synced with manual search 
-    const fetchLocationTelemetry = async (locationName) => {
+    const fetchLocationTelemetry = async (locationName:string) => {
        
         return queryClient.fetchQuery({
       
@@ -37,7 +36,7 @@ export const useSearchLocation = () => {
 
     const mutation = useMutation({
         mutationFn: fetchLocationTelemetry,
-        onSuccess: (data, submittedLocation) => {
+        onSuccess: (data:any) => {
             addSearchToHistory(data);
 
             const currentAqi = data?.current?.air_quality?.['us-epa-index'];

@@ -4,7 +4,7 @@ export const useTemperatureUnit = () => {
     const isCelsius = useOsStore((state) => state.tempdist.celsius);
     const iskm = useOsStore((state) => state.tempdist.km);
 
-    const formatTemp = (celsius) => {
+    const formatTemp = (celsius:number) => {
         if (!isCelsius) {
             return `${Math.round(celsius)}°C`;
         } else {
@@ -14,7 +14,7 @@ export const useTemperatureUnit = () => {
 
     }
 
-    const formatDistance = (distance) => {
+    const formatDistance = (distance:number) => {
         if (!iskm) {// bcz of btn being false on start we have to do !km for true state
             
             return `${Math.round(distance)} km`;

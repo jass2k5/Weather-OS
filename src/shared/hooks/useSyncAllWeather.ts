@@ -3,18 +3,33 @@ import { useEffect, useMemo, useRef } from "react";
 import { useOsStore } from "../store/useOsStore";
 import axios from "axios";
 
+interface WeatherHistoryItem {
+    city: string;
+    country: string;
+    tz_id: string;
+    loc?: { lat: number; lon: number } | null;
+    liveTemp: number;
+    liveCondition: string;
+    humidity: number;
+    wind: number;
+    windDegree: number;
+    visibility: number;
+    feelsLike: number;
+    isDay: boolean;
+    aqi: number | null;
+}
 
 export const useSyncAllWeather = () => {
-    const searchHistory = useOsStore((state) => state.searchHistory);
-    const updateCityData = useOsStore((state) => state.updateCityData);
-    const addNotification = useOsStore((state) => state.addNotification);
+    const searchHistory = useOsStore((state) => state.searchHistory) as WeatherHistoryItem[];
+    const updateCityData = useOsStore((state:any) => state.updateCityData);
+    const addNotification = useOsStore((state:any) => state.addNotification);
 
     const Api_Key = import.meta.env.VITE_WEATHER_API_KEY;
     const BASE_URL = 'https://api.weatherapi.com/v1';
-    const timeoutsRef = useRef([]);
+    const timeoutsRef = useRef<number[]>([]);
 
     const queryOptions = useMemo(() => {
-        return searchHistory.map((historyItem) => ({
+        return searchHistory.map((historyItem: WeatherHistoryItem) => ({
             queryKey: ["syncWeather", historyItem.city],
             queryFn: async () => {
                 const response = await axios.get(`${BASE_URL}/current.json`, {
@@ -28,7 +43,7 @@ export const useSyncAllWeather = () => {
             },
             refetchInterval: 1000 * 60 * 15,
             staleTime: 1000 * 60 * 15,
-            onSuccess: (apiData) => {
+            onSuccess: (apiData:any) => {
                 try {
                     const newCityCompare = {
                         city: apiData.location.name,
@@ -73,9 +88,9 @@ export const useSyncAllWeather = () => {
                 }
             },
         }));
-    }, [searchHistory.map((item) => item.city).join(','), Api_Key, addNotification, updateCityData]);
+    }, [searchHistory.map((item: WeatherHistoryItem) => item.city).join(','), Api_Key, addNotification, updateCityData]);
 
-    useQueries({ queries: queryOptions });
+    useQueries({ queries: queryOptions as any});
 
     useEffect(() => {
         return () => {

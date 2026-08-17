@@ -1,5 +1,5 @@
-export const timeToMinutes = (timeString) => {
-  if (!timeString) return 0;
+export const timeToMinutes = (timeString?:"string" | null):number => {
+  if (!timeString) return 0;// we have this so we can do ?:
   
   const [time, modifier] = timeString.split(" ");
   let [hours, minutes] = time.split(":").map(Number);//why map we converted the string to number array

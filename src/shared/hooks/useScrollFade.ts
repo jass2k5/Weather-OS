@@ -5,14 +5,24 @@ import { useGSAP } from '@gsap/react';
 
 gsap.registerPlugin(ScrollTrigger);
 
-export const useScrollFade = (option = {}) => {
-    const elementRef = useRef(null);
+interface ScrollFadeOptions {
+    x?:number;
+    y?:number;
+    origin?:string;
+    delay?:number;
+    duration?:number;
+    ease?:string;
+    start?:string;
+}
+
+export const useScrollFade = (option: ScrollFadeOptions = {}): React.RefObject<HTMLDivElement | null> => {
+    const elementRef = useRef<HTMLDivElement|null>(null);
     
     useGSAP(() => {
         if (!elementRef.current) return;
 
         
-        const customScroller = document.querySelector('.custom-scrollbar');
+        const customScroller = document.querySelector<HTMLElement>('.custom-scrollbar');
 
         gsap.from(elementRef.current, {
             x: option.x ?? 0,

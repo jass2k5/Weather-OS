@@ -1,7 +1,7 @@
 import { useOsStore } from "../store/useOsStore"
 import { useEffect } from "react"
 
-const SHORTCUTS = {
+const SHORTCUTS:Record<string,string> = {
     "1": "map",
     "2":"weather",
     "3": "clock",
@@ -10,7 +10,7 @@ const SHORTCUTS = {
     "6": "settings"
 };
 
-export const useKeys = () => {
+export const useKeys = ():void => {
     const apps = useOsStore((state) => state.apps);
     const closeApp = useOsStore((state) => state.closeApp);
     const openApp = useOsStore((state) => state.openApp);
@@ -27,7 +27,7 @@ export const useKeys = () => {
     },[theme])
     useEffect(() => {
         
-        const handleOpen = (e) => {
+        const handleOpen = (e:KeyboardEvent):void => {
             if (e.altKey && SHORTCUTS[e.key]) {
                 e.preventDefault();
                 const appName = SHORTCUTS[e.key];
