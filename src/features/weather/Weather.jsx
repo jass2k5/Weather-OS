@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useOsStore } from "../../shared/store/useOsStore";
 import { ConditionTitle } from "./ConditionTitle";
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import { WindCompass } from "./WindCompass";
 import { HourlyForecast } from "./HourlyForecast";
 import { SolarArc } from "./SolarArc";
@@ -29,10 +30,35 @@ export const WeatherApp = () => {
         }
     }, [searchHistory, currentCity, data]);
 
-    if (!data) {
+   
+  if (!data) {
         return (
-            <div className="weather-container absolute inset-0 h-full w-full flex flex-col gap-2 p-2 justify-center items-center">
-                <div className="text-black text-lg">Loading weather...</div>
+            <div 
+                className="weather-container absolute inset-0 h-full w-full flex flex-col justify-center items-center overflow-hidden"
+                style={{ backgroundColor: "#f09550" }}
+            >
+          
+                <div 
+                    className="absolute top-0 h-full w-40 bg-white/20 z-0 pointer-events-none"
+                    style={{ animation: "sweep 2.5s infinite linear" }}
+                ></div>
+
+        
+                <style>{`
+                    @keyframes sweep {
+                        0% { transform: translateX(-100vw) skewX(-20deg); }
+                        100% { transform: translateX(100vw) skewX(-20deg); }
+                    }
+                `}</style>
+
+         
+                <div className="z-10 flex flex-col items-center text-white gap-3 px-4 text-center">
+                    <span className="text-3xl drop-shadow-md">📍</span>
+                    <span className="text-sm sm:text-base font-medium tracking-wide drop-shadow-sm">
+                        No location detected.<br/>
+                        Make sure to search and add a city through the <strong>Maps App</strong>.
+                    </span>
+                </div>
             </div>
         );
     }
