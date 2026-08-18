@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useOsStore } from "../store/useOsStore";
 
 export const useConnectivity = ():null =>{
-    const addNotification = useOsStore((state) => state.addNotification);
+    const addNotification = useOsStore((state:any) => state.addNotification);
 
     useEffect(()=>{
         const handleOnline = ():void => {addNotification("Connection Gained!","online")}
