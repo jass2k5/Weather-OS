@@ -44,7 +44,7 @@ export const useSearchLocation = () => {
 
             addNotification(`Telemetry stream active: ${locName}`, "info");
 
-            setTimeout(() => {
+            window.setTimeout(() => {
                 if (currentAqi <= 2) {
                     addNotification(`AQI is Good for ${locName}`, "success");
                 } else if (currentAqi === 3) {

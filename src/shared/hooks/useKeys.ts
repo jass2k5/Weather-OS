@@ -1,7 +1,7 @@
-import { useOsStore } from "../store/useOsStore"
+import { AppKey, useOsStore } from "../store/useOsStore"
 import { useEffect } from "react"
 
-const SHORTCUTS:Record<string,string> = {
+const SHORTCUTS:Record<string,AppKey> = {
     "1": "map",
     "2":"weather",
     "3": "clock",
@@ -15,9 +15,9 @@ export const useKeys = ():void => {
     const closeApp = useOsStore((state) => state.closeApp);
     const openApp = useOsStore((state) => state.openApp);
     const focusApp = useOsStore((state) => state.focusApp);
-    const closeAll = useOsStore((state)=>state.closeAll);
-    const theme = useOsStore((state)=>state.theme);
-    const setTheme = useOsStore((state)=>state.setTheme);
+    const closeAll = useOsStore((state) => state.closeAll);
+    const theme = useOsStore((state) => state.theme);
+    const setTheme = useOsStore((state) => state.setTheme);
     useEffect(()=>{
         if (theme === 'theme-white') {
             document.body.classList.add('theme-white');

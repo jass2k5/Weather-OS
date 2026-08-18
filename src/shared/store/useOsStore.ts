@@ -1,7 +1,126 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-export const useOsStore = create(persist((set, get) => ({
+export type AppKey = "map" | "clock" | "notification" | "settings" | "contact" | "weather";
+export interface WeatherHistoryItem {
+    city: string;
+    country: string;
+    tz_id: string;
+    loc?: { lat: number; lon: number } | null;
+    liveTemp: number;
+    liveCondition: string;
+    humidity: number;
+    wind: number;
+    windDegree: number;
+    visibility: number;
+    feelsLike: number;
+    isDay: boolean;
+    aqi: number | null;
+}
+export interface NotificationItem {
+    id: string;
+    message: string;
+    type: "info" | "success" | "error" | "warning";
+    timestamp: string;
+}
+export interface DateTimeSettings {
+    showDateTime: boolean;
+    showSeconds: boolean;
+    format: { hour: string; bol: boolean };
+    color: { clr: string; bol: boolean };
+    position: string;
+}
+export interface TempDistSettings {
+    celsius: boolean;
+    km: boolean;
+}
+
+export interface MapSettings {
+    theme: string;
+    Navigations: boolean;
+    flyby: boolean;
+    marker: boolean;
+}
+
+export interface ClockSettings {
+    liveNight: boolean;
+    liveDay: boolean;
+    format: { hour: string; enabled: boolean };
+}
+
+
+export interface FullOsStoreState {
+    // Basic State
+    theme: string;
+    setTheme: (theme: string) => void;
+    isDay: boolean;
+    setNight: () => void;
+    setDay: () => void;
+
+    // UI Toggles
+    isScrollHovered: boolean;
+    isGithubHovered: boolean;
+    setIsGithubHovered: (val: boolean) => void;
+    setIsScrollHovered: (val: boolean) => void;
+    githubText: string | null;
+    setgithubText: (val: string | null) => void;
+
+    // Boot & Background
+    isBooted: boolean;
+    systemBg: string;
+    setBg: (bg: string) => void;
+    finishBoot: () => void;
+
+    // Telemetry
+    activeLocation: string | null;
+    telemetryData: any | null;
+    setSystemTelemetry: (location: string, data: any) => void;
+
+    // Window Management
+    apps: Record<AppKey, { isOpen: boolean }>;
+    closeApp: (Appid: AppKey) => void;
+    openApp: (Appid: AppKey) => void;
+    closeAll: () => void;
+    windowOrder: AppKey[];
+    focusApp: (appId: AppKey) => void;
+
+    // Search History
+    searchHistory: WeatherHistoryItem[];
+    addSearchToHistory: (apiData: any) => void;
+    removeSearchItem: (cityName: string) => void;
+    updateCityData: (cityName: string, newData: Partial<WeatherHistoryItem>) => void;
+
+    // Notifications
+    notificationHistory: NotificationItem[];
+    activeNotifications: NotificationItem[];
+    addNotification: (message: string, type?: "info" | "success" | "error" | "warning") => void;
+    clearNotification: () => void;
+
+    // Settings
+    dateTimeSettings: DateTimeSettings;
+    updateDateTimeSetting: (key: keyof DateTimeSettings, value: any) => void;
+
+    tempdist: TempDistSettings;
+    settempdist: (key: keyof TempDistSettings, val: boolean) => void;
+
+    glassSettings: { enabled: boolean; blurValue: number };
+    updateGlassSetting: (key: string, value: any) => void;
+
+    mouseFollower: { enabled: boolean; clockFollower: boolean };
+    updateFollowerSetting: (key: string, value: any) => void;
+
+    mapSetting: MapSettings;
+    setMapSetting: (key: keyof MapSettings, value: any) => void;
+
+    clockSetting: ClockSettings;
+    setClockSetting: (key: keyof ClockSettings, value: any) => void;
+
+    notificationSetting: { enabled: boolean; sound: boolean };
+    setnotificationSetting: (key: string, value: any) => void;
+}
+
+
+export const useOsStore = create<FullOsStoreState>()(persist((set, get) => ({
     theme: 'dark',
     setTheme: (theme) => set({ theme }),
     isDay: true,
@@ -130,7 +249,7 @@ export const useOsStore = create(persist((set, get) => ({
     updateCityData: (cityName, newData) => set((state) => {
 
         const updatedHistory = state.searchHistory.map((loc) =>
-            (loc.city === cityName ? { ...loc, ...newData } : loc)
+        (loc.city === cityName ? { ...loc, ...newData } : loc)
         );
 
 
@@ -148,7 +267,7 @@ export const useOsStore = create(persist((set, get) => ({
     notificationHistory: [],
     activeNotifications: [],
 
-    addNotification: (message, type = "info") => {
+    addNotification: (message: string, type = "info") => {
         const state = get();
         if (state.notificationSetting && state.notificationSetting.enabled === false) {
             return;
@@ -172,7 +291,7 @@ export const useOsStore = create(persist((set, get) => ({
             audio.play().catch((err) => console.log("Audio play blocked by browser", err));
         }
 
-        let timer = setTimeout(() => {
+        window.setTimeout(() => {
             set((state) => ({
                 activeNotifications: state.activeNotifications.filter((n) => n.id !== id)
             }))
@@ -182,9 +301,9 @@ export const useOsStore = create(persist((set, get) => ({
 
     },
 
-    clearNotification: () => set((state => ({
+    clearNotification: () => set(() => ({
         notificationHistory: []
-    }))),
+    })),
 
 
     //settings section
@@ -199,9 +318,9 @@ export const useOsStore = create(persist((set, get) => ({
         celsius: false,
         km: false,
     },
-    settempdist: (key,val)=> set((state)=>(
+    settempdist: (key, val) => set((state) => (
         {
-            tempdist:{
+            tempdist: {
                 ...state.tempdist,
                 [key]: val
             }
@@ -285,14 +404,12 @@ export const useOsStore = create(persist((set, get) => ({
             ...state.notificationSetting,
             [key]: value
         }
-    }))
-}
-
-),
+    })),
+}),
 
     {
         name: 'weatherOs',
         partialize: (state) => Object.fromEntries(
             Object.entries(state).filter(([key]) => key !== 'notificationHistory' && key !== 'activeNotifications')
         ),
-    }))
+    }));

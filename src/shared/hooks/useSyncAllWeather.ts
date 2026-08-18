@@ -21,8 +21,8 @@ interface WeatherHistoryItem {
 
 export const useSyncAllWeather = () => {
     const searchHistory = useOsStore((state) => state.searchHistory) as WeatherHistoryItem[];
-    const updateCityData = useOsStore((state:any) => state.updateCityData);
-    const addNotification = useOsStore((state:any) => state.addNotification);
+    const updateCityData = useOsStore((state) => state.updateCityData);
+    const addNotification = useOsStore((state) => state.addNotification);
 
     const Api_Key = import.meta.env.VITE_WEATHER_API_KEY;
     const BASE_URL = 'https://api.weatherapi.com/v1';
@@ -45,7 +45,7 @@ export const useSyncAllWeather = () => {
             staleTime: 1000 * 60 * 15,
             onSuccess: (apiData:any) => {
                 try {
-                    const newCityCompare = {
+                    const newCityCompare:WeatherHistoryItem= {
                         city: apiData.location.name,
                         country: apiData.location.country,
                         tz_id: apiData.location.tz_id,
@@ -60,7 +60,7 @@ export const useSyncAllWeather = () => {
                         isDay: apiData.current.is_day === 1,
                         aqi: apiData.current.air_quality ? apiData.current.air_quality['us-epa-index'] : null,
                     };
-                    const oldCityData = {
+                    const oldCityData:WeatherHistoryItem = {
                         city: historyItem.city,
                         country: historyItem.country,
                         tz_id: historyItem.tz_id,
@@ -77,7 +77,7 @@ export const useSyncAllWeather = () => {
                     };
 
                     if (JSON.stringify(oldCityData) !== JSON.stringify(newCityCompare)) {
-                        const id = setTimeout(() => {
+                        const id = window.setTimeout(() => {
                             addNotification(`Synced Weather Data For ${historyItem.city}`, "info");
                         }, 1000);
                         timeoutsRef.current.push(id);
