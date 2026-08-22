@@ -1,4 +1,24 @@
-export const getWeatherAdvisory = (data) => {
+import { WeatherAPIResponse } from "../hooks/useCityForecast";
+
+// 1. Blueprint for a single hazard warning
+export interface Advisory {
+    priority: number;
+    type: string;
+    headline: string;
+    tags: string[];
+    isActive: boolean;
+}
+
+// 2. Blueprint for the final returned object
+export interface AdvisoryResult {
+    mainHeadline: string;
+    bannerTags: string[];
+    allGuidance: Advisory[];
+}
+
+// 3. Attach the return type using the colon after the parameters
+// (Also added | null | undefined so your first if-statement is legally allowed to check for missing data)
+export const getWeatherAdvisory = (data: WeatherAPIResponse | null | undefined): AdvisoryResult => {
     if (!data || !data.current || !data.location) {
         return { mainHeadline: "", bannerTags: [], allGuidance: [] };
     }
@@ -8,10 +28,11 @@ export const getWeatherAdvisory = (data) => {
     const aqiIndex = data.current.air_quality?.['us-epa-index'] ?? 1;
     const city = data.location.name;
 
-    // Define all potential hazards with strict priority weights (Lower number = Higher Priority)
-    const possibleAdvisories = [
+    // Define all potential hazards with strict priority weights
+    // Tell TS this is an array of our Advisory interface
+    const possibleAdvisories: Advisory[] = [
         {
-            priority: 1, // Top Priority
+            priority: 1, 
             type: "Extreme Heat",
             headline: `Extreme heat advisory in ${city}. Avoid direct sunlight.`,
             tags: ["Hydrate", "Shade", "SPF", "Cool"],
@@ -68,7 +89,8 @@ export const getWeatherAdvisory = (data) => {
     const mainHeadline = topPriority.headline;
 
     // Aggregate tags across active warnings for the banner
-    let allCollectedTags = [];
+    let allCollectedTags: string[] = []; // explicitly telling TS this is an array of strings
+    
     activeWarnings.forEach(warning => {
         allCollectedTags = [...allCollectedTags, ...warning.tags];
     });

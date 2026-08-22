@@ -1,4 +1,8 @@
-export const Alerts = ({ paragraph, variant }) => {
+interface AlertProps{
+    paragraph:string;
+    variant:"warning"|"info"|"error";
+}
+export const Alerts = ({ paragraph, variant }:AlertProps) => {
     return (
         <div className={`w-[80%] mx-auto mt-auto shrink-0 flex items-center gap-2 rounded-lg border px-4 py-2.5 transition-colors duration-300 ${
             variant === "warning" ? "border-yellow-500/30 bg-yellow-500/10" : 

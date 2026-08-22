@@ -1,4 +1,10 @@
-export const ThemeCard = ({ src, alt, onClick,videoSrc }) => {
+interface ThemeCardProps{
+    src: string;
+    alt?: string;
+    onClick: () => void;
+    videoSrc?: string;
+}
+export const ThemeCard = ({ src, alt, onClick,videoSrc }: ThemeCardProps) => {
     return (
         <div
             onClick={onClick}
@@ -19,10 +25,10 @@ export const ThemeCard = ({ src, alt, onClick,videoSrc }) => {
                     src={src} 
                     alt={alt || "theme-image"} 
                     loading="eager"
-                    fetchpriority="high"
+                    fetchPriority="high"
                 />
             )}
 
         </div>
     );
-};
+}

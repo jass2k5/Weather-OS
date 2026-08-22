@@ -1,5 +1,10 @@
-
-export const Stepper = ({ value, onChange, min = 0, max = 50 }) => {
+interface StepperProps{
+    value:number;
+    min:number;
+    max:number;
+    onChange:(newValue:number)=>void;
+}
+export const Stepper = ({ value, onChange, min = 0, max = 50 }:StepperProps) => {
     
     const handleDecrease = () => {
         if (value > min) {
