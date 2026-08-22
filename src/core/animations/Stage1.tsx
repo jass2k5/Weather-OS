@@ -1,10 +1,15 @@
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { SplitText } from "gsap/SplitText";
-
+import { RefObject } from "react";
 gsap.registerPlugin(SplitText, useGSAP);
-
-export const RunAct1 = ({ firsth1Ref, secondh1Ref, paraRef, onComplete }) => {
+interface RunAct1Props {
+    firsth1Ref: RefObject<HTMLHeadingElement | null>;
+    secondh1Ref: RefObject<HTMLHeadingElement | null>;
+    paraRef: RefObject<HTMLParagraphElement | null>;
+    onComplete?: () => void;
+}
+export const RunAct1 = ({ firsth1Ref, secondh1Ref, paraRef, onComplete }:RunAct1Props) => {
 
     useGSAP((self) => {
         if (!firsth1Ref.current || !secondh1Ref.current || !paraRef.current) return;
