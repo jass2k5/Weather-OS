@@ -1,6 +1,10 @@
-import React from 'react';
+import { ChangeEvent } from "react";
 
-export const Switch = ({ checked, onChange }) => {
+interface SwitchProps {
+    checked: boolean;
+    onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+}
+export const Switch = ({ checked, onChange }:SwitchProps) => {
   return (
     <label className="relative inline-flex items-center cursor-pointer select-none">
       <input 

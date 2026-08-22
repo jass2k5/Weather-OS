@@ -1,7 +1,9 @@
-import React from 'react';
-
-
-export const DayNightSwitch = ({ checked, onChange }) => {
+import  { ChangeEvent} from 'react';
+interface DayNightSwitchProps{
+  checked:boolean;
+  onChange:(newVal:ChangeEvent<HTMLInputElement>)=>void;
+}
+export const DayNightSwitch = ({ checked, onChange }:DayNightSwitchProps) => {
   return (
     <div className="dayNightToggleWrapper">
       <input 
