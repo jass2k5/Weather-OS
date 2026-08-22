@@ -1,0 +1,84 @@
+import { useState, useEffect } from "react";
+import { useOsStore ,AppKey} from "../../shared/store/useOsStore";
+interface DockIconProps{
+    iconsource:string;
+    appName:AppKey;
+    isOpen:boolean;
+    openApp:(id:AppKey)=>void;
+    Class:string;
+    closeApp:(id:AppKey)=>void;
+    shortCut:string
+}
+export const DockIcon = ({ iconsource, appName, isOpen, openApp, Class, closeApp,shortCut }:DockIconProps) => {
+    const [Menu, setMenu] = useState(false);
+    const focusApp = useOsStore((state) => state.focusApp);
+
+    // Click Outside listener: Kahin aur click karne par menu band ho jayega
+    useEffect(() => {
+        const closeMenu = () => setMenu(false);
+        if (Menu) window.addEventListener('click', closeMenu);
+        return () => window.removeEventListener('click', closeMenu);
+    }, [Menu]);
+
+    return (
+        
+        <div className="dock-item relative flex flex-col items-center justify-center gap-1.5">
+
+
+            {Menu && (
+                <div
+                    onClick={(e) => e.stopPropagation()}
+                    className="rightclick absolute -top-37 bg-[#1a1a1a]/90 backdrop-blur-md border border-white/10 p-2 rounded-xl flex flex-col gap-1 z-50 min-w-[130px] shadow-2xl cursor-default w-max"
+                >
+                    <span className="text-white/40 text-[16px] text-left ml-2.5 uppercase tracking-wider mb-1 pointer-events-none">
+                        {appName}
+                    </span>
+
+                    <div className="h-[1px] w-full bg-white/10 my-0.5"></div>
+
+                    <span className="font-bold text-xs leading-none mb-0.5 px-3 text-white/60">Shortcut {shortCut}</span>
+
+
+                    <div className="h-[1px] w-full bg-white/10 my-0.5"></div>
+
+                    <button
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            if (isOpen) closeApp(appName);
+                            setMenu(false);
+                        }}
+                        className="text-red-400 text-sm hover:bg-red-500/20 px-3 py-1.5 rounded-lg text-left flex justify-between items-center transition-colors"
+                    >
+                        <span>Close</span>
+                        <span className="font-bold text-lg leading-none mb-0.5">×</span>
+                    </button>
+                </div>
+            )}
+
+
+            <div
+                onClick={(e) => {
+                    e.stopPropagation(); 
+                    if (Menu) setMenu(false);
+                    if (!isOpen) {
+                        openApp(appName);
+                        focusApp(appName);
+                    } else {
+                        focusApp(appName);
+                    }
+                }}
+                onContextMenu={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    setMenu(!Menu);
+                }}
+                className={`${Class} icon cursor-pointer flex items-center justify-center`}
+            >
+                <img className="icons" src={iconsource} alt="icon" />
+            </div>
+
+            {/* 4. Active Dot Indicator */}
+            <i className={`ri-circle-fill text-[5px] transition-opacity duration-300 ${isOpen ? "opacity-100" : "opacity-0"}`}></i>
+        </div>
+    );
+}
