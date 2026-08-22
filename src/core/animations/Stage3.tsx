@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, ChangeEvent, FormEvent } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { useMutation } from "@tanstack/react-query";
@@ -11,7 +11,7 @@ gsap.registerPlugin(SplitText);
 const Api_Key = import.meta.env.VITE_WEATHER_API_KEY;
 const BASE_URL = 'https://api.weatherapi.com/v1';
 
-const fetchLocationTelemetry = async (locationName) => {
+const fetchLocationTelemetry = async (locationName: string) => {
     try {
         const response = await axios.get(`${BASE_URL}/current.json`, {
             params: {
@@ -21,7 +21,7 @@ const fetchLocationTelemetry = async (locationName) => {
             }
         });
         return response.data;
-    } catch (error) {
+    } catch (error: any) {
         if (error.response) {
             console.error("API CALL FAILED:", error.response);
         }
@@ -29,20 +29,25 @@ const fetchLocationTelemetry = async (locationName) => {
     }
 };
 
-export const RunAct3 = ({ onComplete }) => {
+interface RunAct3Props {
+    onComplete: () => void;
+}
+
+export const RunAct3 = ({ onComplete }: RunAct3Props) => {
     const [inputValue, setInputValue] = useState("");
-    const inputRef = useRef(null);
-    const containerRef = useRef(null);
-    const info = useRef(null);
+    const inputRef = useRef<HTMLInputElement>(null);
+    const containerRef = useRef<HTMLDivElement>(null);
+    const info = useRef<HTMLDivElement>(null);
     const setSystemTelemetry = useOsStore((state) => state.setSystemTelemetry);
-    const timeoutIdRef = useRef(null);
+    
+    const timeoutIdRef = useRef<number| null>(null);
+    
     const addNotification = useOsStore((state) => state.addNotification);
     const { contextSafe } = useGSAP();
 
     const { mutate, isPending, isSuccess, isError } = useMutation({
         mutationFn: fetchLocationTelemetry,
-        onSuccess: (data, submittedLocation) => {
-      
+        onSuccess: (data, submittedLocation: any) => {
             const cleanBootData = {
                 city: data.location.name,
                 country: data.location.country,
@@ -68,7 +73,7 @@ export const RunAct3 = ({ onComplete }) => {
                     const tl = gsap.timeline({
                         delay: 0.3,
                         onComplete: () => {
-                            console.log("oncomplete run")
+                            console.log("oncomplete run");
                             onComplete();
                         }
                     });
@@ -89,7 +94,7 @@ export const RunAct3 = ({ onComplete }) => {
                 })();
             }, 3000);
         },
-        onError: (error, submittedLocation) => {
+        onError: (_error: any, submittedLocation: any) => {
             addNotification(`Telemetry failed for node: ${submittedLocation}`, "error");
         }
     });
@@ -106,30 +111,30 @@ export const RunAct3 = ({ onComplete }) => {
             autoAlpha: 1,
             ease: 'back.in',
             onComplete: () => {
-                inputRef.current.focus();
+                inputRef.current?.focus();
             }
-        })
-    }, { dependencies: [] })
+        });
+    }, { dependencies: [] });
 
     useEffect(() => {
         return () => {
             if (timeoutIdRef.current) {
                 clearTimeout(timeoutIdRef.current);
             }
-        }
-    }, [])
+        };
+    }, []);
 
-    const handlesumbit = (e) => {
+    const handlesubmit = (e:any) => {
         e.preventDefault();
         const cleanValue = inputValue.trim();
         if (!cleanValue) return;
         mutate(cleanValue);
-    }
+    };
 
     return (
-        <div ref={containerRef} className=" main-container absolute h-full top-0 left-[50%] transform  w-[50%] flex flex-col gap-5 justify-center items-center">
+        <div ref={containerRef} className="main-container absolute h-full top-0 left-[50%] transform w-[50%] flex flex-col gap-5 justify-center items-center">
             <div className="flex flex-col justify-center items-center h-auto w-full gap-4">
-                <form onSubmit={handlesumbit} className="flex flex-col justify-center items-center">
+                <form onSubmit={handlesubmit} className="flex flex-col justify-center items-center">
                     <input
                         ref={inputRef}
                         type="text"
@@ -137,7 +142,7 @@ export const RunAct3 = ({ onComplete }) => {
                         disabled={isPending}
                         placeholder="Enter The Area Name"
                         value={inputValue}
-                        onChange={(e) => setInputValue(e.target.value)}
+                        onChange={(e: ChangeEvent<HTMLInputElement>) => setInputValue(e.target.value)}
                     />
                 </form>
             </div>
@@ -159,5 +164,5 @@ export const RunAct3 = ({ onComplete }) => {
                 )}
             </div>
         </div>
-    )
-}
+    );
+};

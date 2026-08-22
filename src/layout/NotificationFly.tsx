@@ -4,10 +4,19 @@ import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 
 gsap.registerPlugin(useGSAP);
+export interface OsNotification {
+    id: string | number;
+    type: 'success' | 'error' | 'info' | 'warning' | 'offline' | 'online' | string;
+    message: string;
+    timestamp: string;
+}
+interface NotificationItemProps {
+    notif: OsNotification;
+    index: number;
+}
 
-
-const NotificationItem = ({ notif, index }) => {
-    const toastRef = useRef(null);
+const NotificationItem = ({ notif, index }:NotificationItemProps) => {
+    const toastRef = useRef<HTMLDivElement>(null);
 
     useGSAP(() => {
         const tl = gsap.timeline();

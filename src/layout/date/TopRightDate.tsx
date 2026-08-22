@@ -14,7 +14,7 @@ export const TopRightDate = () => {
     const [timeString, setTimeString] = useState("");
     const [dateString, setDateString] = useState("");
     
-    const getPositionClasses = (pos) => {
+    const getPositionClasses = (pos:string) => {
         switch(pos) {
             case 'top-left': return 'top-[8%] left-[6%]';
             case 'bottom-left': return 'bottom-[2%] left-[6%]';
@@ -43,7 +43,7 @@ export const TopRightDate = () => {
         const updateClock = () => {
             const now = new Date();
 
-            const timeOptions = {
+            const timeOptions: Intl.DateTimeFormatOptions = {
                 timeZone: tz_id,
                 hour: "2-digit",
                 minute: "2-digit",

@@ -2,7 +2,8 @@ import { Rnd } from "react-rnd";
 import { useOsStore } from "../store/useOsStore";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import { useRef, useState } from "react";
+import { useRef, useState, ReactNode } from "react";
+import { AppKey } from '../store/useOsStore';
 
 const resizeHandleStyles = {
     right: { width: "14px", right: 0, zIndex: 100 },
@@ -15,17 +16,42 @@ const resizeHandleStyles = {
     topLeft: { width: "18px", height: "18px", left: 0, top: 0, zIndex: 101 },
 };
 
-export const DraggableWindow = ({ children, title, Appid, defaultpos = { x: 300, y: 100 }, isResizable = true, defaultSize = { width: 1000, height: 500 }, minHeight, minWidth }) => {
+interface DraggableWindowProps {
+    children: ReactNode;
+    title: string;
+    Appid: AppKey;
+    defaultpos?: { x: number; y: number };
+    isResizable?: boolean; 
+    defaultSize?: { width: number | string; height: number | string };
+    minHeight?: number | string;
+    minWidth?: number | string;
+}
+
+export const DraggableWindow = ({ 
+    children, 
+    title, 
+    Appid, 
+    defaultpos = { x: 300, y: 100 }, 
+    isResizable = true, 
+    defaultSize = { width: 1000, height: 500 }, 
+    minHeight, 
+    minWidth 
+}: DraggableWindowProps) => {
+    
     const closeApp = useOsStore((state) => state.closeApp);
-    const windowRef = useRef(null);
+    const windowRef = useRef<HTMLDivElement>(null); 
     const focusApp = useOsStore((state) => state.focusApp);
     const windowOrder = useOsStore((state) => state.windowOrder);
     const zIndex = 10 + windowOrder.indexOf(Appid);
     
-    const [size, setSize] = useState(defaultSize);
-    const [position, setPosition] = useState(defaultpos);
+    const [size, setSize] = useState<{ width: number | string; height: number | string }>(defaultSize);
+    const [position, setPosition] = useState<{ x: number; y: number }>(defaultpos);
     const [isMaximized, setIsMaximized] = useState(false);
-    const [prevBounds, setPrevBounds] = useState({ size: defaultSize, position: defaultpos });
+ 
+    const [prevBounds, setPrevBounds] = useState<{
+        size: { width: number | string; height: number | string };
+        position: { x: number; y: number };
+    }>({ size: defaultSize, position: defaultpos });
 
     gsap.registerPlugin(useGSAP);
 
@@ -93,7 +119,6 @@ export const DraggableWindow = ({ children, title, Appid, defaultpos = { x: 300,
         >
             <div
                 ref={windowRef}
-                // Removed the state logic. The CSS vars will automatically react to the body class!
                 className="w-full h-full flex flex-col border border-[var(--border-clr)] bg-[var(--window-bg)] text-[var(--text-clr)] backdrop-blur-md rounded-[0.6rem] overflow-hidden shadow-2xl transition-colors duration-300"
             >
                 <div className="window-header shrink-0 w-full h-7 cursor-grab active:cursor-grabbing bg-[var(--header-bg)] p-4 flex items-center justify-center relative border-b border-[var(--border-clr)] transition-colors duration-300">

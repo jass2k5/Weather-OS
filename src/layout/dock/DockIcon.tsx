@@ -1,7 +1,15 @@
 import { useState, useEffect } from "react";
-import { useOsStore } from "../../shared/store/useOsStore";
-
-export const DockIcon = ({ iconsource, appName, isOpen, openApp, Class, closeApp,shortCut }) => {
+import { useOsStore ,AppKey} from "../../shared/store/useOsStore";
+interface DockIconProps{
+    iconsource:string;
+    appName:AppKey;
+    isOpen:boolean;
+    openApp:(id:AppKey)=>void;
+    Class:string;
+    closeApp:(id:AppKey)=>void;
+    shortCut:string
+}
+export const DockIcon = ({ iconsource, appName, isOpen, openApp, Class, closeApp,shortCut }:DockIconProps) => {
     const [Menu, setMenu] = useState(false);
     const focusApp = useOsStore((state) => state.focusApp);
 

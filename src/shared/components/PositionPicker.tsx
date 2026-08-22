@@ -1,4 +1,8 @@
-export const PositionPicker = ({ value, onChange }) => {
+interface PositionPickerProps{
+    value:string;
+    onChange:(newVal:string)=>void;
+}
+export const PositionPicker = ({ value, onChange }:PositionPickerProps) => {
  
     return (
         <div className="w-14 h-10 bg-black/30 rounded-md p-1 grid grid-cols-2 grid-rows-2 gap-1 border border-white/10">

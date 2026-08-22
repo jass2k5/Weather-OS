@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { getWeatherAdvisory } from "../../shared/components/BannerInfo";
+import { getWeatherAdvisory } from "../../shared/utils/BannerInfo";
 import { useCityForecast } from "../../shared/hooks/useCityForecast";
 import warning from '../../shared/assets/warning.webp';
 import Skeleton from 'react-loading-skeleton';

@@ -1,4 +1,11 @@
-export const SettingRow = ({ title, subtitle, control, showDivider = true }) => {
+import {ReactNode} from 'react';
+interface SettingRowProps{
+    title:string;
+    subtitle:string;
+    control:ReactNode;
+    showDivider:boolean;
+}
+export const SettingRow = ({ title, subtitle, control, showDivider = true }:SettingRowProps) => {
     return (
         <>
             <div className="flex justify-between items-center p-3">

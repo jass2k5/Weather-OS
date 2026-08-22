@@ -1,10 +1,13 @@
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { Draggable } from "gsap/Draggable";
-
+import { RefObject } from "react";
 gsap.registerPlugin(Draggable, useGSAP);
-
-export const RunAct2 = ({ dragBoxRef, onComplete }) => {
+interface RunAct2Props {
+    dragBoxRef: RefObject<HTMLDivElement | null>;
+    onComplete: () => void;
+}
+export const RunAct2 = ({ dragBoxRef, onComplete }:RunAct2Props) => {
     
     useGSAP((self)=>{
         const container = dragBoxRef.current;
