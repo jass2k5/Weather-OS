@@ -1,7 +1,9 @@
-import { useState } from "react";
 import { useOsStore } from "../../shared/store/useOsStore";
 import { useQueryClient, useIsFetching } from "@tanstack/react-query";
-export const SyncBtn = ({city}) => {
+interface SyncBtnProps{
+  city:string;
+}
+export const SyncBtn = ({city}:SyncBtnProps) => {
   const addNotification = useOsStore((state) => state.addNotification);
   const queryClient = useQueryClient();
   const isSyncing = useIsFetching({ queryKey: ["syncWeather", city] });
