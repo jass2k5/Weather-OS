@@ -4,7 +4,7 @@ import Lenis from 'lenis';
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
 import { Header } from './header/Header';
-import { Form } from './form/Form';
+import {Form} from './form/Form';
 import { Information } from './information/Information';
 import { Socials } from './socials/Socials';
 import { Footer } from './footer/Footer';
