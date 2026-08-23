@@ -3,7 +3,6 @@ import { useOsStore } from "../../shared/store/useOsStore"
 export const NotificationApp = () => {
 
     const notificationHistory = useOsStore((state) => state.notificationHistory);
-    const myZIndex = useOsStore((state) => 10 + state.windowOrder.indexOf('notification'));
     
     return (
       

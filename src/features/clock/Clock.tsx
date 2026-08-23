@@ -1,5 +1,5 @@
 import { useOsStore } from "../../shared/store/useOsStore";
-import { useEffect, useRef } from "react";
+import { useEffect} from "react";
 import { WeatherCards } from "./WeatherCards";
 
 

@@ -1,12 +1,12 @@
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, FormEvent } from "react";
 import { useOsStore } from "../../shared/store/useOsStore";
 import { useSearchLocation } from "../../shared/hooks/useSearchLocation";
 import { memo } from "react";
 export const Searchbar = memo( () => {
-    const [inputvalue, setInputValue] = useState("");
-    const [prev, setPrev] = useState(false);
+    const [inputvalue, setInputValue] = useState<string>("");
+    const [prev, setPrev] = useState<boolean>(false);
     const removeSearchItem = useOsStore((state) => state.removeSearchItem);
     const searchHistory = useOsStore((state) => state.searchHistory);
     const addNotification = useOsStore((state) => state.addNotification);
@@ -14,14 +14,14 @@ export const Searchbar = memo( () => {
     const { searchLocation, isSearching } = useSearchLocation();
     
    
-    const formRef = useRef(null);
-    const searchWrapperRef = useRef(null);
-    const isFirstRender = useRef(true);
-    const inputRef = useRef(null); 
+    const formRef = useRef<HTMLDivElement>(null);
+    const searchWrapperRef = useRef<HTMLDivElement>(null);
+    const isFirstRender = useRef<boolean>(true);
+    const inputRef = useRef<HTMLInputElement>(null); 
 
 
     useEffect(() => {
-        const handleKeyDown = (e) => {
+        const handleKeyDown = (e:KeyboardEvent) => {
             if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'f') {
                 e.preventDefault();
                 if (inputRef.current) {
@@ -37,8 +37,8 @@ export const Searchbar = memo( () => {
 
    
     useEffect(() => {
-        const handleClickOutside = (event) => {
-            if (searchWrapperRef.current && !searchWrapperRef.current.contains(event.target)) {
+        const handleClickOutside = (event:MouseEvent) => {
+            if (searchWrapperRef.current && !searchWrapperRef.current.contains(event.target as Node)) {
                 setPrev(false);
             }
         };
@@ -74,7 +74,7 @@ export const Searchbar = memo( () => {
         }
     }, { scope: formRef, dependencies: [isSearching] });
 
-    const handlesumbit = (e) => {
+    const handlesubmit = (e:FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         let cleanvalue = inputvalue.trim();
         if (!cleanvalue) return;
@@ -86,7 +86,7 @@ export const Searchbar = memo( () => {
         <div ref={searchWrapperRef} className="expandsearch">
             <div ref={formRef} className="SearchContainer">
                 <div className="logoAndbar">
-                    <form onSubmit={handlesumbit} className="form">
+                    <form onSubmit={handlesubmit} className="form">
                         <input 
                             ref={inputRef}
                             type="text"
@@ -98,7 +98,7 @@ export const Searchbar = memo( () => {
                         />
                     </form>
                     <div className="holder">
-                        <i onClick={handlesumbit} className="ri-search-line search"></i>
+                        <i onClick={(e:any)=>{handlesubmit(e)}} className="ri-search-line search"></i>//can't change to btn to avoid error we used any
                         <i className="ri-send-plane-fill arrow"></i>
                     </div>
                 </div>

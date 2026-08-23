@@ -1,7 +1,9 @@
 import { useState,useEffect } from "react";
 import { useOsStore } from "../../shared/store/useOsStore";
-
-export const MiniCardClock = ({ tz_id }) => {
+interface MiniCardClockProps{
+    tz_id:string;
+}
+export const MiniCardClock = ({ tz_id }:MiniCardClockProps) => {
     const [time, setTime] = useState("");
     const [monthName,setMonthName] = useState("");
     const [dateNum,setDateNum] = useState("");

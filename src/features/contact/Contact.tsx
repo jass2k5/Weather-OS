@@ -4,7 +4,7 @@ import Lenis from 'lenis';
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
 import { Header } from './header/Header';
-import { Form } from './form/Form';
+import {Form} from './form/Form';
 import { Information } from './information/Information';
 import { Socials } from './socials/Socials';
 import { Footer } from './footer/Footer';
@@ -12,8 +12,7 @@ import { CenterImage } from './information/CenterImage';
 
 gsap.registerPlugin(ScrollTrigger);
 export const ContactApp = () => {
-    const addNotification = useOsStore((state) => state.addNotification);
-    const scrollContainerRef = useRef(null);
+    const scrollContainerRef = useRef<(HTMLDivElement|null)>(null);
     const isDay = useOsStore((state) => state.isDay);
     useEffect(() => {
         if (!isDay) {
@@ -25,8 +24,8 @@ export const ContactApp = () => {
 
     useEffect(() => {
         const lenis = new Lenis({
-            wrapper: scrollContainerRef.current,
-            content: scrollContainerRef.current.querySelector('.contactMain'),
+            wrapper: scrollContainerRef.current!,
+            content: scrollContainerRef.current!.querySelector('.contactMain') as HTMLElement,
             duration: 1,
             easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
         });

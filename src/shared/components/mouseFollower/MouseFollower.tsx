@@ -6,21 +6,21 @@ import batGif from "../../assets/batGif.svg";
 import { useOsStore } from "../../store/useOsStore";
 
 export const MouseFollower = () => {
-    const cursorRef = useRef(null);
+    const cursorRef = useRef<HTMLDivElement>(null);
     const isDay = useOsStore((state)=> state.isDay);
     const isScrollHovered = useOsStore((state)=>state.isScrollHovered);
     const mouseFollower = useOsStore((state)=>state.mouseFollower);
     const isGithubHovered = useOsStore((state)=>state.isGithubHovered);
     const githubText = useOsStore((state)=>state.githubText);
     
-    const mainCursorRef = useRef(null);
-    const githubCursorRef = useRef(null);
+    const mainCursorRef = useRef<HTMLDivElement>(null);
+    const githubCursorRef = useRef<HTMLDivElement>(null);
 
     useGSAP(()=>{
         const xTo = gsap.quickTo(cursorRef.current, "x", { duration: 0.4, ease: "power3" });
         const yTo = gsap.quickTo(cursorRef.current, "y", { duration: 0.4, ease: "power3" });
 
-        const handleMouseMove = (e)=>{
+        const handleMouseMove = (e:MouseEvent)=>{
             xTo(e.clientX+10);
             yTo(e.clientY+20);
         }

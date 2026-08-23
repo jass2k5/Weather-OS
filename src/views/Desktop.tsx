@@ -1,6 +1,6 @@
 import { useEffect, lazy, Suspense, useState, useRef } from 'react';
 import { useQueryClient } from "@tanstack/react-query";
-import { useOsStore } from "../shared/store/useOsStore";
+import { useOsStore,AppKey } from "../shared/store/useOsStore";
 import { DraggableWindow } from "../shared/components/DraggableWindow";
 import { TopRightDate } from "../layout/date/TopRightDate";
 import { Dock } from "../layout/dock/Dock";
@@ -28,15 +28,25 @@ const Settings = lazy(() => import("../features/settings/Settings").then(m => ({
 const ContactApp = lazy(() => import("../features/contact/Contact").then(m => ({ default: m.ContactApp })));
 const NotificationApp = lazy(() => import("../features/notification/Notification").then(m => ({ default: m.NotificationApp })));
 const WeatherApp = lazy(()=>import( '../features/weather/Weather').then(m => ({default: m.WeatherApp})));
-const APP_CONFIG = [
-        { id: 'contact', title: "Contact Me", Component: ContactApp, minW: 520, minH: 380, defW: window.innerWidth, defH: window.innerHeight, posX: 0, posY: 0 },
-        { id: 'weather', title: "Weather", Component: WeatherApp, minW: 520, minH: 380, defW: window.innerWidth, defH: window.innerHeight, posX: 0, posY: 0 },
-        { id: 'notification', title: "Notification History", Component: NotificationApp, minW: 520, minH: 380, defW: 520, defH: 380, isResizable: false },
-        { id: 'map', title: "Map", Component: WeatherMap, minW: 500, minH: 340, defW: window.innerWidth, defH: window.innerHeight, posX: 0, posY: 0 },
-        { id: 'settings', title: "Settings", Component: Settings, minW: 750, minH: 450, defW: window.innerWidth * 0.7, defH: window.innerHeight * 0.7, posX: window.innerWidth * 0.02, posY: window.innerHeight * 0.02 },
-        { id: 'clock', title: "Clock", Component: Clock, minW: 459, minH: 406, defW: window.innerWidth, defH: window.innerHeight, posX: 0, posY: 0 }
-
-    ];
+ const APP_CONFIG: Array<{
+    id: AppKey;
+    title: string;
+    Component: React.ComponentType;
+    minW: number;
+    minH: number;
+    defW: number;
+    defH: number;
+    posX?: number|undefined;
+    posY?: number|undefined;
+    isResizable?: boolean;
+}> = [
+    { id: 'contact', title: "Contact Me", Component: ContactApp, minW: 520, minH: 380, defW: window.innerWidth, defH: window.innerHeight, posX: 0, posY: 0 },
+    { id: 'weather', title: "Weather", Component: WeatherApp, minW: 520, minH: 380, defW: window.innerWidth, defH: window.innerHeight, posX: 0, posY: 0 },
+    { id: 'notification', title: "Notification History", Component: NotificationApp, minW: 520, minH: 380, defW: 520, defH: 380, isResizable: false },
+    { id: 'map', title: "Map", Component: WeatherMap, minW: 500, minH: 340, defW: window.innerWidth, defH: window.innerHeight, posX: 0, posY: 0 },
+    { id: 'settings', title: "Settings", Component: Settings, minW: 750, minH: 450, defW: window.innerWidth * 0.7, defH: window.innerHeight * 0.7, posX: window.innerWidth * 0.02, posY: window.innerHeight * 0.02 },
+    { id: 'clock', title: "Clock", Component: Clock, minW: 459, minH: 406, defW: window.innerWidth, defH: window.innerHeight, posX: 0, posY: 0 }
+];
 
 const shortCuts =[
     {app:"map",src:one},
@@ -53,7 +63,7 @@ const shortCuts =[
 export const Desktop = () => {
     const queryClient = useQueryClient();
     const [isOpen,setIsOpen] = useState(false);
-    const shortCutRef = useRef(null);
+    const shortCutRef = useRef<HTMLDivElement>(null);
     const bgUrl = useOsStore((state) => state.systemBg);
     const apps = useOsStore((state) => state.apps);
     const addNotification = useOsStore((state) => state.addNotification);
@@ -75,8 +85,8 @@ export const Desktop = () => {
             addNotification("Synced All Weather Data Resync after 15min.", "info");
         }, 4000);
         
-        const handleOutsideClick = (e)=>{
-            if(shortCutRef.current && !shortCutRef.current.contains(e.target)){
+        const handleOutsideClick = (e:MouseEvent)=>{
+            if(shortCutRef.current && !shortCutRef.current.contains(e.target as Node)){
                 setIsOpen(false);
             }
         }
@@ -99,7 +109,7 @@ export const Desktop = () => {
            <div ref={shortCutRef} className='shortcut select-none  z-15 h-max w-max absolute right-[1%] bottom-[1%] p-2 flex flex-col justify-center items-center gap-5 pointer-events-none'>
 
             <div  className={`guide h-max w-max p-5 bg-white border border-white/60 rounded-2xl ${!isOpen?'opacity-0':'opacity-100'}`}>
-             {shortCuts.map((short,index)=>(
+             {shortCuts.map((short)=>(
                 <div key={`${short.app}`} className='h-max w-max p-1 flex gap-2'>
                     <img className='h-8' src={alt} alt="alt"/>
                     <span className='text-xl text-black'>+</span>
@@ -149,7 +159,7 @@ export const Desktop = () => {
                             minWidth={app.minW}
                             minHeight={app.minH}
                             defaultSize={{ width: app.defW, height: app.defH }}
-                            defaultpos={app.posX !== undefined ? { x: app.posX, y: app.posY } : undefined}
+                            defaultpos={app.posX !== undefined && app.posY !== undefined? { x: app.posX, y: app.posY } : undefined}
                             isResizable={app.isResizable}
                         >
                             {app.id === 'map' ? (
