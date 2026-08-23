@@ -3,7 +3,6 @@ import { useOsStore } from "../../../shared/store/useOsStore";
 import { useEffect } from "react";
 import contactHeaderImg from "../../../shared/assets/Contactheader.webp";
 export const Header=()=>{
-    const isGithubHovered = useOsStore((state)=>state.isGithubHovered);
     const setIsGithubHovered = useOsStore((state)=>state.setIsGithubHovered);
     const setgithubText = useOsStore((state)=>state.setgithubText);
     const HeadRef = useScrollFade({y:300,duration:1.7,ease:"power2.inOut",origin:"top center",});

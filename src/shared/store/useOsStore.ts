@@ -20,7 +20,7 @@ export interface WeatherHistoryItem {
 export interface NotificationItem {
     id: string;
     message: string;
-    type: "info" | "success" | "error" | "warning";
+    type: "info" | "success" | "error" | "warning"|"online"|"offline";
     timestamp: string;
 }
 export interface DateTimeSettings {
@@ -93,7 +93,7 @@ export interface FullOsStoreState {
     // Notifications
     notificationHistory: NotificationItem[];
     activeNotifications: NotificationItem[];
-    addNotification: (message: string, type?: "info" | "success" | "error" | "warning") => void;
+    addNotification: (message: string, type?: "info" | "success" | "error" | "warning"|"online"|"offline") => void;
     clearNotification: () => void;
 
     // Settings
