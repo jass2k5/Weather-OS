@@ -17,8 +17,8 @@ export const WeatherCards = memo(() => {
     const searchHistory = useOsStore((state) => state.searchHistory);
     const setIsScrollHovered = useOsStore((state) => state.setIsScrollHovered)
     const clockFollower = useOsStore((state) => state.mouseFollower.clockFollower);
-    const cardRefs = useRef([]);
-    const containerRef = useRef(null);
+    const cardRefs = useRef<(HTMLDivElement|null)[]>([]);
+    const containerRef = useRef<(HTMLDivElement|null)>(null);
     const { formatTemp, formatDistance } = useTemperatureUnit();
 
     useGSAP(() => {
@@ -43,7 +43,7 @@ export const WeatherCards = memo(() => {
             });
 
         });
-        let resizeTimeout;
+        let resizeTimeout:number;
         const resizeObserver = new ResizeObserver(() => {
             clearTimeout(resizeTimeout);
             resizeTimeout = setTimeout(() => {
@@ -84,7 +84,7 @@ export const WeatherCards = memo(() => {
             }} ref={containerRef} className=" holder h-[75%] w-[100%] max-w-[900px] overflow-y-auto scrollbar-none relative rounded-3xl -translate-y-8">
             {searchHistory.map((loc, index) => (
                 <div key={`${loc.city}-${index}`}
-                    ref={(el) => (cardRefs.current[index] = el)}
+                    ref={(el) => {cardRefs.current[index] = el}}
                     className={`data  h-full w-full border-2 rounded-3xl overflow-hidden sticky top-0 border-white/25 top-0 `}>
                     {loc.isDay && clockSetting.liveDay && (<video
                         className="video h-full w-full object-center object-cover scale-x-[1.07] rounded-3xl z-0 "
