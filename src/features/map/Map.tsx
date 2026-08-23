@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import Map from "react-map-gl/maplibre";
+import Map, { MapRef } from "react-map-gl/maplibre";
 import { Marker } from "react-map-gl/maplibre";
 import "maplibre-gl/dist/maplibre-gl.css";
 import { NavigationControl } from "react-map-gl/maplibre";
@@ -8,10 +8,8 @@ import "react-loading-skeleton/dist/skeleton.css";
 import { useOsStore } from "../../shared/store/useOsStore";
 import { Searchbar } from "./Searchbar";
 import { Text } from "./Text";
-import gsap from "gsap";
 
-
-const getCoord = (lat, lon) => {
+const getCoord = (lat?:number, lon?:number) => {
     if (lat != null && lon != null) return { lat, lon };
     return null;
 };
@@ -24,10 +22,10 @@ const mapThemes = {
 export const WeatherMap = () => {
 
     const myZIndex = useOsStore((state) => 10 + state.windowOrder.indexOf('map'));
-    const [isMapLoaded, setIsMapLoaded] = useState(false);
-    const [mapError, setMapError] = useState("");
-    const containerRef = useRef(null);
-    const mapRef = useRef(null);
+    const [isMapLoaded, setIsMapLoaded] = useState<boolean>(false);
+    const [mapError, setMapError] = useState<string>("");
+    const containerRef = useRef<HTMLDivElement>(null);
+    const mapRef = useRef<MapRef>(null);
     const flyby = useOsStore((state) => state.mapSetting.flyby);
     const marker = useOsStore((state) => state.mapSetting.marker);
     const theme = useOsStore((state) => state.mapSetting.theme);
@@ -46,7 +44,7 @@ export const WeatherMap = () => {
 
 
     useEffect(() => {
-        if (isMapLoaded && coord) {
+        if (isMapLoaded && coord && mapRef.current) {
             if (flyby) {
                 mapRef.current.getMap().flyTo({
                     center: [coord.lon, coord.lat],

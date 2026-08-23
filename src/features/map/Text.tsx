@@ -15,9 +15,9 @@ export const Text = memo(() => {
     const country = useOsStore((state) => state.telemetryData?.country ?? "Unknown Country");
     const temperature = useOsStore((state) => state.telemetryData?.liveTemp ?? 0);
     const weatherText = useOsStore((state) => state.telemetryData?.liveCondition ?? "Loading...");
-    const cityRef = useRef(null);
-    const tempRef = useRef(null);
-    const weatherTextRef = useRef(null);
+    const cityRef = useRef<HTMLHeadingElement>(null);
+    const tempRef = useRef<HTMLSpanElement>(null);
+    const weatherTextRef = useRef<HTMLSpanElement>(null);
 
     useGSAP(() => {
         const weatherwords = SplitText.create(weatherTextRef.current, { type: "chars" });
