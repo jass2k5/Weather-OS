@@ -1,0 +1,6 @@
+# Ignore config files for language stats
+*.config.js linguist-detectable=false
+eslint.config.js linguist-detectable=false
+
+# If you accidentally committed dist, ignore it
+dist/* linguist-vendored
