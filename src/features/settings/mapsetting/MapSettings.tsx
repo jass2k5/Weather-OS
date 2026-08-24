@@ -1,9 +1,6 @@
 import { useOsStore } from "../../../shared/store/useOsStore"
-import { useState } from "react";
 import { Switch } from "../../../shared/components/ToggleBtn";
-import { Stepper } from "../../../shared/components/ArrowStepper";
 import { SettingRow } from "../../../shared/components/SettingRow";
-import { DayNightSwitch } from "../../../shared/components/ThemeBtn";
 import { SettingGroup } from "../../../shared/components/SettingGroup";
 import { ThemeContainer } from "../../../shared/components/ThemeContainer";
 import { ThemeCard } from "../../../shared/components/ThemeCard";
