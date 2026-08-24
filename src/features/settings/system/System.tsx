@@ -8,8 +8,12 @@ import { PositionPicker } from "../../../shared/components/PositionPicker";
 import { SettingGroup } from "../../../shared/components/SettingGroup";
 import { ThemeCard } from "../../../shared/components/ThemeCard";
 import { ThemeContainer } from "../../../shared/components/ThemeContainer";
-
-const Wallpapers = [
+interface WallpaperProps{
+    id: "firstWalpaper"|"secondWalpaper"| "thirdWalpaper";
+    src: "/stage1bg.webp"|"/stage2bg.webp"|"/stage3bg.webp";
+    alt:string;
+}
+const Wallpapers:WallpaperProps[] = [
     {
         id: "firstWalpaper",
         src: "/stage1bg.webp",

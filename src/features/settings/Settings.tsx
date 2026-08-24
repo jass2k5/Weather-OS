@@ -1,11 +1,13 @@
-import { useState } from "react";
-import { useOsStore } from "../../shared/store/useOsStore";
+import { ReactNode, useState } from "react";
 import { SystemSettings } from "./system/System";
 import { MapSet } from "./mapsetting/MapSettings";
 import { ClockSetting } from "./clocksetting/ClockSetting";
 import { NotifySet } from "./notificationsetting/NotificationSet";
-
-const options = [
+interface options{
+    id:string;
+    icon:ReactNode;
+}
+const options:options[] = [
     { id: "System", icon: <i className="ri-window-line"></i> },
     { id: "Maps", icon: <i className="ri-road-map-line"></i> },
     { id: "Clock", icon: <i className="ri-time-line"></i> },
@@ -13,7 +15,7 @@ const options = [
 ]
 
 export const Settings = () => {
-    const [active, setActive] = useState('System');
+    const [active, setActive] = useState<string>('System');
 
     const renderContent = () => {
         switch (active) {

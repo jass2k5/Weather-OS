@@ -1,5 +1,5 @@
 interface ThemeCardProps{
-    src: string;
+    src?: string;
     alt?: string;
     onClick: () => void;
     videoSrc?: string;
