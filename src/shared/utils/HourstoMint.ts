@@ -1,4 +1,4 @@
-export const timeToMinutes = (timeString?:"string" | null):number => {
+export const timeToMinutes = (timeString?:string | null):number => {
   if (!timeString) return 0;// we have this so we can do ?:
   
   const [time, modifier] = timeString.split(" ");
