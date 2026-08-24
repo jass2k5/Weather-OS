@@ -10,7 +10,7 @@ interface SolarArc {
 }
 export const SolarArc = ({ city }:SolarArc) => {
     const { data, isLoading, isError } = useCityForecast(city);
-    const sunRef = useRef(null);
+    const sunRef = useRef<HTMLDivElement>(null);
 
     const sunriseTime = data?.forecast?.forecastday?.[0]?.astro?.sunrise??"-- --AM";
     const sunsetTime = data?.forecast?.forecastday?.[0]?.astro?.sunset??"-- --PM";

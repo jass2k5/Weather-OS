@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { useOsStore } from "../../shared/store/useOsStore";
+import { useOsStore,WeatherHistoryItem } from "../../shared/store/useOsStore";
 import { ConditionTitle } from "./ConditionTitle";
-import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { WindCompass } from "./WindCompass";
 import { HourlyForecast } from "./HourlyForecast";
@@ -12,8 +12,8 @@ import { Banner } from "./Banner";
 
 export const WeatherApp = () => {
     const searchHistory = useOsStore((state) => state.searchHistory);
-    const [currentCity, setCurrentCity] = useState(searchHistory[0]?.city || "");
-    const [data, setData] = useState(searchHistory[0] ?? null);
+    const [currentCity, setCurrentCity] = useState<string>(searchHistory[0]?.city || "");
+    const [data, setData] = useState<WeatherHistoryItem|null>(searchHistory[0] ?? null);
 
     useEffect(() => {
         if (!searchHistory?.length) {
