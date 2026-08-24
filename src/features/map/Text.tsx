@@ -9,8 +9,6 @@ gsap.registerPlugin(SplitText, useGSAP);
 export const Text = memo(() => {
     const mapSetting = useOsStore((state) => state.mapSetting.theme);
     const myZIndex = useOsStore((state) => 20 + state.windowOrder.indexOf('map'));
-
-
     const city = useOsStore((state) => state.telemetryData?.city ?? "Unknown Location");
     const country = useOsStore((state) => state.telemetryData?.country ?? "Unknown Country");
     const temperature = useOsStore((state) => state.telemetryData?.liveTemp ?? 0);

@@ -1,8 +1,10 @@
 import { useCityForecast } from "../../shared/hooks/useCityForecast";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-
-export const Precipitation = ({ city }) => {
+interface PrecipitationProps{
+    city:string;
+}
+export const Precipitation = ({ city }:PrecipitationProps) => {
     const { data, isLoading, isError } = useCityForecast(city);
 
     if (isLoading) {

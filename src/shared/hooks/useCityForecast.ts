@@ -9,27 +9,28 @@ export interface WeatherAPIResponse {
     };
     current: {
         temp_c: number;
-        feelslike_c: number; // For your "Right now" feels like UI
+        feelslike_c: number;
         humidity: number;
         vis_km: number;
         wind_kph: number;
-        wind_degree: number; // For your wind compass!
+        wind_degree: number;
         wind_dir: string;
-        precip_mm: number;   // For your precipitation charts
+        precip_mm: number;
+        is_day: number;
         condition: {
             text: string;
             icon: string;
         };
         air_quality?: {
-            "us-epa-index"?: number; // For your advisory banner and AQI badges
+            "us-epa-index"?: number;
+            pm2_5?: number;
         };
     };
     forecast: {
-        // forecastday is an array of 7 items (since you fetch days: 7)
         forecastday: Array<{
             date: string;
             day: {
-                maxtemp_c: number; // For your 7-day max/min bars
+                maxtemp_c: number;
                 mintemp_c: number;
                 totalprecip_mm: number;
                 condition: {
@@ -38,25 +39,27 @@ export interface WeatherAPIResponse {
                 };
             };
             astro: {
-                sunrise: string; // For your sunrise/sunset dial
+                sunrise: string;
                 sunset: string;
             };
-            // hour is an array of 24 items for that specific day
             hour: Array<{
-                time: string; // "2026-08-20 00:00"
+                time_epoch: number;
+                time: string;
                 temp_c: number;
+                is_day: number;
+                precip_mm: number;
                 condition: {
                     text: string;
                     icon: string;
                 };
                 air_quality?: {
                     "us-epa-index"?: number;
+                    pm2_5?: number;
                 };
             }>;
         }>;
     };
 }
-
 export const useCityForecast = (cityname:string) =>  {
     const Api_Key = import.meta.env.VITE_WEATHER_API_KEY;
     const BASE_URL = 'https://api.weatherapi.com/v1';

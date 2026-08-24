@@ -3,9 +3,11 @@ import needle from '../../shared/assets/compass-needle.svg';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { useRef } from 'react';
-
-export const Compass = ({ degree }) => {
-    const needleRef = useRef(null);
+interface CompassProps{
+    degree:number
+}
+export const Compass = ({ degree }:CompassProps) => {
+    const needleRef = useRef<HTMLImageElement>(null);
 
     useGSAP(() => {
         if (needleRef.current) {

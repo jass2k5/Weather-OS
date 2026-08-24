@@ -1,8 +1,11 @@
 import { useTemperatureUnit } from "../../shared/hooks/useUnits";
 import { useNumberCounter } from "../../shared/hooks/useNumberCounter";
 import { Compass } from "./Compass";
-
-export const WindCompass = ({ windSpeed, windDegree }) => {
+interface WindCompassProps{
+    windSpeed:number;
+    windDegree:number;
+}
+export const WindCompass = ({ windSpeed, windDegree }:WindCompassProps) => {
     const { formatDistance } = useTemperatureUnit();
     const speed = useNumberCounter({ targetValue: windSpeed });
 

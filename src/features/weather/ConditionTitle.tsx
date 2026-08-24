@@ -8,10 +8,11 @@ import thunderstorm from '../../shared/assets/thunderstorm.svg';
 import lightrain from '../../shared/assets/lightrain.svg';
 import snow from '../../shared/assets/snow.svg';
 import fog from '../../shared/assets/fog.svg';
-
+import {WeatherHistoryItem} from '../../shared/store/useOsStore'
 import "react-loading-skeleton/dist/skeleton.css";
 
-export const getWeatherIcon = (conditionText, isDay = 1) => {
+
+export const getWeatherIcon = (conditionText:string, isDay:boolean|number = 1):string => {
     if (!conditionText) return isDay ? clearsun : clearmoon;
     const text = conditionText.toLowerCase();
 
@@ -26,8 +27,11 @@ export const getWeatherIcon = (conditionText, isDay = 1) => {
 
     return isDay ? clearsun : clearmoon;
 };
-
-export const ConditionTitle = ({ city, data }) => {
+interface ConditionTitleProps{
+    city:string;
+    data:WeatherHistoryItem
+}
+export const ConditionTitle = ({ city, data }:ConditionTitleProps) => {
     const { formatTemp, formatDistance } = useTemperatureUnit();
    const temperature = useNumberCounter({ targetValue: data.liveTemp });
     
