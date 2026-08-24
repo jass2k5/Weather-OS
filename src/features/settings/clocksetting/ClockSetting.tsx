@@ -5,9 +5,13 @@ import { SettingGroup } from "../../../shared/components/SettingGroup";
 import { ThemeContainer } from "../../../shared/components/ThemeContainer";
 import { ThemeCard } from "../../../shared/components/ThemeCard";
 import { Alerts } from "../../../shared/components/Alerts";
-
-const Clockthemes = [{ id: "night", src:"/NightVideo.mp4"  ,key:"liveNight"},
-{id:"day",src:"/DayVideo.mp4",key:"liveDay"}
+interface Clockthemes{
+    id:"night"|"day";
+    src:"/NightVideo.mp4"|"/DayVideo.mp4";
+    key:"liveNight"|"liveDay";
+}
+const Clockthemes:Clockthemes[] = [{ id: "night", src:"/NightVideo.mp4"  ,key:"liveNight"},
+                    {id:"day",src:"/DayVideo.mp4",key:"liveDay"}
 ]
 export const ClockSetting = () => {
     const clockSetting = useOsStore((state) => state.clockSetting);
@@ -38,7 +42,7 @@ export const ClockSetting = () => {
                 showDivider={false}
                 control={
                     <Switch
-                    checked={clockSetting?.format?.bol}
+                    checked={clockSetting?.format?.enabled}
                     onChange={(e)=>{
                         setClockSetting('format',{
                             enabled:e.target.checked,

@@ -1,7 +1,7 @@
 import { ChangeEvent } from "react";
 
 interface SwitchProps {
-    checked: boolean;
+    checked: boolean|undefined;
     onChange: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 export const Switch = ({ checked, onChange }:SwitchProps) => {

@@ -1,33 +1,14 @@
 import { useTemperatureUnit } from "../../shared/hooks/useUnits";
 import { useNumberCounter } from "../../shared/hooks/useNumberCounter";
-import cloudysun from '../../shared/assets/cloudysun.svg';
-import cloudymoon from '../../shared/assets/cloudymoon.svg';
-import clearsun from '../../shared/assets/clearsun.svg';
-import clearmoon from '../../shared/assets/clearmoon.svg';
-import thunderstorm from '../../shared/assets/thunderstorm.svg';
-import lightrain from '../../shared/assets/lightrain.svg';
-import snow from '../../shared/assets/snow.svg';
-import fog from '../../shared/assets/fog.svg';
-
+import {WeatherHistoryItem} from '../../shared/store/useOsStore'
 import "react-loading-skeleton/dist/skeleton.css";
+import {getWeatherIcon} from '../../shared/utils/GetWeatherIcon';
 
-export const getWeatherIcon = (conditionText, isDay = 1) => {
-    if (!conditionText) return isDay ? clearsun : clearmoon;
-    const text = conditionText.toLowerCase();
-
-    if (text.includes("thunder") || text.includes("lightning")) return thunderstorm;
-    if (text.includes("snow") || text.includes("blizzard") || text.includes("ice") || text.includes("sleet")) return snow;
-    if (text.includes("fog") || text.includes("mist") || text.includes("haze")) return fog;
-    if (text.includes("rain") || text.includes("drizzle") || text.includes("shower")) return lightrain;
-
-    if (text.includes("cloud") || text.includes("overcast")) {
-        return isDay ? cloudysun : cloudymoon;
-    }
-
-    return isDay ? clearsun : clearmoon;
-};
-
-export const ConditionTitle = ({ city, data }) => {
+interface ConditionTitleProps{
+    city:string;
+    data:WeatherHistoryItem
+}
+export const ConditionTitle = ({ city, data }:ConditionTitleProps) => {
     const { formatTemp, formatDistance } = useTemperatureUnit();
    const temperature = useNumberCounter({ targetValue: data.liveTemp });
     

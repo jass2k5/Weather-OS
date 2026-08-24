@@ -1,34 +1,13 @@
 import { useCityForecast } from "../../shared/hooks/useCityForecast";
 import { useTemperatureUnit } from "../../shared/hooks/useUnits";
-import cloudysun from '../../shared/assets/cloudysun.svg';
-import cloudymoon from '../../shared/assets/cloudymoon.svg';
-import clearsun from '../../shared/assets/clearsun.svg';
-import clearmoon from '../../shared/assets/clearmoon.svg';
-import thunderstorm from '../../shared/assets/thunderstorm.svg';
-import lightrain from '../../shared/assets/lightrain.svg';
-import snow from '../../shared/assets/snow.svg';
-import fog from '../../shared/assets/fog.svg';
-
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
+import {getWeatherIcon} from '../../shared/utils/GetWeatherIcon';
 
-export const getWeatherIcon = (conditionText, isDay) => {
-    if (!conditionText) return isDay ? clearsun : clearmoon;
-    const text = conditionText.toLowerCase();
-
-    if (text.includes("thunder") || text.includes("lightning")) return thunderstorm;
-    if (text.includes("snow") || text.includes("blizzard") || text.includes("ice") || text.includes("sleet")) return snow;
-    if (text.includes("fog") || text.includes("mist") || text.includes("haze")) return fog;
-    if (text.includes("rain") || text.includes("drizzle") || text.includes("shower")) return lightrain;
-
-    if (text.includes("cloud") || text.includes("overcast")) {
-        return isDay ? cloudysun : cloudymoon;
-    }
-
-    return isDay ? clearsun : clearmoon;
-};
-
-export const HourlyForecast = ({ city }) => {
+interface HourlyForecastProps{
+    city:string;
+}
+export const HourlyForecast = ({ city }:HourlyForecastProps) => {
     const { data, isLoading, isError } = useCityForecast(city);
     const { formatTemp } = useTemperatureUnit();
 
@@ -76,7 +55,7 @@ export const HourlyForecast = ({ city }) => {
     const combinedHours = [...todayHours, ...tommorowHours];
 
     const nextSixHours = combinedHours.slice(currentLocalHour, currentLocalHour + 7);
-    const aqi = Math.round(data.current?.air_quality?.pm2_5) || "--";
+    const aqi = Math.round(data.current?.air_quality?.pm2_5 ?? 0) || "--";
 
     return (
         <div className="Hourly border border-black/10 max-h-[300px] w-full flex flex-col items-center justify-center p-3 rounded-[0.8rem] gap-6">

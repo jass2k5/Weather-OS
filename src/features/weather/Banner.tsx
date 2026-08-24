@@ -4,10 +4,12 @@ import { useCityForecast } from "../../shared/hooks/useCityForecast";
 import warning from '../../shared/assets/warning.webp';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
-
-export const Banner = ({ city }) => {
+interface BannerProps{
+    city:string;
+}
+export const Banner = ({ city }:BannerProps) => {
     const { data, isLoading, isError } = useCityForecast(city);
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
     if (isLoading) {
         return (

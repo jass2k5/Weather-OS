@@ -1,34 +1,14 @@
 import { useCityForecast } from "../../shared/hooks/useCityForecast";
 import { useTemperatureUnit } from "../../shared/hooks/useUnits";
-import cloudysun from '../../shared/assets/cloudysun.svg';
-import cloudymoon from '../../shared/assets/cloudymoon.svg';
-import clearsun from '../../shared/assets/clearsun.svg';
-import clearmoon from '../../shared/assets/clearmoon.svg';
-import thunderstorm from '../../shared/assets/thunderstorm.svg';
-import lightrain from '../../shared/assets/lightrain.svg';
-import snow from '../../shared/assets/snow.svg';
-import fog from '../../shared/assets/fog.svg';
+import {getWeatherIcon} from '../../shared/utils/GetWeatherIcon';
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { useMemo } from "react";
 
-export const getWeatherIcon = (conditionText, isDay = 1) => {
-    if (!conditionText) return isDay ? clearsun : clearmoon;
-    const text = conditionText.toLowerCase();
-
-    if (text.includes("thunder") || text.includes("lightning")) return thunderstorm;
-    if (text.includes("snow") || text.includes("blizzard") || text.includes("ice") || text.includes("sleet")) return snow;
-    if (text.includes("fog") || text.includes("mist") || text.includes("haze")) return fog;
-    if (text.includes("rain") || text.includes("drizzle") || text.includes("shower")) return lightrain;
-
-    if (text.includes("cloud") || text.includes("overcast")) {
-        return isDay ? cloudysun : cloudymoon;
-    }
-
-    return isDay ? clearsun : clearmoon;
-};
-
-export const WeeklyForecast = ({ city }) => {
+interface WeeklyForecastProps{
+    city:string
+}
+export const WeeklyForecast = ({ city }:WeeklyForecastProps) => {
     const { data, isLoading, isError } = useCityForecast(city);
     const { formatTemp } = useTemperatureUnit();
 
@@ -51,12 +31,16 @@ export const WeeklyForecast = ({ city }) => {
                     day: {
                         mintemp_c: lastDay.day.mintemp_c + (Math.random() * 2 - 1),
                         maxtemp_c: lastDay.day.maxtemp_c + (Math.random() * 2 - 1),
-                        condition: lastDay.day.condition
-                    }
+                        condition: lastDay.day.condition,
+                        totalprecip_mm: lastDay.day.totalprecip_mm
+                    },
+                    astro: lastDay.astro,
+                    hour: lastDay.hour
                 });
             }
         }
         return days;
+        
     }, [data]);
     if (isLoading) {
         return (
@@ -109,7 +93,7 @@ export const WeeklyForecast = ({ city }) => {
     const absoluteMax = Math.max(...allMaxs);
     const rangeSpan = absoluteMax - absoluteMin || 1;
 
-    const getDayLabel = (dateStr, index) => {
+    const getDayLabel = (dateStr:string, index:number) => {
         if (index === 0) return "Today";
         const date = new Date(dateStr);
         return date.toLocaleDateString('en-US', { weekday: 'short' });

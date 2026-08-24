@@ -3,7 +3,7 @@ interface SettingRowProps{
     title:string;
     subtitle:string;
     control:ReactNode;
-    showDivider:boolean;
+    showDivider?:boolean;
 }
 export const SettingRow = ({ title, subtitle, control, showDivider = true }:SettingRowProps) => {
     return (

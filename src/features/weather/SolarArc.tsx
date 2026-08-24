@@ -5,19 +5,21 @@ import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { useCityForecast } from "../../shared/hooks/useCityForecast";
 import { timeToMinutes } from "../../shared/utils/HourstoMint";
-
-export const SolarArc = ({ city }) => {
+interface SolarArc {
+    city:string;
+}
+export const SolarArc = ({ city }:SolarArc) => {
     const { data, isLoading, isError } = useCityForecast(city);
-    const sunRef = useRef(null);
+    const sunRef = useRef<HTMLDivElement>(null);
 
-    const sunriseTime = data?.forecast?.forecastday?.[0]?.astro?.sunrise;
-    const sunsetTime = data?.forecast?.forecastday?.[0]?.astro?.sunset;
+    const sunriseTime = data?.forecast?.forecastday?.[0]?.astro?.sunrise??"-- --AM";
+    const sunsetTime = data?.forecast?.forecastday?.[0]?.astro?.sunset??"-- --PM";
     
     const sunriseMinutes = timeToMinutes(sunriseTime);
     const sunsetMinutes = timeToMinutes(sunsetTime);
 
     const localTimeStr = data?.location?.localtime?.replace(" ", "T");
-    const now = new Date(localTimeStr);
+    const now = localTimeStr? new Date(localTimeStr):new Date();
     const currentMins = (now.getHours() * 60) + now.getMinutes();
 
     const duration = sunsetMinutes - sunriseMinutes;

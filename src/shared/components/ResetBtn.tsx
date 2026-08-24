@@ -1,6 +1,6 @@
 interface ResetProps{
     onClick:()=>void;
-    label:string;
+    label?:string;
 }
 export const Reset = ({ onClick, label = "Reset" }:ResetProps) => {
     return (
