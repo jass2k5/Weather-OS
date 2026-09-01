@@ -18,7 +18,6 @@ interface WeatherHistoryItem {
     isDay: boolean;
     aqi: number | null;
 }
-
 export const useSyncAllWeather = () => {
     const searchHistory = useOsStore((state) => state.searchHistory) as WeatherHistoryItem[];
     const updateCityData = useOsStore((state) => state.updateCityData);
@@ -28,8 +27,8 @@ export const useSyncAllWeather = () => {
     const BASE_URL = 'https://api.weatherapi.com/v1';
     const timeoutsRef = useRef<number[]>([]);
 
-    const queryOptions = useMemo(() => {
-        return searchHistory.map((historyItem: WeatherHistoryItem) => ({
+    useQueries({
+        queries: searchHistory.map((historyItem: WeatherHistoryItem) => ({
             queryKey: ["syncWeather", historyItem.city],
             queryFn: async () => {
                 const response = await axios.get(`${BASE_URL}/current.json`, {
@@ -39,19 +38,7 @@ export const useSyncAllWeather = () => {
             },
             refetchInterval: 1000 * 60 * 15,
             staleTime: 1000 * 60 * 15,
-        }));
-    }, [searchHistory, Api_Key]);
-
-    // Use standard React useEffect to monitor query results (TanStack Query v5 standard)
-    const queryResults = useQueries({ queries: queryOptions });
-
-    useEffect(() => {
-        queryResults.forEach((result, index) => {
-            if (result.isSuccess && result.data) {
-                const apiData = result.data;
-                const historyItem = searchHistory[index];
-                if (!historyItem) return;
-
+            onSuccess: (apiData: any) => {
                 const newCityCompare: WeatherHistoryItem = {
                     city: apiData.location.name,
                     country: apiData.location.country,
@@ -78,8 +65,8 @@ export const useSyncAllWeather = () => {
                     updateCityData(historyItem.city, newCityCompare);
                 }
             }
-        });
-    }, [queryResults, searchHistory, addNotification, updateCityData]);
+        }))
+    });
 
     useEffect(() => {
         return () => {
