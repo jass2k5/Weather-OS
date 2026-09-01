@@ -1,5 +1,5 @@
 import { useQueries } from "@tanstack/react-query";
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useOsStore } from "../store/useOsStore";
 import axios from "axios";
 
@@ -18,6 +18,7 @@ interface WeatherHistoryItem {
     isDay: boolean;
     aqi: number | null;
 }
+
 export const useSyncAllWeather = () => {
     const searchHistory = useOsStore((state) => state.searchHistory) as WeatherHistoryItem[];
     const updateCityData = useOsStore((state) => state.updateCityData);
@@ -26,8 +27,11 @@ export const useSyncAllWeather = () => {
     const Api_Key = import.meta.env.VITE_WEATHER_API_KEY;
     const BASE_URL = 'https://api.weatherapi.com/v1';
     const timeoutsRef = useRef<number[]>([]);
+    
+    // Track processed update timestamps to prevent cascading re-triggers
+    const processedTimestamps = useRef<Record<string, number>>({});
 
-    useQueries({
+    const queryResults = useQueries({
         queries: searchHistory.map((historyItem: WeatherHistoryItem) => ({
             queryKey: ["syncWeather", historyItem.city],
             queryFn: async () => {
@@ -38,7 +42,21 @@ export const useSyncAllWeather = () => {
             },
             refetchInterval: 1000 * 60 * 15,
             staleTime: 1000 * 60 * 15,
-            onSuccess: (apiData: any) => {
+        }))
+    });
+
+    useEffect(() => {
+        queryResults.forEach((result, index) => {
+            if (result.isSuccess && result.data && result.dataUpdatedAt) {
+                const historyItem = searchHistory[index];
+                if (!historyItem) return;
+
+                // If we already processed this exact fetch timestamp for this city, skip entirely
+                if (processedTimestamps.current[historyItem.city] === result.dataUpdatedAt) {
+                    return;
+                }
+
+                const apiData = result.data;
                 const newCityCompare: WeatherHistoryItem = {
                     city: apiData.location.name,
                     country: apiData.location.country,
@@ -58,6 +76,8 @@ export const useSyncAllWeather = () => {
                 const oldCityData: WeatherHistoryItem = { ...historyItem, loc: historyItem.loc ?? null };
 
                 if (JSON.stringify(oldCityData) !== JSON.stringify(newCityCompare)) {
+                    processedTimestamps.current[historyItem.city] = result.dataUpdatedAt;
+                    
                     const id = window.setTimeout(() => {
                         addNotification(`Synced Weather Data For ${historyItem.city}`, "info");
                     }, 1000);
@@ -65,8 +85,8 @@ export const useSyncAllWeather = () => {
                     updateCityData(historyItem.city, newCityCompare);
                 }
             }
-        }))
-    });
+        });
+    }, [queryResults, searchHistory, addNotification, updateCityData]);
 
     useEffect(() => {
         return () => {
