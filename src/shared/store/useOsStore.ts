@@ -315,7 +315,7 @@ export const useOsStore = create<FullOsStoreState>()(persist((set, get) => ({
         position: 'top-right'
     },
     tempdist: {
-        celsius: false,
+        celsius: false,//false means they are enabled we wrote false because of button to be shown as off in celsius if the celsius in on
         km: false,
     },
     settempdist: (key, val) => set((state) => (
