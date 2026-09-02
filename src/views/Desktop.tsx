@@ -20,6 +20,9 @@ import four from '../shared/assets/4.webp'
 import five from '../shared/assets/5.webp'
 import six from '../shared/assets/6.webp'
 import T from '../shared/assets/T.webp'
+import * as Sentry from '@sentry/react';
+// ... your other imports
+
 
 // Lazy Loaded Apps
 const WeatherMap = lazy(() => import("../features/map/Map").then(m => ({ default: m.WeatherMap })));
