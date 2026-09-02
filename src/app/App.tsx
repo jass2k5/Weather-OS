@@ -3,6 +3,7 @@ import { Desktop } from "../views/Desktop"
 import { MouseFollower } from "../shared/components/mouseFollower/MouseFollower"
 import { useOsStore } from "../shared/store/useOsStore"
 import { useConnectivity } from "../shared/hooks/useConnectivity"
+
 export const App = ()=>{
 const isBooted = useOsStore((state) => state.isBooted);
 useConnectivity()

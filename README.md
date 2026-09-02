@@ -6,39 +6,70 @@ Weather OS isn't just a weather app; it's a front-end engineering showcase. By t
 
 ![Weather OS Preview](./.github/images/hero.png) 
 
+# 🌤️ Weather-OS
 
-## 💻 Tech Stack
-This project utilizes a modern, performance-focused frontend stack:
-* **Core:** React 19, TypeScript, Vite
-* **Styling & Animation:** Tailwind CSS, SCSS, GSAP, Lenis (Smooth Scrolling)
-* **State Management:** Zustand, React Query
-* **Testing & Reliability:** Cypress, Jest, Sentry
-* **Mapping:** MapLibre GL, React-Map-GL
-## 📦 Core Dependencies
-The system relies on the following major packages to power its OS simulation and data visualization:
+A robust, web-based operating system dashboard featuring real-time weather synchronization, physics-based window management, and interactive spatial mapping. Built with a strict emphasis on production-grade state management, cache deduplication, and fault tolerance.
 
-```json
-"dependencies": {
-  "@gsap/react": "^2.1.2",
-  "@tailwindcss/vite": "^4.3.1",
-  "@tanstack/react-query": "^5.101.0",
-  "axios": "^1.17.0",
-  "gsap": "^3.15.0",
-  "lenis": "^1.3.25",
-  "maplibre-gl": "^5.24.0",
-  "react": "^19.2.6",
-  "react-dom": "^19.2.6",
-  "react-error-boundary": "^6.1.2",
-  "react-loading-skeleton": "^3.5.0",
-  "react-map-gl": "^8.1.1",
-  "react-rnd": "^10.5.3",
-  "remixicon": "^4.9.1",
-  "sass": "^1.101.0",
-  "styled-components": "^6.4.3",
-  "tailwindcss": "^4.3.1",
-  "zustand": "^5.0.14"
-}
-```
+## 🚀 Key Features
+
+* **Advanced Window Management:** Fully draggable, resizable, and stackable application windows with dynamic z-index calculation.
+* **Silent Background Sync:** Automated 15-minute weather data polling with strict cache invalidation and race-condition mitigation to prevent UI blocking or infinite render loops.
+* **Hardware-Accelerated Motion:** Physics-based drag mechanics, fluid scroll normalization, and complex sequence choreographies (SVG timelines, text splitting).
+* **Isolated Fault Tolerance:** Component-level error boundaries ensuring that individual application crashes (e.g., WebGL map failures) do not take down the entire OS environment.
+* **Production Observability:** Integrated error tracking and breadcrumb logging to monitor live application stability.
+
+## 🛠️ Tech Stack & Architecture
+
+### Core & Runtime
+* **HTML5 & Modern Web APIs** – Semantic layout, DOM manipulation, ResizeObserver API, and Web Audio/Media contexts.
+* **JavaScript (ESNext) & TypeScript (TSX)** – Strictly typed codebase, custom interfaces, generic store hooks, and build-time type safety.
+* **React 18 / 19** – Concurrent mode, component lifecycles, lazy loading (`React.lazy`), and async boundary suspense (`Suspense`).
+* **Vite** – Ultra-fast Next-Gen frontend build tooling, HMR, and environment-level configuration.
+
+### State Management & Data Fetching
+* **Zustand** – Lightweight global state orchestrator handling window management, z-index hierarchy, user telemetry, and background app configurations.
+* **TanStack React Query v5** – Server-state management, cache deduplication, background sync scheduling, and custom cache invalidation pipelines.
+* **TanStack Query Devtools** – Real-time inspection of active, stale, and garbage-collected network queries and mutation states.
+* **Axios** – Promise-based HTTP client managing external Weather and Geocoding REST API contracts.
+
+### Styling & Motion Engineering
+* **SCSS / Sass** – Modular CSS architecture featuring native `@container` queries, CSS grid configurations, and responsive `clamp()` functions.
+* **Tailwind CSS** – Utility-first dynamic styling, glassmorphism overlays, and layout constraints.
+* **GSAP Core & @gsap/react (`useGSAP`)** – Hardware-accelerated UI choreographies and seamless React lifecycle integration for animation cleanup.
+* **GSAP Draggable** – Physics-based, smooth drag-and-drop mechanics powering the OS window management and positioning system.
+* **GSAP ScrollTrigger** – Scroll-linked animation timelines for precise, scroll-driven UI reveals.
+* **GSAP SplitText** – Dynamic text splitting for complex, character-staggered entry animations.
+* **@studio-freight/lenis** – Smooth scroll normalization engine across desktop viewports.
+* **MapLibre GL & react-map-gl** – WebGL-based vector interactive mapping engine, camera flybys, coordinate markers, and spatial rendering.
+* **React Loading Skeleton** – Contextual skeleton loaders for graceful asynchronous content delivery.
+
+### Testing & Quality Assurance
+* **Vitest** – High-performance native unit test runner with fake timer mocks and environment orchestration.
+* **React Testing Library (@testing-library/react)** – Custom hook validation (`renderHook`), component integration tests, and user-event simulation.
+* **React Error Boundary** – Isolated component crash fallback wrappers preventing global unmount cascading.
+
+### Observability & Monitoring
+* **Sentry (@sentry/react)** – Production real-time exception tracking, breadcrumb logging, and error boundary monitoring.
+
+## 🧠 Architecture Highlights
+
+**Defensive State Synchronization**
+To prevent infinite render loops and redundant API calls during rapid component mounting, the sync engine utilizes dependency checks and timestamp-guards. Data is conditionally committed to the Zustand store only if a deep comparison confirms absolute delta changes, saving memory allocation and preventing cascade re-renders.
+
+**Feature-Sliced Routing**
+Heavy dependencies like MapLibre and GSAP logic are dynamically imported using React `lazy` and `Suspense`. Apps remain unmounted until explicitly invoked by the user, keeping the initial JavaScript bundle exceptionally lightweight.
+
+## 📦 Getting Started
+
+1. Clone the repository
+2. Install dependencies: `npm install`
+3. Configure environment variables (`.env.local`):
+   * `VITE_WEATHER_API_KEY=`
+   * `VITE_MAPTILER_KEY=`
+   * `VITE_SENTRY_DSN=` (Optional for local development)
+4. Start the development server: `npm run dev`
+5. Run the test suite: `npm run test`
+
 
 ## 🛠️ The OS Experience
 
