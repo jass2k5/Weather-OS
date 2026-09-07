@@ -20,8 +20,6 @@ import four from '../shared/assets/4.webp'
 import five from '../shared/assets/5.webp'
 import six from '../shared/assets/6.webp'
 import T from '../shared/assets/T.webp'
-import * as Sentry from '@sentry/react';
-// ... your other imports
 
 
 // Lazy Loaded Apps
@@ -31,25 +29,26 @@ const Settings = lazy(() => import("../features/settings/Settings").then(m => ({
 const ContactApp = lazy(() => import("../features/contact/Contact").then(m => ({ default: m.ContactApp })));
 const NotificationApp = lazy(() => import("../features/notification/Notification").then(m => ({ default: m.NotificationApp })));
 const WeatherApp = lazy(()=>import( '../features/weather/Weather').then(m => ({default: m.WeatherApp})));
- const APP_CONFIG: Array<{
+const APP_CONFIG: Array<{
     id: AppKey;
     title: string;
     Component: React.ComponentType;
     minW: number;
     minH: number;
-    defW: number;
-    defH: number;
-    posX?: number|undefined;
-    posY?: number|undefined;
+    defW: number | string; 
+    defH: number | string; 
+    posX?: number | undefined;
+    posY?: number | undefined;
     isResizable?: boolean;
 }> = [
-    { id: 'contact', title: "Contact Me", Component: ContactApp, minW: 520, minH: 380, defW: window.innerWidth, defH: window.innerHeight, posX: 0, posY: 0 },
-    { id: 'weather', title: "Weather", Component: WeatherApp, minW: 520, minH: 380, defW: window.innerWidth, defH: window.innerHeight, posX: 0, posY: 0 },
+    { id: 'contact', title: "Contact Me", Component: ContactApp, minW: 520, minH: 380, defW: "100vw", defH: "100vh", posX: 0, posY: 0 },
+    { id: 'weather', title: "Weather", Component: WeatherApp, minW: 520, minH: 380, defW: "100vw", defH: "100vh", posX: 0, posY: 0 },
     { id: 'notification', title: "Notification History", Component: NotificationApp, minW: 520, minH: 380, defW: 520, defH: 380, isResizable: false },
-    { id: 'map', title: "Map", Component: WeatherMap, minW: 500, minH: 340, defW: window.innerWidth, defH: window.innerHeight, posX: 0, posY: 0 },
-    { id: 'settings', title: "Settings", Component: Settings, minW: 750, minH: 450, defW: window.innerWidth * 0.7, defH: window.innerHeight * 0.7, posX: window.innerWidth * 0.02, posY: window.innerHeight * 0.02 },
-    { id: 'clock', title: "Clock", Component: Clock, minW: 459, minH: 406, defW: window.innerWidth, defH: window.innerHeight, posX: 0, posY: 0 }
+    { id: 'map', title: "Map", Component: WeatherMap, minW: 500, minH: 340, defW: "100vw", defH: "100vh", posX: 0, posY: 0 },
+    { id: 'settings', title: "Settings", Component: Settings, minW: 750, minH: 450, defW: "70vw", defH: "70vh", posX: 20, posY: 20 },
+    { id: 'clock', title: "Clock", Component: Clock, minW: 459, minH: 406, defW: "100vw", defH: "100vh", posX: 0, posY: 0 }
 ];
+
 
 const shortCuts =[
     {app:"map",src:one},
